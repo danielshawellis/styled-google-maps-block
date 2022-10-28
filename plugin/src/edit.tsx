@@ -31,7 +31,7 @@ const edit: React.ComponentType<BlockEditProps<MapSettings>> = function ({ attri
 	return (
 		<>
 			<div { ...blockProps }>
-				<iframe ref={ iframeRef } src={ `https://www.google.com/maps/embed/v1/${ attributes.mapmode }?q=${ attributes.q }&maptype=${ attributes.maptype }&zoom=${ attributes.zoom }&key=${ attributes.key }` } width="100%" height={ attributes.height } style={{ border: 0 }} allowFullScreen={ true } loading="lazy" referrerPolicy="no-referrer-when-downgrade"></iframe>
+				<iframe ref={ iframeRef } src={ `https://www.google.com/maps/embed/v1/${ attributes.mapmode }?q=${ attributes.q }&maptype=${ attributes.maptype }&zoom=${ attributes.zoom }&key=${ attributes.key }&language=${ attributes.language }&region=${ attributes.region }` } width="100%" height={ attributes.height } style={{ border: 0 }} allowFullScreen={ true } loading="lazy" referrerPolicy="no-referrer-when-downgrade"></iframe>
 			</div>
 
 			<InspectorControls>
@@ -83,6 +83,20 @@ const edit: React.ComponentType<BlockEditProps<MapSettings>> = function ({ attri
 									{ label: 'Satellite', value: 'satellite' },
 								] }
 								onChange={ ( maptype: MapSettings['maptype'] ) => setAttributes({ maptype }) }
+							/>
+						</PanelRow>
+						<PanelRow>
+							<TextControl
+								label="Language"
+								value={ attributes.language }
+								onChange={ ( language ) => setAttributes({ language }) }
+							/>
+						</PanelRow>
+						<PanelRow>
+							<TextControl
+								label="Region"
+								value={ attributes.region }
+								onChange={ ( region ) => setAttributes({ region }) }
 							/>
 						</PanelRow>
 					</PanelBody>

@@ -51,7 +51,7 @@ const edit = function (_ref) {
   const iframeRef = (0,_wordpress_compose__WEBPACK_IMPORTED_MODULE_3__.useFocusableIframe)();
   return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", blockProps, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("iframe", {
     ref: iframeRef,
-    src: `https://www.google.com/maps/embed/v1/${attributes.mapmode}?q=${attributes.q}&maptype=${attributes.maptype}&zoom=${attributes.zoom}&key=${attributes.key}`,
+    src: `https://www.google.com/maps/embed/v1/${attributes.mapmode}?q=${attributes.q}&maptype=${attributes.maptype}&zoom=${attributes.zoom}&key=${attributes.key}&language=${attributes.language}&region=${attributes.region}`,
     width: "100%",
     height: attributes.height,
     style: {
@@ -117,6 +117,18 @@ const edit = function (_ref) {
     }],
     onChange: maptype => setAttributes({
       maptype
+    })
+  })), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelRow, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
+    label: "Language",
+    value: attributes.language,
+    onChange: language => setAttributes({
+      language
+    })
+  })), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelRow, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
+    label: "Region",
+    value: attributes.region,
+    onChange: region => setAttributes({
+      region
     })
   }))))));
 };
