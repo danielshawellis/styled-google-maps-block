@@ -1,0 +1,129 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 2,
+	"name": "create-block/google-maps-gutenberg-block",
+	"version": "0.1.0",
+	"title": "Styled Google Maps",
+	"category": "widgets",
+	"description": "A highly-customizable Google Maps embed.",
+	"supports": {
+		"html": false
+	},
+	"textdomain": "google-maps-gutenberg-block",
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"style": "file:./style-index.css",
+	"keywords": [
+		"google",
+		"maps",
+		"map",
+		"branded",
+		"styled",
+		"customized",
+		"embed"
+	],
+	"attributes": {
+		"key": {
+			"type": "string",
+			"default": "AIzaSyAjyDspiPfzEfjRSS5fQzm-3jHFjHxeXB4"
+		},
+		"height": {
+			"type": "string",
+			"default": "400px"
+		},
+		"mapmode": {
+			"type": "string",
+			"default": "place",
+			"enum": [
+				"place",
+				"view",
+				"directions",
+				"streetview",
+				"search"
+			]
+		},
+		"q": {
+			"type": "string",
+			"default": "Empire State Building"
+		},
+		"center": {
+			"type": "string",
+			"default": "40.7484,-73.9857"
+		},
+		"zoom": {
+			"type": "number",
+			"default": 10
+		},
+		"maptype": {
+			"type": "string",
+			"default": "roadmap",
+			"enum": [
+				"roadmap",
+				"satellite"
+			]
+		},
+		"language": {
+			"type": "string",
+			"default": "en"
+		},
+		"region": {
+			"type": "string",
+			"default": "US"
+		},
+		"origin": {
+			"type": "string",
+			"default": "Empire State Building"
+		},
+		"destination": {
+			"type": "string",
+			"default": "Flatiron Building"
+		},
+		"waypoints": {
+			"type": "string",
+			"default": ""
+		},
+		"mode": {
+			"type": "string",
+			"enum": [
+				"driving",
+				"walking",
+				"bicycling",
+				"transit",
+				"flying"
+			],
+			"default": "driving"
+		},
+		"avoid": {
+			"type": "string",
+			"default": ""
+		},
+		"units": {
+			"type": "string",
+			"enum": [
+				"metric",
+				"imperial"
+			],
+			"default": "metric"
+		},
+		"location": {
+			"type": "string",
+			"default": "40.7484,-73.9857"
+		},
+		"pano": {
+			"type": "string",
+			"default": "AF1QipMhTjMWAB9suCj36Qs-3D_aRhr47gK2cCQWElF0"
+		},
+		"heading": {
+			"type": "number",
+			"default": 0
+		},
+		"pitch": {
+			"type": "number",
+			"default": 0
+		},
+		"fov": {
+			"type": "number",
+			"default": 90
+		}
+	}
+}
