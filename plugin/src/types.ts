@@ -81,4 +81,9 @@ export type MapSettings = {
   heading: number,
   pitch: number,
   fov: number,
+  styles: {
+    featureType?: string
+    elementType?: string,
+    stylers: Record<'hue' | 'lightness' | 'saturation' | 'gamma' | 'invert_lightness' | 'visibility' | 'color' | 'weight', string>
+  }[]
 }

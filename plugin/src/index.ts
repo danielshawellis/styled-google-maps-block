@@ -16,6 +16,13 @@ import { MapSettings } from './types';
 import './style.scss';
 
 /**
+ * PrimeReact styles
+ */
+import "primereact/resources/themes/lara-light-indigo/theme.css";  //theme
+import "primereact/resources/primereact.min.css";                  //core css
+import "primeicons/primeicons.css";                                //icons
+
+/**
  * Internal dependencies
  */
 import edit from './edit';

@@ -10,6 +10,11 @@ import { useFocusableIframe } from '@wordpress/compose';
 import { BlockEditProps } from '@wordpress/blocks';
 import { MapSettings } from './types';
 
+import { DataTable } from 'primereact/datatable';
+import { Column } from 'primereact/column';
+import { Dropdown } from 'primereact/dropdown';
+import { Button } from 'primereact/button';
+
 /**
  * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
  * Those files can contain any CSS code that gets applied to the editor.
@@ -27,6 +32,9 @@ import './editor.scss';
 const edit: React.ComponentType<BlockEditProps<MapSettings>> = function ({ attributes, setAttributes }) {
 	const blockProps = useBlockProps();
 	const iframeRef = useFocusableIframe() as React.LegacyRef<HTMLIFrameElement>;
+
+	const styleNameTemplate = (rowData) => <span>{ rowData.featureType ?? 'all' } - { rowData.elementType ?? 'all' }</span>;
+	const header = () => <Button label="Add New Style" icon="pi pi-plus" />
 
 	return (
 		<>
@@ -98,6 +106,15 @@ const edit: React.ComponentType<BlockEditProps<MapSettings>> = function ({ attri
 								value={ attributes.region }
 								onChange={ ( region ) => setAttributes({ region }) }
 							/>
+						</PanelRow>
+					</PanelBody>
+				</Panel>
+				<Panel>
+					<PanelBody title="Styles" initialOpen={ true }>
+						<PanelRow>
+								<DataTable value={ attributes.styles } header={ header }>
+									<Column header="Style Name" body={ styleNameTemplate }></Column>
+								</DataTable>
 						</PanelRow>
 					</PanelBody>
 				</Panel>

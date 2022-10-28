@@ -124,6 +124,10 @@
 		"fov": {
 			"type": "number",
 			"default": 90
+		},
+		"styles": {
+			"type": "array",
+			"default": []
 		}
 	}
 }
