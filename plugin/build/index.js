@@ -17,9 +17,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _wordpress_compose__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/compose */ "@wordpress/compose");
 /* harmony import */ var _wordpress_compose__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_compose__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var primereact_datatable__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! primereact/datatable */ "./node_modules/primereact/datatable/datatable.esm.js");
-/* harmony import */ var primereact_column__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! primereact/column */ "./node_modules/primereact/column/column.esm.js");
-/* harmony import */ var primereact_button__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! primereact/button */ "./node_modules/primereact/button/button.esm.js");
+/* harmony import */ var primereact_button__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! primereact/button */ "./node_modules/primereact/button/button.esm.js");
+/* harmony import */ var _styler__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./styler */ "./src/styler.tsx");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_6__);
 /* harmony import */ var _editor_scss__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./editor.scss */ "./src/editor.scss");
 
 /**
@@ -56,14 +57,7 @@ const edit = function (_ref) {
   } = _ref;
   const blockProps = (0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.useBlockProps)();
   const iframeRef = (0,_wordpress_compose__WEBPACK_IMPORTED_MODULE_3__.useFocusableIframe)();
-  const styleNameTemplate = rowData => {
-    var _rowData$featureType, _rowData$elementType;
-    return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", null, (_rowData$featureType = rowData.featureType) !== null && _rowData$featureType !== void 0 ? _rowData$featureType : 'all', " - ", (_rowData$elementType = rowData.elementType) !== null && _rowData$elementType !== void 0 ? _rowData$elementType : 'all');
-  };
-  const header = () => (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(primereact_button__WEBPACK_IMPORTED_MODULE_6__.Button, {
-    label: "Add New Style",
-    icon: "pi pi-plus"
-  });
+  const [stylerIsOpen, setStylerIsOpen] = (0,react__WEBPACK_IMPORTED_MODULE_6__.useState)(false);
   return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", blockProps, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("iframe", {
     ref: iframeRef,
     src: `https://www.google.com/maps/embed/v1/${attributes.mapmode}?q=${attributes.q}&maptype=${attributes.maptype}&zoom=${attributes.zoom}&key=${attributes.key}&language=${attributes.language}&region=${attributes.region}`,
@@ -148,13 +142,15 @@ const edit = function (_ref) {
   })))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Panel, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {
     title: "Styles",
     initialOpen: true
-  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelRow, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(primereact_datatable__WEBPACK_IMPORTED_MODULE_4__.DataTable, {
-    value: attributes.styles,
-    header: header
-  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(primereact_column__WEBPACK_IMPORTED_MODULE_5__.Column, {
-    header: "Style Name",
-    body: styleNameTemplate
-  })))))));
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelRow, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(primereact_button__WEBPACK_IMPORTED_MODULE_4__.Button, {
+    label: "Open Styler",
+    onClick: () => setStylerIsOpen(true)
+  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_styler__WEBPACK_IMPORTED_MODULE_5__.Styler, {
+    visible: stylerIsOpen,
+    onHide: () => setStylerIsOpen(false),
+    attributes: attributes,
+    setAttributes: setAttributes
+  }))))));
 };
 /* harmony default export */ __webpack_exports__["default"] = (edit);
 
@@ -174,9 +170,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var primereact_resources_themes_lara_light_indigo_theme_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! primereact/resources/themes/lara-light-indigo/theme.css */ "./node_modules/primereact/resources/themes/lara-light-indigo/theme.css");
 /* harmony import */ var primereact_resources_primereact_min_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! primereact/resources/primereact.min.css */ "./node_modules/primereact/resources/primereact.min.css");
 /* harmony import */ var primeicons_primeicons_css__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! primeicons/primeicons.css */ "./node_modules/primeicons/primeicons.css");
-/* harmony import */ var _edit__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./edit */ "./src/edit.tsx");
-/* harmony import */ var _save__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./save */ "./src/save.tsx");
-/* harmony import */ var _block_json__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./block.json */ "./src/block.json");
+/* harmony import */ var primeflex_primeflex_css__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! primeflex/primeflex.css */ "./node_modules/primeflex/primeflex.css");
+/* harmony import */ var _edit__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./edit */ "./src/edit.tsx");
+/* harmony import */ var _save__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./save */ "./src/save.tsx");
+/* harmony import */ var _block_json__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./block.json */ "./src/block.json");
 /**
  * Registers a new block provided a unique name and an object defining its behavior.
  *
@@ -198,6 +195,7 @@ __webpack_require__.r(__webpack_exports__);
  //theme
  //core css
  //icons
+ //flex utility
 
 /**
  * Internal dependencies
@@ -212,9 +210,9 @@ __webpack_require__.r(__webpack_exports__);
  * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-registration/
  */
 // @ts-ignore TODO: Fix the typing here
-(0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__.registerBlockType)(_block_json__WEBPACK_IMPORTED_MODULE_7__.name, {
-  edit: _edit__WEBPACK_IMPORTED_MODULE_5__["default"],
-  save: _save__WEBPACK_IMPORTED_MODULE_6__["default"]
+(0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__.registerBlockType)(_block_json__WEBPACK_IMPORTED_MODULE_8__.name, {
+  edit: _edit__WEBPACK_IMPORTED_MODULE_6__["default"],
+  save: _save__WEBPACK_IMPORTED_MODULE_7__["default"]
 });
 
 /***/ }),
@@ -264,6 +262,60 @@ const save = function (_ref) {
   }));
 };
 /* harmony default export */ __webpack_exports__["default"] = (save);
+
+/***/ }),
+
+/***/ "./src/styler.tsx":
+/*!************************!*\
+  !*** ./src/styler.tsx ***!
+  \************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "Styler": function() { return /* binding */ Styler; }
+/* harmony export */ });
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var primereact_datatable__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! primereact/datatable */ "./node_modules/primereact/datatable/datatable.esm.js");
+/* harmony import */ var primereact_column__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! primereact/column */ "./node_modules/primereact/column/column.esm.js");
+/* harmony import */ var primereact_button__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! primereact/button */ "./node_modules/primereact/button/button.esm.js");
+/* harmony import */ var primereact_dialog__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! primereact/dialog */ "./node_modules/primereact/dialog/dialog.esm.js");
+
+
+
+
+
+const Styler = _ref => {
+  let {
+    visible,
+    onHide,
+    attributes,
+    setAttributes
+  } = _ref;
+  const styleNameTemplate = rowData => {
+    var _rowData$featureType, _rowData$elementType;
+    return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", null, (_rowData$featureType = rowData.featureType) !== null && _rowData$featureType !== void 0 ? _rowData$featureType : 'all', " - ", (_rowData$elementType = rowData.elementType) !== null && _rowData$elementType !== void 0 ? _rowData$elementType : 'all');
+  };
+  const header = () => (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "p-d-flex p-jc-between"
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("strong", null, "Styles"), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(primereact_button__WEBPACK_IMPORTED_MODULE_3__.Button, {
+    label: "Add New Style",
+    icon: "pi pi-plus"
+  }));
+  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(primereact_dialog__WEBPACK_IMPORTED_MODULE_4__.Dialog, {
+    visible: visible,
+    onHide: onHide,
+    maximizable: true
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(primereact_datatable__WEBPACK_IMPORTED_MODULE_1__.DataTable, {
+    value: attributes.styles,
+    header: header
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(primereact_column__WEBPACK_IMPORTED_MODULE_2__.Column, {
+    header: "Style Name",
+    body: styleNameTemplate
+  })));
+};
 
 /***/ }),
 
@@ -348,6 +400,19 @@ function removeClass(element, className) {
     element.setAttribute('class', replaceClassName(element.className && element.className.baseVal || '', className));
   }
 }
+
+/***/ }),
+
+/***/ "./node_modules/primeflex/primeflex.css":
+/*!**********************************************!*\
+  !*** ./node_modules/primeflex/primeflex.css ***!
+  \**********************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
 
 /***/ }),
 
@@ -7727,6 +7792,820 @@ DataTable.defaultProps = {
   totalRecords: null,
   value: null,
   virtualScrollerOptions: null
+};
+
+
+
+
+/***/ }),
+
+/***/ "./node_modules/primereact/dialog/dialog.esm.js":
+/*!******************************************************!*\
+  !*** ./node_modules/primereact/dialog/dialog.esm.js ***!
+  \******************************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "Dialog": function() { return /* binding */ Dialog; }
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var primereact_api__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! primereact/api */ "./node_modules/primereact/api/api.esm.js");
+/* harmony import */ var primereact_csstransition__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! primereact/csstransition */ "./node_modules/primereact/csstransition/csstransition.esm.js");
+/* harmony import */ var primereact_hooks__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! primereact/hooks */ "./node_modules/primereact/hooks/hooks.esm.js");
+/* harmony import */ var primereact_portal__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! primereact/portal */ "./node_modules/primereact/portal/portal.esm.js");
+/* harmony import */ var primereact_ripple__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! primereact/ripple */ "./node_modules/primereact/ripple/ripple.esm.js");
+/* harmony import */ var primereact_utils__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! primereact/utils */ "./node_modules/primereact/utils/utils.esm.js");
+
+
+
+
+
+
+
+
+function _extends() {
+  _extends = Object.assign ? Object.assign.bind() : function (target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i];
+
+      for (var key in source) {
+        if (Object.prototype.hasOwnProperty.call(source, key)) {
+          target[key] = source[key];
+        }
+      }
+    }
+
+    return target;
+  };
+  return _extends.apply(this, arguments);
+}
+
+function _arrayLikeToArray(arr, len) {
+  if (len == null || len > arr.length) len = arr.length;
+
+  for (var i = 0, arr2 = new Array(len); i < len; i++) {
+    arr2[i] = arr[i];
+  }
+
+  return arr2;
+}
+
+function _arrayWithoutHoles(arr) {
+  if (Array.isArray(arr)) return _arrayLikeToArray(arr);
+}
+
+function _iterableToArray(iter) {
+  if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter);
+}
+
+function _unsupportedIterableToArray(o, minLen) {
+  if (!o) return;
+  if (typeof o === "string") return _arrayLikeToArray(o, minLen);
+  var n = Object.prototype.toString.call(o).slice(8, -1);
+  if (n === "Object" && o.constructor) n = o.constructor.name;
+  if (n === "Map" || n === "Set") return Array.from(o);
+  if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
+}
+
+function _nonIterableSpread() {
+  throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+}
+
+function _toConsumableArray(arr) {
+  return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();
+}
+
+function _arrayWithHoles(arr) {
+  if (Array.isArray(arr)) return arr;
+}
+
+function _iterableToArrayLimit(arr, i) {
+  var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"];
+
+  if (_i == null) return;
+  var _arr = [];
+  var _n = true;
+  var _d = false;
+
+  var _s, _e;
+
+  try {
+    for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) {
+      _arr.push(_s.value);
+
+      if (i && _arr.length === i) break;
+    }
+  } catch (err) {
+    _d = true;
+    _e = err;
+  } finally {
+    try {
+      if (!_n && _i["return"] != null) _i["return"]();
+    } finally {
+      if (_d) throw _e;
+    }
+  }
+
+  return _arr;
+}
+
+function _nonIterableRest() {
+  throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+}
+
+function _slicedToArray(arr, i) {
+  return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
+}
+
+var Dialog = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.forwardRef(function (props, ref) {
+  var _React$useState = react__WEBPACK_IMPORTED_MODULE_0__.useState(props.id),
+      _React$useState2 = _slicedToArray(_React$useState, 2),
+      idState = _React$useState2[0],
+      setIdState = _React$useState2[1];
+
+  var _React$useState3 = react__WEBPACK_IMPORTED_MODULE_0__.useState(false),
+      _React$useState4 = _slicedToArray(_React$useState3, 2),
+      maskVisibleState = _React$useState4[0],
+      setMaskVisibleState = _React$useState4[1];
+
+  var _React$useState5 = react__WEBPACK_IMPORTED_MODULE_0__.useState(false),
+      _React$useState6 = _slicedToArray(_React$useState5, 2),
+      visibleState = _React$useState6[0],
+      setVisibleState = _React$useState6[1];
+
+  var _React$useState7 = react__WEBPACK_IMPORTED_MODULE_0__.useState(props.maximized),
+      _React$useState8 = _slicedToArray(_React$useState7, 2),
+      maximizedState = _React$useState8[0],
+      setMaximizedState = _React$useState8[1];
+
+  var dialogRef = react__WEBPACK_IMPORTED_MODULE_0__.useRef(null);
+  var maskRef = react__WEBPACK_IMPORTED_MODULE_0__.useRef(null);
+  var contentRef = react__WEBPACK_IMPORTED_MODULE_0__.useRef(null);
+  var headerRef = react__WEBPACK_IMPORTED_MODULE_0__.useRef(null);
+  var footerRef = react__WEBPACK_IMPORTED_MODULE_0__.useRef(null);
+  var closeRef = react__WEBPACK_IMPORTED_MODULE_0__.useRef(null);
+  var dragging = react__WEBPACK_IMPORTED_MODULE_0__.useRef(false);
+  var resizing = react__WEBPACK_IMPORTED_MODULE_0__.useRef(false);
+  var lastPageX = react__WEBPACK_IMPORTED_MODULE_0__.useRef(null);
+  var lastPageY = react__WEBPACK_IMPORTED_MODULE_0__.useRef(null);
+  var styleElement = react__WEBPACK_IMPORTED_MODULE_0__.useRef(null);
+  var attributeSelector = react__WEBPACK_IMPORTED_MODULE_0__.useRef('');
+  var maximized = props.onMaximize ? props.maximized : maximizedState;
+
+  var _useEventListener = (0,primereact_hooks__WEBPACK_IMPORTED_MODULE_3__.useEventListener)({
+    type: 'keydown',
+    listener: function listener(event) {
+      return onKeyDown(event);
+    }
+  }),
+      _useEventListener2 = _slicedToArray(_useEventListener, 2),
+      bindDocumentKeyDownListener = _useEventListener2[0],
+      unbindDocumentKeyDownListener = _useEventListener2[1];
+
+  var _useEventListener3 = (0,primereact_hooks__WEBPACK_IMPORTED_MODULE_3__.useEventListener)({
+    type: 'mousemove',
+    target: function target() {
+      return window.document;
+    },
+    listener: function listener(event) {
+      return onResize(event);
+    }
+  }),
+      _useEventListener4 = _slicedToArray(_useEventListener3, 2),
+      bindDocumentResizeListener = _useEventListener4[0],
+      unbindDocumentResizeListener = _useEventListener4[1];
+
+  var _useEventListener5 = (0,primereact_hooks__WEBPACK_IMPORTED_MODULE_3__.useEventListener)({
+    type: 'mouseup',
+    target: function target() {
+      return window.document;
+    },
+    listener: function listener(event) {
+      return onResizeEnd(event);
+    }
+  }),
+      _useEventListener6 = _slicedToArray(_useEventListener5, 2),
+      bindDocumentResizeEndListener = _useEventListener6[0],
+      unbindDocumentResizEndListener = _useEventListener6[1];
+
+  var _useEventListener7 = (0,primereact_hooks__WEBPACK_IMPORTED_MODULE_3__.useEventListener)({
+    type: 'mousemove',
+    target: function target() {
+      return window.document;
+    },
+    listener: function listener(event) {
+      return onDrag(event);
+    }
+  }),
+      _useEventListener8 = _slicedToArray(_useEventListener7, 2),
+      bindDocumentDragListener = _useEventListener8[0],
+      unbindDocumentDragListener = _useEventListener8[1];
+
+  var _useEventListener9 = (0,primereact_hooks__WEBPACK_IMPORTED_MODULE_3__.useEventListener)({
+    type: 'mouseup',
+    target: function target() {
+      return window.document;
+    },
+    listener: function listener(event) {
+      return onDragEnd(event);
+    }
+  }),
+      _useEventListener10 = _slicedToArray(_useEventListener9, 2),
+      bindDocumentDragEndListener = _useEventListener10[0],
+      unbindDocumentDragEndListener = _useEventListener10[1];
+
+  var onClose = function onClose(event) {
+    props.onHide();
+    event.preventDefault();
+  };
+
+  var focus = function focus() {
+    var activeElement = document.activeElement;
+    var isActiveElementInDialog = activeElement && dialogRef.current && dialogRef.current.contains(activeElement);
+
+    if (!isActiveElementInDialog && props.closable && props.showHeader) {
+      closeRef.current.focus();
+    }
+  };
+
+  var onMaskClick = function onMaskClick(event) {
+    if (props.dismissableMask && props.modal && maskRef.current === event.target) {
+      onClose(event);
+    }
+
+    props.onMaskClick && props.onMaskClick(event);
+  };
+
+  var toggleMaximize = function toggleMaximize(event) {
+    if (props.onMaximize) {
+      props.onMaximize({
+        originalEvent: event,
+        maximized: !maximized
+      });
+    } else {
+      setMaximizedState(function (prevMaximized) {
+        return !prevMaximized;
+      });
+    }
+
+    event.preventDefault();
+  };
+
+  var onKeyDown = function onKeyDown(event) {
+    var currentTarget = event.currentTarget;
+
+    if (!currentTarget || !currentTarget.primeDialogParams) {
+      return;
+    }
+
+    var params = currentTarget.primeDialogParams;
+    var paramLength = params.length;
+    var dialogId = params[paramLength - 1] ? params[paramLength - 1].id : undefined;
+
+    if (dialogId !== idState) {
+      return;
+    }
+
+    var dialog = document.getElementById(dialogId);
+
+    if (props.closable && props.closeOnEscape && event.key === 'Escape') {
+      onClose(event);
+      event.stopImmediatePropagation();
+      params.splice(paramLength - 1, 1);
+    } else if (event.key === 'Tab') {
+      event.preventDefault();
+      var focusableElements = primereact_utils__WEBPACK_IMPORTED_MODULE_6__.DomHandler.getFocusableElements(dialog);
+
+      if (focusableElements && focusableElements.length > 0) {
+        if (!document.activeElement) {
+          focusableElements[0].focus();
+        } else {
+          var focusedIndex = focusableElements.indexOf(document.activeElement);
+
+          if (event.shiftKey) {
+            if (focusedIndex === -1 || focusedIndex === 0) focusableElements[focusableElements.length - 1].focus();else focusableElements[focusedIndex - 1].focus();
+          } else {
+            if (focusedIndex === -1 || focusedIndex === focusableElements.length - 1) focusableElements[0].focus();else focusableElements[focusedIndex + 1].focus();
+          }
+        }
+      }
+    }
+  };
+
+  var onDragStart = function onDragStart(event) {
+    if (primereact_utils__WEBPACK_IMPORTED_MODULE_6__.DomHandler.hasClass(event.target, 'p-dialog-header-icon') || primereact_utils__WEBPACK_IMPORTED_MODULE_6__.DomHandler.hasClass(event.target.parentElement, 'p-dialog-header-icon')) {
+      return;
+    }
+
+    if (props.draggable) {
+      dragging.current = true;
+      lastPageX.current = event.pageX;
+      lastPageY.current = event.pageY;
+      dialogRef.current.style.margin = '0';
+      primereact_utils__WEBPACK_IMPORTED_MODULE_6__.DomHandler.addClass(document.body, 'p-unselectable-text');
+      props.onDragStart && props.onDragStart(event);
+    }
+  };
+
+  var onDrag = function onDrag(event) {
+    if (dragging.current) {
+      var width = primereact_utils__WEBPACK_IMPORTED_MODULE_6__.DomHandler.getOuterWidth(dialogRef.current);
+      var height = primereact_utils__WEBPACK_IMPORTED_MODULE_6__.DomHandler.getOuterHeight(dialogRef.current);
+      var deltaX = event.pageX - lastPageX.current;
+      var deltaY = event.pageY - lastPageY.current;
+      var offset = dialogRef.current.getBoundingClientRect();
+      var leftPos = offset.left + deltaX;
+      var topPos = offset.top + deltaY;
+      var viewport = primereact_utils__WEBPACK_IMPORTED_MODULE_6__.DomHandler.getViewport();
+      dialogRef.current.style.position = 'fixed';
+
+      if (props.keepInViewport) {
+        if (leftPos >= props.minX && leftPos + width < viewport.width) {
+          lastPageX.current = event.pageX;
+          dialogRef.current.style.left = leftPos + 'px';
+        }
+
+        if (topPos >= props.minY && topPos + height < viewport.height) {
+          lastPageY.current = event.pageY;
+          dialogRef.current.style.top = topPos + 'px';
+        }
+      } else {
+        lastPageX.current = event.pageX;
+        dialogRef.current.style.left = leftPos + 'px';
+        lastPageY.current = event.pageY;
+        dialogRef.current.style.top = topPos + 'px';
+      }
+
+      props.onDrag && props.onDrag(event);
+    }
+  };
+
+  var onDragEnd = function onDragEnd(event) {
+    if (dragging.current) {
+      dragging.current = false;
+      primereact_utils__WEBPACK_IMPORTED_MODULE_6__.DomHandler.removeClass(document.body, 'p-unselectable-text');
+      props.onDragEnd && props.onDragEnd(event);
+    }
+  };
+
+  var onResizeStart = function onResizeStart(event) {
+    if (props.resizable) {
+      resizing.current = true;
+      lastPageX.current = event.pageX;
+      lastPageY.current = event.pageY;
+      primereact_utils__WEBPACK_IMPORTED_MODULE_6__.DomHandler.addClass(document.body, 'p-unselectable-text');
+      props.onResizeStart && props.onResizeStart(event);
+    }
+  };
+
+  var convertToPx = function convertToPx(value, property, viewport) {
+    !viewport && (viewport = primereact_utils__WEBPACK_IMPORTED_MODULE_6__.DomHandler.getViewport());
+    var val = parseInt(value);
+
+    if (/^(\d+|(\.\d+))(\.\d+)?%$/.test(value)) {
+      return val * (viewport[property] / 100);
+    }
+
+    return val;
+  };
+
+  var onResize = function onResize(event) {
+    if (resizing.current) {
+      var deltaX = event.pageX - lastPageX.current;
+      var deltaY = event.pageY - lastPageY.current;
+      var width = primereact_utils__WEBPACK_IMPORTED_MODULE_6__.DomHandler.getOuterWidth(dialogRef.current);
+      var height = primereact_utils__WEBPACK_IMPORTED_MODULE_6__.DomHandler.getOuterHeight(dialogRef.current);
+      var offset = dialogRef.current.getBoundingClientRect();
+      var viewport = primereact_utils__WEBPACK_IMPORTED_MODULE_6__.DomHandler.getViewport();
+      var hasBeenDragged = !parseInt(dialogRef.current.style.top) || !parseInt(dialogRef.current.style.left);
+      var minWidth = convertToPx(dialogRef.current.style.minWidth, 'width', viewport);
+      var minHeight = convertToPx(dialogRef.current.style.minHeight, 'height', viewport);
+      var newWidth = width + deltaX;
+      var newHeight = height + deltaY;
+
+      if (hasBeenDragged) {
+        newWidth += deltaX;
+        newHeight += deltaY;
+      }
+
+      if ((!minWidth || newWidth > minWidth) && offset.left + newWidth < viewport.width) {
+        dialogRef.current.style.width = newWidth + 'px';
+      }
+
+      if ((!minHeight || newHeight > minHeight) && offset.top + newHeight < viewport.height) {
+        dialogRef.current.style.height = newHeight + 'px';
+      }
+
+      lastPageX.current = event.pageX;
+      lastPageY.current = event.pageY;
+      props.onResize && props.onResize(event);
+    }
+  };
+
+  var onResizeEnd = function onResizeEnd(event) {
+    if (resizing.current) {
+      resizing.current = false;
+      primereact_utils__WEBPACK_IMPORTED_MODULE_6__.DomHandler.removeClass(document.body, 'p-unselectable-text');
+      props.onResizeEnd && props.onResizeEnd(event);
+    }
+  };
+
+  var resetPosition = function resetPosition() {
+    dialogRef.current.style.position = '';
+    dialogRef.current.style.left = '';
+    dialogRef.current.style.top = '';
+    dialogRef.current.style.margin = '';
+  };
+
+  var getPositionClass = function getPositionClass() {
+    var positions = ['center', 'left', 'right', 'top', 'top-left', 'top-right', 'bottom', 'bottom-left', 'bottom-right'];
+    var pos = positions.find(function (item) {
+      return item === props.position || item.replace('-', '') === props.position;
+    });
+    return pos ? "p-dialog-".concat(pos) : '';
+  };
+
+  var onEnter = function onEnter() {
+    dialogRef.current.setAttribute(attributeSelector.current, '');
+  };
+
+  var onEntered = function onEntered() {
+    props.onShow && props.onShow();
+
+    if (props.focusOnShow) {
+      focus();
+    }
+
+    enableDocumentSettings();
+  };
+
+  var onExiting = function onExiting() {
+    if (props.modal) {
+      primereact_utils__WEBPACK_IMPORTED_MODULE_6__.DomHandler.addClass(maskRef.current, 'p-component-overlay-leave');
+    }
+
+    if (props.blockScroll) {
+      primereact_utils__WEBPACK_IMPORTED_MODULE_6__.DomHandler.removeClass(document.body, 'p-overflow-hidden');
+    }
+  };
+
+  var onExited = function onExited() {
+    dragging.current = false;
+    primereact_utils__WEBPACK_IMPORTED_MODULE_6__.ZIndexUtils.clear(maskRef.current);
+    setMaskVisibleState(false);
+    disableDocumentSettings();
+  };
+
+  var enableDocumentSettings = function enableDocumentSettings() {
+    bindGlobalListeners();
+
+    if (props.blockScroll || props.maximizable && maximized) {
+      primereact_utils__WEBPACK_IMPORTED_MODULE_6__.DomHandler.addClass(document.body, 'p-overflow-hidden');
+    }
+  };
+
+  var disableDocumentSettings = function disableDocumentSettings() {
+    unbindGlobalListeners();
+    var isMaximized = props.maximizable && maximized;
+
+    if (props.modal) {
+      var hasBlockScroll = document.primeDialogParams && document.primeDialogParams.some(function (param) {
+        return param.hasBlockScroll;
+      });
+
+      if (hasBlockScroll || isMaximized) {
+        primereact_utils__WEBPACK_IMPORTED_MODULE_6__.DomHandler.removeClass(document.body, 'p-overflow-hidden');
+      }
+    } else if (props.blockScroll || isMaximized) {
+      primereact_utils__WEBPACK_IMPORTED_MODULE_6__.DomHandler.removeClass(document.body, 'p-overflow-hidden');
+    }
+  };
+
+  var bindGlobalListeners = function bindGlobalListeners() {
+    if (props.draggable) {
+      bindDocumentDragListener();
+      bindDocumentDragEndListener();
+    }
+
+    if (props.resizable) {
+      bindDocumentResizeListener();
+      bindDocumentResizeEndListener();
+    }
+
+    bindDocumentKeyDownListener();
+    var newParam = {
+      id: idState,
+      hasBlockScroll: props.blockScroll
+    };
+    document.primeDialogParams = document.primeDialogParams ? [].concat(_toConsumableArray(document.primeDialogParams), [newParam]) : [newParam];
+  };
+
+  var unbindGlobalListeners = function unbindGlobalListeners() {
+    unbindDocumentDragListener();
+    unbindDocumentDragEndListener();
+    unbindDocumentResizeListener();
+    unbindDocumentResizEndListener();
+    unbindDocumentKeyDownListener();
+    document.primeDialogParams = document.primeDialogParams && document.primeDialogParams.filter(function (param) {
+      return param.id !== idState;
+    });
+  };
+
+  var createStyle = function createStyle() {
+    if (!styleElement.current) {
+      styleElement.current = primereact_utils__WEBPACK_IMPORTED_MODULE_6__.DomHandler.createInlineStyle(primereact_api__WEBPACK_IMPORTED_MODULE_1__["default"].nonce);
+      var innerHTML = '';
+
+      for (var breakpoint in props.breakpoints) {
+        innerHTML += "\n                    @media screen and (max-width: ".concat(breakpoint, ") {\n                        .p-dialog[").concat(attributeSelector.current, "] {\n                            width: ").concat(props.breakpoints[breakpoint], " !important;\n                        }\n                    }\n                ");
+      }
+
+      styleElement.current.innerHTML = innerHTML;
+    }
+  };
+
+  var changeScrollOnMaximizable = function changeScrollOnMaximizable() {
+    if (!props.blockScroll) {
+      var funcName = maximized ? 'addClass' : 'removeClass';
+      primereact_utils__WEBPACK_IMPORTED_MODULE_6__.DomHandler[funcName](document.body, 'p-overflow-hidden');
+    }
+  };
+
+  (0,primereact_hooks__WEBPACK_IMPORTED_MODULE_3__.useMountEffect)(function () {
+    var unqiueId = (0,primereact_utils__WEBPACK_IMPORTED_MODULE_6__.UniqueComponentId)();
+
+    if (!idState) {
+      setIdState(unqiueId);
+    }
+
+    if (!attributeSelector.current) {
+      attributeSelector.current = unqiueId;
+    }
+
+    if (props.visible) {
+      setMaskVisibleState(true);
+    }
+
+    if (props.breakpoints) {
+      createStyle();
+    }
+  });
+  (0,primereact_hooks__WEBPACK_IMPORTED_MODULE_3__.useUpdateEffect)(function () {
+    if (props.visible && !maskVisibleState) {
+      setMaskVisibleState(true);
+    }
+
+    if (props.visible !== visibleState && maskVisibleState) {
+      setVisibleState(props.visible);
+    }
+  });
+  (0,primereact_hooks__WEBPACK_IMPORTED_MODULE_3__.useUpdateEffect)(function () {
+    if (maskVisibleState) {
+      primereact_utils__WEBPACK_IMPORTED_MODULE_6__.ZIndexUtils.set('modal', maskRef.current, primereact_api__WEBPACK_IMPORTED_MODULE_1__["default"].autoZIndex, props.baseZIndex || primereact_api__WEBPACK_IMPORTED_MODULE_1__["default"].zIndex.modal);
+      setVisibleState(true);
+    }
+  }, [maskVisibleState]);
+  (0,primereact_hooks__WEBPACK_IMPORTED_MODULE_3__.useUpdateEffect)(function () {
+    changeScrollOnMaximizable();
+  }, [props.maximized, maximizedState]);
+  (0,primereact_hooks__WEBPACK_IMPORTED_MODULE_3__.useUnmountEffect)(function () {
+    disableDocumentSettings();
+    primereact_utils__WEBPACK_IMPORTED_MODULE_6__.DomHandler.removeInlineStyle(styleElement.current);
+    primereact_utils__WEBPACK_IMPORTED_MODULE_6__.ZIndexUtils.clear(maskRef.current);
+  });
+  react__WEBPACK_IMPORTED_MODULE_0__.useImperativeHandle(ref, function () {
+    return {
+      props: props,
+      resetPosition: resetPosition,
+      getElement: function getElement() {
+        return dialogRef.current;
+      },
+      getMask: function getMask() {
+        return maskRef.current;
+      },
+      getContent: function getContent() {
+        return contentRef.current;
+      },
+      getHeader: function getHeader() {
+        return headerRef.current;
+      },
+      getFooter: function getFooter() {
+        return footerRef.current;
+      },
+      getCloseButton: function getCloseButton() {
+        return closeRef.current;
+      }
+    };
+  });
+
+  var createCloseIcon = function createCloseIcon() {
+    if (props.closable) {
+      var ariaLabel = props.ariaCloseIconLabel || (0,primereact_api__WEBPACK_IMPORTED_MODULE_1__.localeOption)('close');
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+        ref: closeRef,
+        type: "button",
+        className: "p-dialog-header-icon p-dialog-header-close p-link",
+        "aria-label": ariaLabel,
+        onClick: onClose
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
+        className: "p-dialog-header-close-icon pi pi-times",
+        "aria-hidden": "true"
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(primereact_ripple__WEBPACK_IMPORTED_MODULE_5__.Ripple, null));
+    }
+
+    return null;
+  };
+
+  var createMaximizeIcon = function createMaximizeIcon() {
+    var iconClassName = (0,primereact_utils__WEBPACK_IMPORTED_MODULE_6__.classNames)('p-dialog-header-maximize-icon pi', {
+      'pi-window-maximize': !maximized,
+      'pi-window-minimize': maximized
+    });
+
+    if (props.maximizable) {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+        type: "button",
+        className: "p-dialog-header-icon p-dialog-header-maximize p-link",
+        onClick: toggleMaximize
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
+        className: iconClassName
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(primereact_ripple__WEBPACK_IMPORTED_MODULE_5__.Ripple, null));
+    }
+
+    return null;
+  };
+
+  var createHeader = function createHeader() {
+    if (props.showHeader) {
+      var closeIcon = createCloseIcon();
+      var maximizeIcon = createMaximizeIcon();
+      var icons = primereact_utils__WEBPACK_IMPORTED_MODULE_6__.ObjectUtils.getJSXElement(props.icons, props);
+      var header = primereact_utils__WEBPACK_IMPORTED_MODULE_6__.ObjectUtils.getJSXElement(props.header, props);
+      var headerId = idState + '_header';
+      var headerClassName = (0,primereact_utils__WEBPACK_IMPORTED_MODULE_6__.classNames)('p-dialog-header', props.headerClassName);
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+        ref: headerRef,
+        style: props.headerStyle,
+        className: headerClassName,
+        onMouseDown: onDragStart
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+        id: headerId,
+        className: "p-dialog-title"
+      }, header), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+        className: "p-dialog-header-icons"
+      }, icons, maximizeIcon, closeIcon));
+    }
+
+    return null;
+  };
+
+  var createContent = function createContent() {
+    var className = (0,primereact_utils__WEBPACK_IMPORTED_MODULE_6__.classNames)('p-dialog-content', props.contentClassName);
+    var contentId = idState + '_content';
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      id: contentId,
+      ref: contentRef,
+      className: className,
+      style: props.contentStyle
+    }, props.children);
+  };
+
+  var createFooter = function createFooter() {
+    var footer = primereact_utils__WEBPACK_IMPORTED_MODULE_6__.ObjectUtils.getJSXElement(props.footer, props);
+    return footer && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      ref: footerRef,
+      className: "p-dialog-footer"
+    }, footer);
+  };
+
+  var createResizer = function createResizer() {
+    if (props.resizable) {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
+        className: "p-resizable-handle",
+        style: {
+          zIndex: 90
+        },
+        onMouseDown: onResizeStart
+      });
+    }
+
+    return null;
+  };
+
+  var createElement = function createElement() {
+    var otherProps = primereact_utils__WEBPACK_IMPORTED_MODULE_6__.ObjectUtils.findDiffKeys(props, Dialog.defaultProps);
+    var className = (0,primereact_utils__WEBPACK_IMPORTED_MODULE_6__.classNames)('p-dialog p-component', props.className, {
+      'p-dialog-rtl': props.rtl,
+      'p-dialog-maximized': maximized
+    });
+    var maskClassName = (0,primereact_utils__WEBPACK_IMPORTED_MODULE_6__.classNames)('p-dialog-mask', getPositionClass(), {
+      'p-component-overlay p-component-overlay-enter': props.modal,
+      'p-dialog-visible': maskVisibleState,
+      'p-dialog-draggable': props.draggable,
+      'p-dialog-resizable': props.resizable
+    }, props.maskClassName);
+    var header = createHeader();
+    var content = createContent();
+    var footer = createFooter();
+    var resizer = createResizer();
+    var headerId = idState + '_header';
+    var contentId = idState + '_content';
+    var transitionTimeout = {
+      enter: props.position === 'center' ? 150 : 300,
+      exit: props.position === 'center' ? 150 : 300
+    };
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      ref: maskRef,
+      style: props.maskStyle,
+      className: maskClassName,
+      onClick: onMaskClick
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(primereact_csstransition__WEBPACK_IMPORTED_MODULE_2__.CSSTransition, {
+      nodeRef: dialogRef,
+      classNames: "p-dialog",
+      timeout: transitionTimeout,
+      "in": visibleState,
+      options: props.transitionOptions,
+      unmountOnExit: true,
+      onEnter: onEnter,
+      onEntered: onEntered,
+      onExiting: onExiting,
+      onExited: onExited
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", _extends({
+      ref: dialogRef,
+      id: idState,
+      className: className,
+      style: props.style,
+      onClick: props.onClick,
+      role: "dialog"
+    }, otherProps, {
+      "aria-labelledby": headerId,
+      "aria-describedby": contentId,
+      "aria-modal": props.modal
+    }), header, content, footer, resizer)));
+  };
+
+  var createDialog = function createDialog() {
+    var element = createElement();
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(primereact_portal__WEBPACK_IMPORTED_MODULE_4__.Portal, {
+      element: element,
+      appendTo: props.appendTo,
+      visible: true
+    });
+  };
+
+  return maskVisibleState && createDialog();
+});
+Dialog.displayName = 'Dialog';
+Dialog.defaultProps = {
+  __TYPE: 'Dialog',
+  appendTo: null,
+  ariaCloseIconLabel: null,
+  baseZIndex: 0,
+  blockScroll: false,
+  breakpoints: null,
+  className: null,
+  closable: true,
+  closeOnEscape: true,
+  contentClassName: null,
+  contentStyle: null,
+  dismissableMask: false,
+  draggable: true,
+  focusOnShow: true,
+  footer: null,
+  header: null,
+  headerClassName: null,
+  headerStyle: null,
+  icons: null,
+  id: null,
+  keepInViewport: true,
+  maskClassName: null,
+  maskStyle: null,
+  maximizable: false,
+  maximized: false,
+  minX: 0,
+  minY: 0,
+  modal: true,
+  onClick: null,
+  onDrag: null,
+  onDragEnd: null,
+  onDragStart: null,
+  onHide: null,
+  onMaskClick: null,
+  onMaximize: null,
+  onResize: null,
+  onResizeEnd: null,
+  onResizeStart: null,
+  onShow: null,
+  position: 'center',
+  resizable: true,
+  rtl: false,
+  showHeader: true,
+  style: null,
+  transitionOptions: null,
+  visible: false
 };
 
 

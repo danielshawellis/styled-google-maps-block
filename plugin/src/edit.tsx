@@ -15,6 +15,10 @@ import { Column } from 'primereact/column';
 import { Dropdown } from 'primereact/dropdown';
 import { Button } from 'primereact/button';
 
+import { Styler } from './styler';
+
+import { useState } from 'react';
+
 /**
  * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
  * Those files can contain any CSS code that gets applied to the editor.
@@ -32,9 +36,7 @@ import './editor.scss';
 const edit: React.ComponentType<BlockEditProps<MapSettings>> = function ({ attributes, setAttributes }) {
 	const blockProps = useBlockProps();
 	const iframeRef = useFocusableIframe() as React.LegacyRef<HTMLIFrameElement>;
-
-	const styleNameTemplate = (rowData) => <span>{ rowData.featureType ?? 'all' } - { rowData.elementType ?? 'all' }</span>;
-	const header = () => <Button label="Add New Style" icon="pi pi-plus" />
+	const [stylerIsOpen, setStylerIsOpen] = useState(false);
 
 	return (
 		<>
@@ -112,9 +114,8 @@ const edit: React.ComponentType<BlockEditProps<MapSettings>> = function ({ attri
 				<Panel>
 					<PanelBody title="Styles" initialOpen={ true }>
 						<PanelRow>
-								<DataTable value={ attributes.styles } header={ header }>
-									<Column header="Style Name" body={ styleNameTemplate }></Column>
-								</DataTable>
+								<Button label="Open Styler" onClick={ () => setStylerIsOpen(true) }/>
+								<Styler visible={ stylerIsOpen } onHide={ () => setStylerIsOpen(false) } attributes={ attributes } setAttributes={ setAttributes } />
 						</PanelRow>
 					</PanelBody>
 				</Panel>
