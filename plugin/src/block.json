@@ -111,7 +111,7 @@
 		},
 		"pano": {
 			"type": "string",
-			"default": "AF1QipMhTjMWAB9suCj36Qs-3D_aRhr47gK2cCQWElF0"
+			"default": ""
 		},
 		"heading": {
 			"type": "number",
