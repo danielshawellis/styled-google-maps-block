@@ -49,23 +49,26 @@ const edit = function (_ref) {
   } = _ref;
   const blockProps = (0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.useBlockProps)();
   const iframeRef = (0,_wordpress_compose__WEBPACK_IMPORTED_MODULE_3__.useFocusableIframe)();
-  const makeUrlGetter = (mapMode, acceptedParameters) => _attributes => Object.entries(_attributes).reduce((accumulator, _ref2) => {
-    let [key, value] = _ref2;
-    if (acceptedParameters.includes(key) && value !== '') accumulator.searchParams.append(key, typeof value === 'number' ? value.toString() : value);
-    return accumulator;
-  }, new URL(`https://www.google.com/maps/embed/v1/${mapMode}`)).href;
+  const constructUrl = (acceptedParameters, _attributes) => {
+    const url = new URL(`https://www.google.com/maps/embed/v1/${_attributes.mapmode}`);
+    acceptedParameters.forEach(parameter => {
+      const value = _attributes[parameter];
+      if (value !== '') url.searchParams.append(parameter, typeof value === 'number' ? value.toString() : value);
+    });
+    return url.href;
+  };
   const getMapUrl = _attributes => {
-    switch (attributes.mapmode) {
+    switch (_attributes.mapmode) {
       case 'place':
-        return makeUrlGetter('place', ['key', 'q', 'zoom', 'maptype', 'language', 'region'])(attributes);
+        return constructUrl(['key', 'q', 'zoom', 'maptype', 'language', 'region'], _attributes);
       case 'view':
-        return makeUrlGetter('view', ['key', 'center', 'zoom', 'maptype', 'language', 'region'])(attributes);
+        return constructUrl(['key', 'center', 'zoom', 'maptype', 'language', 'region'], _attributes);
       case 'directions':
-        return makeUrlGetter('directions', ['key', 'origin', 'destination', 'mode', 'units', 'zoom', 'maptype', 'language', 'region'])(attributes);
+        return constructUrl(['key', 'origin', 'destination', 'mode', 'units', 'zoom', 'maptype', 'language', 'region'], _attributes);
       case 'streetview':
-        return makeUrlGetter('streetview', ['key', 'location', 'pano', 'heading', 'pitch', 'fov', 'language', 'region'])(attributes);
+        return constructUrl(['key', 'location', 'pano', 'heading', 'pitch', 'fov', 'language', 'region'], _attributes);
       case 'search':
-        return makeUrlGetter('search', ['key', 'q', 'zoom', 'maptype', 'language', 'region'])(attributes);
+        return constructUrl(['key', 'q', 'zoom', 'maptype', 'language', 'region'], _attributes);
     }
     ;
   };

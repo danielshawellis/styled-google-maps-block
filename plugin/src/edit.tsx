@@ -28,18 +28,22 @@ const edit: React.ComponentType<BlockEditProps<MapSettings>> = function ({ attri
 	const blockProps = useBlockProps();
 	const iframeRef = useFocusableIframe() as React.LegacyRef<HTMLIFrameElement>;
 
-	const makeUrlGetter = (mapMode: MapSettings['mapmode'], acceptedParameters: (keyof Omit<MapSettings, 'mapmode' | 'height'>)[]) => (_attributes: typeof attributes) => Object.entries(_attributes).reduce((accumulator, [key, value]) => {
-		if (acceptedParameters.includes(key) && value !== '') accumulator.searchParams.append(key, typeof value === 'number' ? value.toString() : value);
-		return accumulator;
-	}, new URL(`https://www.google.com/maps/embed/v1/${ mapMode }`)).href;
+	const constructUrl = (acceptedParameters: (keyof Omit<MapSettings, 'mapmode' | 'height'>)[], _attributes: typeof attributes): string => {
+		const url = new URL(`https://www.google.com/maps/embed/v1/${ _attributes.mapmode }`);
+		acceptedParameters.forEach(parameter => {
+			const value = _attributes[parameter];
+			if (value !== '') url.searchParams.append(parameter, typeof value === 'number' ? value.toString() : value)
+		});
+		return url.href;
+	};
 
 	const getMapUrl = (_attributes: typeof attributes): string => {
-		switch (attributes.mapmode) {
-			case 'place': return makeUrlGetter('place', ['key', 'q', 'zoom', 'maptype', 'language', 'region'])(attributes);
-			case 'view': return makeUrlGetter('view', ['key', 'center', 'zoom', 'maptype', 'language', 'region'])(attributes);
-			case 'directions': return makeUrlGetter('directions', ['key', 'origin', 'destination', 'mode', 'units', 'zoom', 'maptype', 'language', 'region'])(attributes);
-			case 'streetview': return makeUrlGetter('streetview', ['key', 'location', 'pano', 'heading', 'pitch', 'fov', 'language', 'region'])(attributes);
-			case 'search': return makeUrlGetter('search', ['key', 'q', 'zoom', 'maptype', 'language', 'region'])(attributes);
+		switch (_attributes.mapmode) {
+			case 'place': return constructUrl(['key', 'q', 'zoom', 'maptype', 'language', 'region'], _attributes);
+			case 'view': return constructUrl(['key', 'center', 'zoom', 'maptype', 'language', 'region'], _attributes);
+			case 'directions': return constructUrl(['key', 'origin', 'destination', 'mode', 'units', 'zoom', 'maptype', 'language', 'region'], _attributes);
+			case 'streetview': return constructUrl(['key', 'location', 'pano', 'heading', 'pitch', 'fov', 'language', 'region'], _attributes);
+			case 'search': return constructUrl(['key', 'q', 'zoom', 'maptype', 'language', 'region'], _attributes);
 		};
 	}; 
 
