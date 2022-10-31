@@ -58,9 +58,18 @@ const edit = function (_ref) {
   const blockProps = (0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.useBlockProps)();
   const iframeRef = (0,_wordpress_compose__WEBPACK_IMPORTED_MODULE_3__.useFocusableIframe)();
   const [stylerIsOpen, setStylerIsOpen] = (0,react__WEBPACK_IMPORTED_MODULE_6__.useState)(false);
+  const getStylesQueryString = styles => styles.reduce((accumulator, _ref2) => {
+    let {
+      featureType,
+      elementType,
+      stylers
+    } = _ref2;
+    const stringComponents = [...[featureType && `feature:${featureType}`], ...[elementType && `element:${elementType}`], ...[stylers.visibility && `visibility:${stylers.visibility}`], ...[stylers.color && `color:${stylers.color}`], ...[stylers.weight && `weight:${stylers.weight}`]];
+    return `${accumulator}&style=${stringComponents.join('|')}`;
+  }, '');
   return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", blockProps, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("iframe", {
     ref: iframeRef,
-    src: `https://www.google.com/maps/embed/v1/${attributes.mapmode}?q=${attributes.q}&maptype=${attributes.maptype}&zoom=${attributes.zoom}&key=${attributes.key}&language=${attributes.language}&region=${attributes.region}`,
+    src: `https://www.google.com/maps/embed/v1/${attributes.mapmode}?q=${attributes.q}&maptype=${attributes.maptype}&zoom=${attributes.zoom}&key=${attributes.key}&language=${attributes.language}&region=${attributes.region}${getStylesQueryString(attributes.styles)}`,
     width: "100%",
     height: attributes.height,
     style: {
@@ -142,7 +151,12 @@ const edit = function (_ref) {
   })))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Panel, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {
     title: "Styles",
     initialOpen: true
-  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelRow, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(primereact_button__WEBPACK_IMPORTED_MODULE_4__.Button, {
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelRow, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "p-fluid",
+    style: {
+      width: '100%'
+    }
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(primereact_button__WEBPACK_IMPORTED_MODULE_4__.Button, {
     label: "Open Styler",
     onClick: () => setStylerIsOpen(true)
   }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_styler__WEBPACK_IMPORTED_MODULE_5__.Styler, {
@@ -150,7 +164,7 @@ const edit = function (_ref) {
     onHide: () => setStylerIsOpen(false),
     attributes: attributes,
     setAttributes: setAttributes
-  }))))));
+  })))))));
 };
 /* harmony default export */ __webpack_exports__["default"] = (edit);
 
@@ -280,13 +294,90 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var primereact_datatable__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! primereact/datatable */ "./node_modules/primereact/datatable/datatable.esm.js");
 /* harmony import */ var primereact_column__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! primereact/column */ "./node_modules/primereact/column/column.esm.js");
-/* harmony import */ var primereact_button__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! primereact/button */ "./node_modules/primereact/button/button.esm.js");
-/* harmony import */ var primereact_dialog__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! primereact/dialog */ "./node_modules/primereact/dialog/dialog.esm.js");
+/* harmony import */ var primereact_dropdown__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! primereact/dropdown */ "./node_modules/primereact/dropdown/dropdown.esm.js");
+/* harmony import */ var primereact_button__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! primereact/button */ "./node_modules/primereact/button/button.esm.js");
+/* harmony import */ var primereact_dialog__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! primereact/dialog */ "./node_modules/primereact/dialog/dialog.esm.js");
+/* harmony import */ var primereact_treeselect__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! primereact/treeselect */ "./node_modules/primereact/treeselect/treeselect.esm.js");
+/* harmony import */ var primereact_divider__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! primereact/divider */ "./node_modules/primereact/divider/divider.esm.js");
+/* harmony import */ var primereact_colorpicker__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! primereact/colorpicker */ "./node_modules/primereact/colorpicker/colorpicker.esm.js");
+/* harmony import */ var primereact_inputnumber__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! primereact/inputnumber */ "./node_modules/primereact/inputnumber/inputnumber.esm.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_10__);
 
 
 
 
 
+
+
+
+
+
+
+const featureNodes = [{
+  "key": "all",
+  "label": "All"
+}, {
+  "key": "administrative",
+  "label": "Administrative",
+  "children": [{
+    "key": "administrative.country",
+    "label": "Country"
+  }, {
+    "key": "administrative.land_parcel",
+    "label": "Land Parcel"
+  }, {
+    "key": "administrative.locality",
+    "label": "Locality"
+  }, {
+    "key": "administrative.neighborhood",
+    "label": "Neighborhood"
+  }, {
+    "key": "administrative.province",
+    "label": "Province"
+  }]
+}];
+const elementNodes = [{
+  key: "all",
+  label: "All"
+}, {
+  key: "geometry",
+  label: "Geometry",
+  children: [{
+    key: "geometry.fill",
+    label: "Geometry Fill"
+  }, {
+    key: "geometry.stroke",
+    label: "Geometry Stroke"
+  }]
+}, {
+  key: "labels",
+  label: "Labels",
+  children: [{
+    key: "labels.icon",
+    label: "Label Icons"
+  }, {
+    key: "labels.text",
+    label: "Label Text",
+    children: [{
+      key: "labels.text.fill",
+      label: "Label Text Fill"
+    }, {
+      key: "labels.text.stroke",
+      label: "Label Text Stroke"
+    }]
+  }]
+}];
+const visibilityOptions = [{
+  label: 'Hidden',
+  value: 'hidden'
+}, {
+  label: 'Simplified',
+  value: 'simplified'
+}, {
+  label: 'Shown',
+  value: 'shown'
+}];
 const Styler = _ref => {
   let {
     visible,
@@ -294,27 +385,160 @@ const Styler = _ref => {
     attributes,
     setAttributes
   } = _ref;
-  const styleNameTemplate = rowData => {
-    var _rowData$featureType, _rowData$elementType;
-    return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", null, (_rowData$featureType = rowData.featureType) !== null && _rowData$featureType !== void 0 ? _rowData$featureType : 'all', " - ", (_rowData$elementType = rowData.elementType) !== null && _rowData$elementType !== void 0 ? _rowData$elementType : 'all');
-  };
+  // Set up component state
+  const [stylerIsOpen, setStylerIsOpen] = (0,react__WEBPACK_IMPORTED_MODULE_10__.useState)(false);
+  const [featureType, setFeatureType] = (0,react__WEBPACK_IMPORTED_MODULE_10__.useState)("all");
+  const [elementType, setElementType] = (0,react__WEBPACK_IMPORTED_MODULE_10__.useState)("all");
+  const [visibility, setVisibility] = (0,react__WEBPACK_IMPORTED_MODULE_10__.useState)(null);
+  const [color, setColor] = (0,react__WEBPACK_IMPORTED_MODULE_10__.useState)(null);
+  const [weight, setWeight] = (0,react__WEBPACK_IMPORTED_MODULE_10__.useState)(null);
+  const [saturation, setSaturation] = (0,react__WEBPACK_IMPORTED_MODULE_10__.useState)(null);
+  const [lightness, setLightness] = (0,react__WEBPACK_IMPORTED_MODULE_10__.useState)(null);
+
+  // Define inner templates
   const header = () => (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
-    className: "p-d-flex p-jc-between"
-  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("strong", null, "Styles"), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(primereact_button__WEBPACK_IMPORTED_MODULE_3__.Button, {
+    className: "p-d-flex p-jc-between p-ai-center"
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("strong", {
+    className: "p-mr-3"
+  }, "Styles"), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(primereact_button__WEBPACK_IMPORTED_MODULE_4__.Button, {
     label: "Add New Style",
-    icon: "pi pi-plus"
+    icon: "pi pi-plus",
+    onClick: () => setStylerIsOpen(true)
   }));
-  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(primereact_dialog__WEBPACK_IMPORTED_MODULE_4__.Dialog, {
+  const fetureTypeTemplate = rowData => {
+    var _rowData$featureType;
+    return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", null, (_rowData$featureType = rowData.featureType) !== null && _rowData$featureType !== void 0 ? _rowData$featureType : 'all');
+  };
+  const elementTypeTemplate = rowData => {
+    var _rowData$elementType;
+    return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", null, (_rowData$elementType = rowData.elementType) !== null && _rowData$elementType !== void 0 ? _rowData$elementType : 'all');
+  };
+  const buttonsTemplate = rowData => (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(primereact_button__WEBPACK_IMPORTED_MODULE_4__.Button, {
+    label: "Edit",
+    icon: "pi pi-pencil",
+    className: "p-mr-2"
+  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(primereact_button__WEBPACK_IMPORTED_MODULE_4__.Button, {
+    label: "Delete",
+    icon: "pi pi-trash",
+    className: "p-button-danger"
+  }));
+
+  // Define the save funcation
+  const save = () => {
+    const _featureType = featureType;
+    const _elementType = elementType;
+    if (!featureType || !elementType) return;
+    setAttributes({
+      styles: [...attributes.styles, {
+        featureType: _featureType,
+        elementType: _elementType,
+        stylers: {
+          ...(visibility && {
+            visibility
+          })
+        }
+      }]
+    });
+    console.log(attributes);
+  };
+  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(primereact_dialog__WEBPACK_IMPORTED_MODULE_5__.Dialog, {
     visible: visible,
     onHide: onHide,
     maximizable: true
-  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(primereact_datatable__WEBPACK_IMPORTED_MODULE_1__.DataTable, {
+  }, !stylerIsOpen && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(primereact_datatable__WEBPACK_IMPORTED_MODULE_1__.DataTable, {
     value: attributes.styles,
-    header: header
+    header: header,
+    emptyMessage: "No styles are currently set"
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(primereact_column__WEBPACK_IMPORTED_MODULE_2__.Column, {
-    header: "Style Name",
-    body: styleNameTemplate
-  })));
+    header: "Feature Type",
+    body: fetureTypeTemplate
+  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(primereact_column__WEBPACK_IMPORTED_MODULE_2__.Column, {
+    header: "Element Type",
+    body: elementTypeTemplate
+  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(primereact_column__WEBPACK_IMPORTED_MODULE_2__.Column, {
+    body: buttonsTemplate
+  })), stylerIsOpen && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "p-fluid p-formgrid p-grid"
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "p-field p-col"
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("label", {
+    htmlFor: "feature-type-select"
+  }, "Feture Type"), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(primereact_treeselect__WEBPACK_IMPORTED_MODULE_6__.TreeSelect, {
+    value: featureType,
+    options: featureNodes,
+    filter: true,
+    onChange: _ref2 => {
+      let {
+        value
+      } = _ref2;
+      return setFeatureType(value);
+    },
+    inputId: "feature-type-select"
+  })), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "p-field p-col"
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("label", {
+    htmlFor: "element-type-select"
+  }, "Element Type"), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(primereact_treeselect__WEBPACK_IMPORTED_MODULE_6__.TreeSelect, {
+    value: elementType,
+    options: elementNodes,
+    filter: true,
+    onChange: _ref3 => {
+      let {
+        value
+      } = _ref3;
+      return setElementType(value);
+    },
+    inputId: "element-type-select"
+  }))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(primereact_divider__WEBPACK_IMPORTED_MODULE_7__.Divider, {
+    align: "center"
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", null, "Styles")), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "p-fluid p-formgrid p-grid"
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "p-field p-col"
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("label", {
+    htmlFor: "visibility-dropdown"
+  }, "Visibility"), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(primereact_dropdown__WEBPACK_IMPORTED_MODULE_3__.Dropdown, {
+    value: visibility,
+    options: visibilityOptions,
+    onChange: _ref4 => {
+      let {
+        value
+      } = _ref4;
+      return setVisibility(value);
+    },
+    placeholder: "Inherit Visibility",
+    showClear: true,
+    inputId: "visibility-dropdown"
+  })), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "p-field p-col"
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("label", {
+    htmlFor: "color-input"
+  }, "Color"), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(primereact_colorpicker__WEBPACK_IMPORTED_MODULE_8__.ColorPicker, {
+    value: color,
+    onChange: _ref5 => {
+      let {
+        value
+      } = _ref5;
+      return setColor(value);
+    },
+    inputId: "color-input"
+  })), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "p-field p-col"
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("label", {
+    htmlFor: "weight-input"
+  }, "Weight"), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(primereact_inputnumber__WEBPACK_IMPORTED_MODULE_9__.InputNumber, {
+    value: weight,
+    onChange: _ref6 => {
+      let {
+        value
+      } = _ref6;
+      return setWeight(value);
+    },
+    id: "weight-input"
+  }))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(primereact_button__WEBPACK_IMPORTED_MODULE_4__.Button, {
+    label: "Save",
+    onClick: save
+  }))));
 };
 
 /***/ }),
@@ -1466,6 +1690,744 @@ Button.defaultProps = {
   loading: false,
   loadingIcon: 'pi pi-spinner pi-spin',
   visible: true
+};
+
+
+
+
+/***/ }),
+
+/***/ "./node_modules/primereact/colorpicker/colorpicker.esm.js":
+/*!****************************************************************!*\
+  !*** ./node_modules/primereact/colorpicker/colorpicker.esm.js ***!
+  \****************************************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "ColorPicker": function() { return /* binding */ ColorPicker; }
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var primereact_api__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! primereact/api */ "./node_modules/primereact/api/api.esm.js");
+/* harmony import */ var primereact_hooks__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! primereact/hooks */ "./node_modules/primereact/hooks/hooks.esm.js");
+/* harmony import */ var primereact_overlayservice__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! primereact/overlayservice */ "./node_modules/primereact/overlayservice/overlayservice.esm.js");
+/* harmony import */ var primereact_tooltip__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! primereact/tooltip */ "./node_modules/primereact/tooltip/tooltip.esm.js");
+/* harmony import */ var primereact_utils__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! primereact/utils */ "./node_modules/primereact/utils/utils.esm.js");
+/* harmony import */ var primereact_csstransition__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! primereact/csstransition */ "./node_modules/primereact/csstransition/csstransition.esm.js");
+/* harmony import */ var primereact_portal__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! primereact/portal */ "./node_modules/primereact/portal/portal.esm.js");
+
+
+
+
+
+
+
+
+
+function _extends() {
+  _extends = Object.assign ? Object.assign.bind() : function (target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i];
+
+      for (var key in source) {
+        if (Object.prototype.hasOwnProperty.call(source, key)) {
+          target[key] = source[key];
+        }
+      }
+    }
+
+    return target;
+  };
+  return _extends.apply(this, arguments);
+}
+
+function _arrayWithHoles(arr) {
+  if (Array.isArray(arr)) return arr;
+}
+
+function _iterableToArrayLimit(arr, i) {
+  var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"];
+
+  if (_i == null) return;
+  var _arr = [];
+  var _n = true;
+  var _d = false;
+
+  var _s, _e;
+
+  try {
+    for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) {
+      _arr.push(_s.value);
+
+      if (i && _arr.length === i) break;
+    }
+  } catch (err) {
+    _d = true;
+    _e = err;
+  } finally {
+    try {
+      if (!_n && _i["return"] != null) _i["return"]();
+    } finally {
+      if (_d) throw _e;
+    }
+  }
+
+  return _arr;
+}
+
+function _arrayLikeToArray(arr, len) {
+  if (len == null || len > arr.length) len = arr.length;
+
+  for (var i = 0, arr2 = new Array(len); i < len; i++) {
+    arr2[i] = arr[i];
+  }
+
+  return arr2;
+}
+
+function _unsupportedIterableToArray(o, minLen) {
+  if (!o) return;
+  if (typeof o === "string") return _arrayLikeToArray(o, minLen);
+  var n = Object.prototype.toString.call(o).slice(8, -1);
+  if (n === "Object" && o.constructor) n = o.constructor.name;
+  if (n === "Map" || n === "Set") return Array.from(o);
+  if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
+}
+
+function _nonIterableRest() {
+  throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+}
+
+function _slicedToArray(arr, i) {
+  return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
+}
+
+var ColorPickerPanel = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.forwardRef(function (props, ref) {
+  var createElement = function createElement() {
+    var className = (0,primereact_utils__WEBPACK_IMPORTED_MODULE_5__.classNames)('p-colorpicker-panel', {
+      'p-colorpicker-overlay-panel': !props.inline,
+      'p-disabled': props.disabled
+    });
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(primereact_csstransition__WEBPACK_IMPORTED_MODULE_6__.CSSTransition, {
+      nodeRef: ref,
+      classNames: "p-connected-overlay",
+      "in": props["in"],
+      timeout: {
+        enter: 120,
+        exit: 100
+      },
+      options: props.transitionOptions,
+      unmountOnExit: true,
+      onEnter: props.onEnter,
+      onEntered: props.onEntered,
+      onExit: props.onExit,
+      onExited: props.onExited
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      ref: ref,
+      className: className,
+      onClick: props.onClick
+    }, props.children));
+  };
+
+  var element = createElement();
+  return props.inline ? element : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(primereact_portal__WEBPACK_IMPORTED_MODULE_7__.Portal, {
+    element: element,
+    appendTo: props.appendTo
+  });
+});
+ColorPickerPanel.displayName = 'ColorPickerPanel';
+
+var ColorPicker = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.memo( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.forwardRef(function (props, ref) {
+  var _React$useState = react__WEBPACK_IMPORTED_MODULE_0__.useState(false),
+      _React$useState2 = _slicedToArray(_React$useState, 2),
+      overlayVisibleState = _React$useState2[0],
+      setOverlayVisibleState = _React$useState2[1];
+
+  var elementRef = react__WEBPACK_IMPORTED_MODULE_0__.useRef(null);
+  var overlayRef = react__WEBPACK_IMPORTED_MODULE_0__.useRef(null);
+  var inputRef = react__WEBPACK_IMPORTED_MODULE_0__.useRef(props.inputRef);
+  var colorSelectorRef = react__WEBPACK_IMPORTED_MODULE_0__.useRef(null);
+  var colorHandleRef = react__WEBPACK_IMPORTED_MODULE_0__.useRef(null);
+  var hueHandleRef = react__WEBPACK_IMPORTED_MODULE_0__.useRef(null);
+  var hueViewRef = react__WEBPACK_IMPORTED_MODULE_0__.useRef(null);
+  var hueDragging = react__WEBPACK_IMPORTED_MODULE_0__.useRef(false);
+  var hsbValue = react__WEBPACK_IMPORTED_MODULE_0__.useRef(null);
+  var colorDragging = react__WEBPACK_IMPORTED_MODULE_0__.useRef(false);
+
+  var _useOverlayListener = (0,primereact_hooks__WEBPACK_IMPORTED_MODULE_2__.useOverlayListener)({
+    target: elementRef,
+    overlay: overlayRef,
+    listener: function listener(event, _ref) {
+      var valid = _ref.valid;
+      valid && hide();
+    },
+    when: overlayVisibleState
+  }),
+      _useOverlayListener2 = _slicedToArray(_useOverlayListener, 2),
+      bindOverlayListener = _useOverlayListener2[0],
+      unbindOverlayListener = _useOverlayListener2[1];
+
+  var _useEventListener = (0,primereact_hooks__WEBPACK_IMPORTED_MODULE_2__.useEventListener)({
+    type: 'mousemove',
+    listener: function listener(event) {
+      colorDragging.current && pickColor(event);
+      hueDragging.current && pickHue(event);
+    }
+  }),
+      _useEventListener2 = _slicedToArray(_useEventListener, 2),
+      bindDocumentMouseMoveListener = _useEventListener2[0],
+      unbindDocumentMouseMoveListener = _useEventListener2[1];
+
+  var _useEventListener3 = (0,primereact_hooks__WEBPACK_IMPORTED_MODULE_2__.useEventListener)({
+    type: 'mouseup',
+    listener: function listener() {
+      colorDragging.current = hueDragging.current = false;
+      primereact_utils__WEBPACK_IMPORTED_MODULE_5__.DomHandler.removeClass(elementRef.current, 'p-colorpicker-dragging');
+      unbindDocumentMouseMoveListener();
+      unbindDocumentMouseUpListener();
+    }
+  }),
+      _useEventListener4 = _slicedToArray(_useEventListener3, 2),
+      bindDocumentMouseUpListener = _useEventListener4[0],
+      unbindDocumentMouseUpListener = _useEventListener4[1];
+
+  var onPanelClick = function onPanelClick(event) {
+    if (!props.inline) {
+      primereact_overlayservice__WEBPACK_IMPORTED_MODULE_3__.OverlayService.emit('overlay-click', {
+        originalEvent: event,
+        target: elementRef.current
+      });
+    }
+  };
+
+  var onHueMousedown = function onHueMousedown(event) {
+    if (props.disabled) {
+      return;
+    }
+
+    bindDragListeners();
+    onHueDragStart(event);
+  };
+
+  var onHueDragStart = function onHueDragStart(event) {
+    if (props.disabled) {
+      return;
+    }
+
+    hueDragging.current = true;
+    pickHue(event);
+    primereact_utils__WEBPACK_IMPORTED_MODULE_5__.DomHandler.addClass(elementRef.current, 'p-colorpicker-dragging');
+  };
+
+  var pickHue = function pickHue(event) {
+    var top = hueViewRef.current.getBoundingClientRect().top + (window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0);
+    hsbValue.current = validateHSB({
+      h: Math.floor(360 * (150 - Math.max(0, Math.min(150, (event.pageY || event.changedTouches[0].pageY) - top))) / 150),
+      s: 100,
+      b: 100
+    });
+    updateColorSelector();
+    updateHue();
+    updateModel();
+  };
+
+  var onColorMousedown = function onColorMousedown(event) {
+    if (props.disabled) {
+      return;
+    }
+
+    bindDragListeners();
+    onColorDragStart(event);
+  };
+
+  var onColorDragStart = function onColorDragStart(event) {
+    if (props.disabled) {
+      return;
+    }
+
+    colorDragging.current = true;
+    pickColor(event);
+    primereact_utils__WEBPACK_IMPORTED_MODULE_5__.DomHandler.addClass(elementRef.current, 'p-colorpicker-dragging');
+    event.preventDefault();
+  };
+
+  var onDrag = function onDrag(event) {
+    if (colorDragging.current) {
+      pickColor(event);
+      event.preventDefault();
+    }
+
+    if (hueDragging.current) {
+      pickHue(event);
+      event.preventDefault();
+    }
+  };
+
+  var onDragEnd = function onDragEnd() {
+    colorDragging.current = false;
+    hueDragging.current = false;
+    primereact_utils__WEBPACK_IMPORTED_MODULE_5__.DomHandler.removeClass(elementRef.current, 'p-colorpicker-dragging');
+    unbindDragListeners();
+  };
+
+  var bindDragListeners = function bindDragListeners() {
+    bindDocumentMouseMoveListener();
+    bindDocumentMouseUpListener();
+  };
+
+  var unbindDragListeners = function unbindDragListeners() {
+    unbindDocumentMouseMoveListener();
+    unbindDocumentMouseUpListener();
+  };
+
+  var pickColor = function pickColor(event) {
+    var rect = colorSelectorRef.current.getBoundingClientRect();
+    var top = rect.top + (window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0);
+    var left = rect.left + document.body.scrollLeft;
+    var saturation = Math.floor(100 * Math.max(0, Math.min(150, (event.pageX || event.changedTouches[0].pageX) - left)) / 150);
+    var brightness = Math.floor(100 * (150 - Math.max(0, Math.min(150, (event.pageY || event.changedTouches[0].pageY) - top))) / 150);
+    hsbValue.current = validateHSB({
+      h: hsbValue.current.h,
+      s: saturation,
+      b: brightness
+    });
+    updateColorHandle();
+    updateInput();
+    updateModel();
+  };
+
+  var updateModel = function updateModel() {
+    switch (props.format) {
+      case 'hex':
+        onChange(HSBtoHEX(hsbValue.current));
+        break;
+
+      case 'rgb':
+        onChange(HSBtoRGB(hsbValue.current));
+        break;
+
+      case 'hsb':
+        onChange(hsbValue.current);
+        break;
+    }
+  };
+
+  var toHSB = function toHSB(value) {
+    var hsb;
+
+    if (value) {
+      switch (props.format) {
+        case 'hex':
+          hsb = HEXtoHSB(value);
+          break;
+
+        case 'rgb':
+          hsb = RGBtoHSB(value);
+          break;
+
+        case 'hsb':
+          hsb = value;
+          break;
+      }
+    } else {
+      hsb = HEXtoHSB(props.defaultColor);
+    }
+
+    return hsb;
+  };
+
+  var updateHSBValue = function updateHSBValue(value) {
+    hsbValue.current = toHSB(value);
+  };
+
+  var onChange = function onChange(value) {
+    if (props.onChange) {
+      props.onChange({
+        value: value,
+        stopPropagation: function stopPropagation() {},
+        preventDefault: function preventDefault() {},
+        target: {
+          name: props.name,
+          id: props.id,
+          value: value
+        }
+      });
+    }
+  };
+
+  var updateColorSelector = function updateColorSelector() {
+    if (colorSelectorRef.current) {
+      var newHsbValue = validateHSB({
+        h: hsbValue.current.h,
+        s: 100,
+        b: 100
+      });
+      colorSelectorRef.current.style.backgroundColor = '#' + HSBtoHEX(newHsbValue);
+    }
+  };
+
+  var updateColorHandle = function updateColorHandle() {
+    if (colorHandleRef.current) {
+      colorHandleRef.current.style.left = Math.floor(150 * hsbValue.current.s / 100) + 'px';
+      colorHandleRef.current.style.top = Math.floor(150 * (100 - hsbValue.current.b) / 100) + 'px';
+    }
+  };
+
+  var updateHue = function updateHue() {
+    if (hueHandleRef.current) {
+      hueHandleRef.current.style.top = Math.floor(150 - 150 * hsbValue.current.h / 360) + 'px';
+    }
+  };
+
+  var updateInput = function updateInput() {
+    if (inputRef.current) {
+      inputRef.current.style.backgroundColor = '#' + HSBtoHEX(hsbValue.current);
+    }
+  };
+
+  var show = function show() {
+    setOverlayVisibleState(true);
+  };
+
+  var hide = function hide() {
+    setOverlayVisibleState(false);
+  };
+
+  var onOverlayEnter = function onOverlayEnter() {
+    primereact_utils__WEBPACK_IMPORTED_MODULE_5__.ZIndexUtils.set('overlay', overlayRef.current, primereact_api__WEBPACK_IMPORTED_MODULE_1__["default"].autoZIndex, primereact_api__WEBPACK_IMPORTED_MODULE_1__["default"].zIndex.overlay);
+    alignOverlay();
+  };
+
+  var onOverlayEntered = function onOverlayEntered() {
+    bindOverlayListener();
+    props.onShow && props.onShow();
+  };
+
+  var onOverlayExit = function onOverlayExit() {
+    unbindOverlayListener();
+  };
+
+  var onOverlayExited = function onOverlayExited() {
+    primereact_utils__WEBPACK_IMPORTED_MODULE_5__.ZIndexUtils.clear(overlayRef.current);
+    props.onHide && props.onHide();
+  };
+
+  var onInputClick = function onInputClick() {
+    togglePanel();
+  };
+
+  var togglePanel = function togglePanel() {
+    overlayVisibleState ? hide() : show();
+  };
+
+  var onInputKeydown = function onInputKeydown(event) {
+    switch (event.which) {
+      //space
+      case 32:
+        togglePanel();
+        event.preventDefault();
+        break;
+      //escape and tab
+
+      case 27:
+      case 9:
+        hide();
+        break;
+    }
+  };
+
+  var validateHSB = function validateHSB(hsb) {
+    return {
+      h: Math.min(360, Math.max(0, hsb.h)),
+      s: Math.min(100, Math.max(0, hsb.s)),
+      b: Math.min(100, Math.max(0, hsb.b))
+    };
+  };
+
+  var HEXtoRGB = function HEXtoRGB(hex) {
+    var hexValue = parseInt(hex.indexOf('#') > -1 ? hex.substring(1) : hex, 16);
+    return {
+      r: hexValue >> 16,
+      g: (hexValue & 0x00ff00) >> 8,
+      b: hexValue & 0x0000ff
+    };
+  };
+
+  var HEXtoHSB = function HEXtoHSB(hex) {
+    return RGBtoHSB(HEXtoRGB(hex));
+  };
+
+  var RGBtoHSB = function RGBtoHSB(rgb) {
+    var hsb = {
+      h: 0,
+      s: 0,
+      b: 0
+    };
+    var min = Math.min(rgb.r, rgb.g, rgb.b);
+    var max = Math.max(rgb.r, rgb.g, rgb.b);
+    var delta = max - min;
+    hsb.b = max;
+    hsb.s = max !== 0 ? 255 * delta / max : 0;
+
+    if (hsb.s !== 0) {
+      if (rgb.r === max) {
+        hsb.h = (rgb.g - rgb.b) / delta;
+      } else if (rgb.g === max) {
+        hsb.h = 2 + (rgb.b - rgb.r) / delta;
+      } else {
+        hsb.h = 4 + (rgb.r - rgb.g) / delta;
+      }
+    } else {
+      hsb.h = -1;
+    }
+
+    hsb.h *= 60;
+
+    if (hsb.h < 0) {
+      hsb.h += 360;
+    }
+
+    hsb.s *= 100 / 255;
+    hsb.b *= 100 / 255;
+    return hsb;
+  };
+
+  var HSBtoRGB = function HSBtoRGB(hsb) {
+    var rgb = {
+      r: null,
+      g: null,
+      b: null
+    };
+    var h = Math.round(hsb.h);
+    var s = Math.round(hsb.s * 255 / 100);
+    var v = Math.round(hsb.b * 255 / 100);
+
+    if (s === 0) {
+      rgb = {
+        r: v,
+        g: v,
+        b: v
+      };
+    } else {
+      var t1 = v;
+      var t2 = (255 - s) * v / 255;
+      var t3 = (t1 - t2) * (h % 60) / 60;
+      if (h === 360) h = 0;
+
+      if (h < 60) {
+        rgb.r = t1;
+        rgb.b = t2;
+        rgb.g = t2 + t3;
+      } else if (h < 120) {
+        rgb.g = t1;
+        rgb.b = t2;
+        rgb.r = t1 - t3;
+      } else if (h < 180) {
+        rgb.g = t1;
+        rgb.r = t2;
+        rgb.b = t2 + t3;
+      } else if (h < 240) {
+        rgb.b = t1;
+        rgb.r = t2;
+        rgb.g = t1 - t3;
+      } else if (h < 300) {
+        rgb.b = t1;
+        rgb.g = t2;
+        rgb.r = t2 + t3;
+      } else if (h < 360) {
+        rgb.r = t1;
+        rgb.g = t2;
+        rgb.b = t1 - t3;
+      } else {
+        rgb.r = 0;
+        rgb.g = 0;
+        rgb.b = 0;
+      }
+    }
+
+    return {
+      r: Math.round(rgb.r),
+      g: Math.round(rgb.g),
+      b: Math.round(rgb.b)
+    };
+  };
+
+  var RGBtoHEX = function RGBtoHEX(rgb) {
+    var hex = [rgb.r.toString(16), rgb.g.toString(16), rgb.b.toString(16)];
+
+    for (var key in hex) {
+      if (hex[key].length === 1) {
+        hex[key] = '0' + hex[key];
+      }
+    }
+
+    return hex.join('');
+  };
+
+  var HSBtoHEX = function HSBtoHEX(hsb) {
+    return RGBtoHEX(HSBtoRGB(hsb));
+  };
+
+  var updateUI = function updateUI() {
+    updateHue();
+    updateColorHandle();
+    updateInput();
+    updateColorSelector();
+  };
+
+  var alignOverlay = function alignOverlay() {
+    if (inputRef.current) {
+      primereact_utils__WEBPACK_IMPORTED_MODULE_5__.DomHandler.alignOverlay(overlayRef.current, inputRef.current.parentElement, props.appendTo || primereact_api__WEBPACK_IMPORTED_MODULE_1__["default"].appendTo);
+    }
+  };
+
+  react__WEBPACK_IMPORTED_MODULE_0__.useImperativeHandle(ref, function () {
+    return {
+      props: props,
+      show: show,
+      hide: hide,
+      getElement: function getElement() {
+        return elementRef.current;
+      },
+      getOverlay: function getOverlay() {
+        return overlayRef.current;
+      },
+      getInput: function getInput() {
+        return inputRef.current;
+      }
+    };
+  });
+  react__WEBPACK_IMPORTED_MODULE_0__.useEffect(function () {
+    primereact_utils__WEBPACK_IMPORTED_MODULE_5__.ObjectUtils.combinedRefs(inputRef, props.inputRef);
+  }, [inputRef, props.inputRef]);
+  (0,primereact_hooks__WEBPACK_IMPORTED_MODULE_2__.useMountEffect)(function () {
+    updateHSBValue(props.value);
+    updateUI();
+  });
+  (0,primereact_hooks__WEBPACK_IMPORTED_MODULE_2__.useUpdateEffect)(function () {
+    if (!colorDragging.current && !hueDragging.current) {
+      updateHSBValue(props.value);
+    }
+  }, [props.value]);
+  (0,primereact_hooks__WEBPACK_IMPORTED_MODULE_2__.useUpdateEffect)(function () {
+    updateUI();
+  });
+  (0,primereact_hooks__WEBPACK_IMPORTED_MODULE_2__.useUnmountEffect)(function () {
+    primereact_utils__WEBPACK_IMPORTED_MODULE_5__.ZIndexUtils.clear(overlayRef.current);
+  });
+
+  var createColorSelector = function createColorSelector() {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      ref: colorSelectorRef,
+      className: "p-colorpicker-color-selector",
+      onMouseDown: onColorMousedown,
+      onTouchStart: onColorDragStart,
+      onTouchMove: onDrag,
+      onTouchEnd: onDragEnd
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      className: "p-colorpicker-color"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      ref: colorHandleRef,
+      className: "p-colorpicker-color-handle"
+    })));
+  };
+
+  var createHue = function createHue() {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      ref: hueViewRef,
+      className: "p-colorpicker-hue",
+      onMouseDown: onHueMousedown,
+      onTouchStart: onHueDragStart,
+      onTouchMove: onDrag,
+      onTouchEnd: onDragEnd
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      ref: hueHandleRef,
+      className: "p-colorpicker-hue-handle"
+    }));
+  };
+
+  var createContent = function createContent() {
+    var colorSelector = createColorSelector();
+    var hue = createHue();
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      className: "p-colorpicker-content"
+    }, colorSelector, hue);
+  };
+
+  var createInput = function createInput() {
+    if (!props.inline) {
+      var inputClassName = (0,primereact_utils__WEBPACK_IMPORTED_MODULE_5__.classNames)('p-colorpicker-preview p-inputtext', {
+        'p-disabled': props.disabled
+      });
+      var inputProps = primereact_utils__WEBPACK_IMPORTED_MODULE_5__.ObjectUtils.findDiffKeys(props, ColorPicker.defaultProps);
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", _extends({
+        ref: inputRef,
+        type: "text",
+        className: inputClassName,
+        readOnly: true,
+        id: props.inputId,
+        tabIndex: props.tabIndex,
+        disabled: props.disabled,
+        onClick: onInputClick,
+        onKeyDown: onInputKeydown
+      }, inputProps));
+    }
+
+    return null;
+  };
+
+  var hasTooltip = primereact_utils__WEBPACK_IMPORTED_MODULE_5__.ObjectUtils.isNotEmpty(props.tooltip);
+  var otherProps = primereact_utils__WEBPACK_IMPORTED_MODULE_5__.ObjectUtils.findDiffKeys(props, ColorPicker.defaultProps);
+  var className = (0,primereact_utils__WEBPACK_IMPORTED_MODULE_5__.classNames)('p-colorpicker p-component', {
+    'p-colorpicker-overlay': !props.inline
+  }, props.className);
+  var content = createContent();
+  var input = createInput();
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", _extends({
+    ref: elementRef,
+    id: props.id,
+    style: props.style,
+    className: className
+  }, otherProps), input, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(ColorPickerPanel, {
+    ref: overlayRef,
+    appendTo: props.appendTo,
+    inline: props.inline,
+    disabled: props.disabled,
+    onClick: onPanelClick,
+    "in": props.inline || overlayVisibleState,
+    onEnter: onOverlayEnter,
+    onEntered: onOverlayEntered,
+    onExit: onOverlayExit,
+    onExited: onOverlayExited,
+    transitionOptions: props.transitionOptions
+  }, content)), hasTooltip && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(primereact_tooltip__WEBPACK_IMPORTED_MODULE_4__.Tooltip, _extends({
+    target: elementRef,
+    content: props.tooltip
+  }, props.tooltipOptions)));
+}));
+ColorPicker.displayName = 'ColorPicker';
+ColorPicker.defaultProps = {
+  __TYPE: 'ColorPicker',
+  id: null,
+  inputRef: null,
+  value: null,
+  style: null,
+  className: null,
+  defaultColor: 'ff0000',
+  inline: false,
+  format: 'hex',
+  appendTo: null,
+  disabled: false,
+  tabIndex: null,
+  inputId: null,
+  tooltip: null,
+  tooltipOptions: null,
+  transitionOptions: null,
+  onChange: null,
+  onShow: null,
+  onHide: null
 };
 
 
@@ -8613,6 +9575,84 @@ Dialog.defaultProps = {
 
 /***/ }),
 
+/***/ "./node_modules/primereact/divider/divider.esm.js":
+/*!********************************************************!*\
+  !*** ./node_modules/primereact/divider/divider.esm.js ***!
+  \********************************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "Divider": function() { return /* binding */ Divider; }
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var primereact_utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! primereact/utils */ "./node_modules/primereact/utils/utils.esm.js");
+
+
+
+function _extends() {
+  _extends = Object.assign ? Object.assign.bind() : function (target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i];
+
+      for (var key in source) {
+        if (Object.prototype.hasOwnProperty.call(source, key)) {
+          target[key] = source[key];
+        }
+      }
+    }
+
+    return target;
+  };
+  return _extends.apply(this, arguments);
+}
+
+var Divider = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.forwardRef(function (props, ref) {
+  var elementRef = react__WEBPACK_IMPORTED_MODULE_0__.useRef(null);
+  var horizontal = props.layout === 'horizontal';
+  var vertical = props.layout === 'vertical';
+  var otherProps = primereact_utils__WEBPACK_IMPORTED_MODULE_1__.ObjectUtils.findDiffKeys(props, Divider.defaultProps);
+  var className = (0,primereact_utils__WEBPACK_IMPORTED_MODULE_1__.classNames)("p-divider p-component p-divider-".concat(props.layout, " p-divider-").concat(props.type), {
+    'p-divider-left': horizontal && (!props.align || props.align === 'left'),
+    'p-divider-right': horizontal && props.align === 'right',
+    'p-divider-center': horizontal && props.align === 'center' || vertical && (!props.align || props.align === 'center'),
+    'p-divider-top': vertical && props.align === 'top',
+    'p-divider-bottom': vertical && props.align === 'bottom'
+  }, props.className);
+  react__WEBPACK_IMPORTED_MODULE_0__.useImperativeHandle(ref, function () {
+    return {
+      props: props,
+      getElement: function getElement() {
+        return elementRef.current;
+      }
+    };
+  });
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", _extends({
+    ref: elementRef,
+    className: className,
+    style: props.style,
+    role: "separator"
+  }, otherProps), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    className: "p-divider-content"
+  }, props.children));
+});
+Divider.displayName = 'Divider';
+Divider.defaultProps = {
+  __TYPE: 'Divider',
+  align: null,
+  layout: 'horizontal',
+  type: 'solid',
+  style: null,
+  className: null
+};
+
+
+
+
+/***/ }),
+
 /***/ "./node_modules/primereact/dropdown/dropdown.esm.js":
 /*!**********************************************************!*\
   !*** ./node_modules/primereact/dropdown/dropdown.esm.js ***!
@@ -13655,6 +14695,2262 @@ Tooltip.defaultProps = {
   onBeforeHide: null,
   onShow: null,
   onHide: null
+};
+
+
+
+
+/***/ }),
+
+/***/ "./node_modules/primereact/tree/tree.esm.js":
+/*!**************************************************!*\
+  !*** ./node_modules/primereact/tree/tree.esm.js ***!
+  \**************************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "Tree": function() { return /* binding */ Tree; }
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var primereact_utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! primereact/utils */ "./node_modules/primereact/utils/utils.esm.js");
+/* harmony import */ var primereact_api__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! primereact/api */ "./node_modules/primereact/api/api.esm.js");
+/* harmony import */ var primereact_ripple__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! primereact/ripple */ "./node_modules/primereact/ripple/ripple.esm.js");
+
+
+
+
+
+function _extends() {
+  _extends = Object.assign ? Object.assign.bind() : function (target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i];
+
+      for (var key in source) {
+        if (Object.prototype.hasOwnProperty.call(source, key)) {
+          target[key] = source[key];
+        }
+      }
+    }
+
+    return target;
+  };
+  return _extends.apply(this, arguments);
+}
+
+function _arrayLikeToArray$2(arr, len) {
+  if (len == null || len > arr.length) len = arr.length;
+
+  for (var i = 0, arr2 = new Array(len); i < len; i++) {
+    arr2[i] = arr[i];
+  }
+
+  return arr2;
+}
+
+function _arrayWithoutHoles(arr) {
+  if (Array.isArray(arr)) return _arrayLikeToArray$2(arr);
+}
+
+function _iterableToArray(iter) {
+  if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter);
+}
+
+function _unsupportedIterableToArray$2(o, minLen) {
+  if (!o) return;
+  if (typeof o === "string") return _arrayLikeToArray$2(o, minLen);
+  var n = Object.prototype.toString.call(o).slice(8, -1);
+  if (n === "Object" && o.constructor) n = o.constructor.name;
+  if (n === "Map" || n === "Set") return Array.from(o);
+  if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray$2(o, minLen);
+}
+
+function _nonIterableSpread() {
+  throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+}
+
+function _toConsumableArray(arr) {
+  return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray$2(arr) || _nonIterableSpread();
+}
+
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+}
+
+function _arrayWithHoles(arr) {
+  if (Array.isArray(arr)) return arr;
+}
+
+function _iterableToArrayLimit(arr, i) {
+  var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"];
+
+  if (_i == null) return;
+  var _arr = [];
+  var _n = true;
+  var _d = false;
+
+  var _s, _e;
+
+  try {
+    for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) {
+      _arr.push(_s.value);
+
+      if (i && _arr.length === i) break;
+    }
+  } catch (err) {
+    _d = true;
+    _e = err;
+  } finally {
+    try {
+      if (!_n && _i["return"] != null) _i["return"]();
+    } finally {
+      if (_d) throw _e;
+    }
+  }
+
+  return _arr;
+}
+
+function _nonIterableRest() {
+  throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+}
+
+function _slicedToArray(arr, i) {
+  return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray$2(arr, i) || _nonIterableRest();
+}
+
+function _createForOfIteratorHelper$1(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray$1(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+
+function _unsupportedIterableToArray$1(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray$1(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray$1(o, minLen); }
+
+function _arrayLikeToArray$1(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function ownKeys$1(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread$1(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys$1(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys$1(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+var UITreeNode = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.memo(function (props) {
+  var contentRef = react__WEBPACK_IMPORTED_MODULE_0__.useRef(null);
+  var nodeTouched = react__WEBPACK_IMPORTED_MODULE_0__.useRef(false);
+  var isLeaf = props.isNodeLeaf(props.node);
+  var expanded = (props.expandedKeys ? props.expandedKeys[props.node.key] !== undefined : false) || props.node.expanded;
+
+  var expand = function expand(event) {
+    var expandedKeys = props.expandedKeys ? _objectSpread$1({}, props.expandedKeys) : {};
+    expandedKeys[props.node.key] = true;
+    props.onToggle({
+      originalEvent: event,
+      value: expandedKeys
+    });
+    invokeToggleEvents(event, true);
+  };
+
+  var collapse = function collapse(event) {
+    var expandedKeys = _objectSpread$1({}, props.expandedKeys);
+
+    delete expandedKeys[props.node.key];
+    props.onToggle({
+      originalEvent: event,
+      value: expandedKeys
+    });
+    invokeToggleEvents(event, false);
+  };
+
+  var onTogglerClick = function onTogglerClick(event) {
+    if (props.disabled) {
+      return;
+    }
+
+    expanded ? collapse(event) : expand(event);
+    event.preventDefault();
+    event.stopPropagation();
+  };
+
+  var invokeToggleEvents = function invokeToggleEvents(event, isExpanded) {
+    if (isExpanded) {
+      if (props.onExpand) {
+        props.onExpand({
+          originalEvent: event,
+          node: props.node
+        });
+      }
+    } else {
+      if (props.onCollapse) {
+        props.onCollapse({
+          originalEvent: event,
+          node: props.node
+        });
+      }
+    }
+  };
+
+  var onNodeKeyDown = function onNodeKeyDown(event) {
+    if (props.disabled) {
+      return;
+    }
+
+    var nodeElement = event.target.parentElement;
+
+    if (!primereact_utils__WEBPACK_IMPORTED_MODULE_1__.DomHandler.hasClass(nodeElement, 'p-treenode')) {
+      return;
+    }
+
+    switch (event.which) {
+      //down arrow
+      case 40:
+        var listElement = nodeElement.children[1];
+
+        if (listElement) {
+          focusNode(listElement.children[0]);
+        } else {
+          var nextNodeElement = nodeElement.nextElementSibling;
+
+          while (nextNodeElement) {
+            if (!primereact_utils__WEBPACK_IMPORTED_MODULE_1__.DomHandler.hasClass(nextNodeElement, 'p-treenode-droppoint')) {
+              break;
+            }
+
+            nextNodeElement = nextNodeElement.nextElementSibling;
+          }
+
+          if (nextNodeElement) {
+            focusNode(nextNodeElement);
+          } else {
+            var nextSiblingAncestor = findNextSiblingOfAncestor(nodeElement);
+            nextSiblingAncestor && focusNode(nextSiblingAncestor);
+          }
+        }
+
+        event.preventDefault();
+        break;
+      //up arrow
+
+      case 38:
+        if (nodeElement.previousElementSibling) {
+          focusNode(findLastVisibleDescendant(nodeElement.previousElementSibling));
+        } else {
+          var parentNodeElement = getParentNodeElement(nodeElement);
+          parentNodeElement && focusNode(parentNodeElement);
+        }
+
+        event.preventDefault();
+        break;
+      //right arrow
+
+      case 39:
+        if (!expanded) {
+          expand(event);
+        }
+
+        event.preventDefault();
+        break;
+      //left arrow
+
+      case 37:
+        if (expanded) {
+          collapse(event);
+        }
+
+        event.preventDefault();
+        break;
+      //enter
+
+      case 13:
+        onClick(event);
+        event.preventDefault();
+        break;
+    }
+  };
+
+  var findNextSiblingOfAncestor = function findNextSiblingOfAncestor(nodeElement) {
+    var parentNodeElement = getParentNodeElement(nodeElement);
+    return parentNodeElement ? parentNodeElement.nextElementSibling || findNextSiblingOfAncestor(parentNodeElement) : null;
+  };
+
+  var findLastVisibleDescendant = function findLastVisibleDescendant(nodeElement) {
+    var childrenListElement = nodeElement.children[1];
+
+    if (childrenListElement) {
+      var lastChildElement = childrenListElement.children[childrenListElement.children.length - 1];
+      return findLastVisibleDescendant(lastChildElement);
+    } else {
+      return nodeElement;
+    }
+  };
+
+  var getParentNodeElement = function getParentNodeElement(nodeElement) {
+    var parentNodeElement = nodeElement.parentElement.parentElement;
+    return primereact_utils__WEBPACK_IMPORTED_MODULE_1__.DomHandler.hasClass(parentNodeElement, 'p-treenode') ? parentNodeElement : null;
+  };
+
+  var focusNode = function focusNode(element) {
+    element && element.children[0] && element.children[0].focus();
+  };
+
+  var onClick = function onClick(event) {
+    if (props.onClick) {
+      props.onClick({
+        originalEvent: event,
+        node: props.node
+      });
+    }
+
+    var targetNode = event.target.nodeName;
+
+    if (props.disabled || targetNode === 'INPUT' || targetNode === 'BUTTON' || targetNode === 'A' || primereact_utils__WEBPACK_IMPORTED_MODULE_1__.DomHandler.hasClass(event.target, 'p-clickable')) {
+      return;
+    }
+
+    if (props.selectionMode && props.node.selectable !== false) {
+      var selectionKeys;
+
+      if (isCheckboxSelectionMode()) {
+        var checked = isChecked();
+        selectionKeys = props.selectionKeys ? _objectSpread$1({}, props.selectionKeys) : {};
+
+        if (checked) {
+          if (props.propagateSelectionDown) propagateDown(props.node, false, selectionKeys);else delete selectionKeys[props.node.key];
+
+          if (props.propagateSelectionUp && props.onPropagateUp) {
+            props.onPropagateUp({
+              originalEvent: event,
+              check: false,
+              selectionKeys: selectionKeys
+            });
+          }
+
+          if (props.onUnselect) {
+            props.onUnselect({
+              originalEvent: event,
+              node: props.node
+            });
+          }
+        } else {
+          if (props.propagateSelectionDown) propagateDown(props.node, true, selectionKeys);else selectionKeys[props.node.key] = {
+            checked: true
+          };
+
+          if (props.propagateSelectionUp && props.onPropagateUp) {
+            props.onPropagateUp({
+              originalEvent: event,
+              check: true,
+              selectionKeys: selectionKeys
+            });
+          }
+
+          if (props.onSelect) {
+            props.onSelect({
+              originalEvent: event,
+              node: props.node
+            });
+          }
+        }
+      } else {
+        var selected = isSelected();
+        var metaSelection = nodeTouched.current ? false : props.metaKeySelection;
+
+        if (metaSelection) {
+          var metaKey = event.metaKey || event.ctrlKey;
+
+          if (selected && metaKey) {
+            if (isSingleSelectionMode()) {
+              selectionKeys = null;
+            } else {
+              selectionKeys = _objectSpread$1({}, props.selectionKeys);
+              delete selectionKeys[props.node.key];
+            }
+
+            if (props.onUnselect) {
+              props.onUnselect({
+                originalEvent: event,
+                node: props.node
+              });
+            }
+          } else {
+            if (isSingleSelectionMode()) {
+              selectionKeys = props.node.key;
+            } else if (isMultipleSelectionMode()) {
+              selectionKeys = !metaKey ? {} : props.selectionKeys ? _objectSpread$1({}, props.selectionKeys) : {};
+              selectionKeys[props.node.key] = true;
+            }
+
+            if (props.onSelect) {
+              props.onSelect({
+                originalEvent: event,
+                node: props.node
+              });
+            }
+          }
+        } else {
+          if (isSingleSelectionMode()) {
+            if (selected) {
+              selectionKeys = null;
+
+              if (props.onUnselect) {
+                props.onUnselect({
+                  originalEvent: event,
+                  node: props.node
+                });
+              }
+            } else {
+              selectionKeys = props.node.key;
+
+              if (props.onSelect) {
+                props.onSelect({
+                  originalEvent: event,
+                  node: props.node
+                });
+              }
+            }
+          } else {
+            if (selected) {
+              selectionKeys = _objectSpread$1({}, props.selectionKeys);
+              delete selectionKeys[props.node.key];
+
+              if (props.onUnselect) {
+                props.onUnselect({
+                  originalEvent: event,
+                  node: props.node
+                });
+              }
+            } else {
+              selectionKeys = props.selectionKeys ? _objectSpread$1({}, props.selectionKeys) : {};
+              selectionKeys[props.node.key] = true;
+
+              if (props.onSelect) {
+                props.onSelect({
+                  originalEvent: event,
+                  node: props.node
+                });
+              }
+            }
+          }
+        }
+      }
+
+      if (props.onSelectionChange) {
+        props.onSelectionChange({
+          originalEvent: event,
+          value: selectionKeys
+        });
+      }
+    }
+
+    nodeTouched.current = false;
+  };
+
+  var onDoubleClick = function onDoubleClick(event) {
+    if (props.onDoubleClick) {
+      props.onDoubleClick({
+        originalEvent: event,
+        node: props.node
+      });
+    }
+  };
+
+  var onRightClick = function onRightClick(event) {
+    if (props.disabled) {
+      return;
+    }
+
+    primereact_utils__WEBPACK_IMPORTED_MODULE_1__.DomHandler.clearSelection();
+
+    if (props.onContextMenuSelectionChange) {
+      props.onContextMenuSelectionChange({
+        originalEvent: event,
+        value: props.node.key
+      });
+    }
+
+    if (props.onContextMenu) {
+      props.onContextMenu({
+        originalEvent: event,
+        node: props.node
+      });
+    }
+  };
+
+  var propagateUp = function propagateUp(event) {
+    var check = event.check;
+    var selectionKeys = event.selectionKeys;
+    var checkedChildCount = 0;
+    var childPartialSelected = false;
+
+    var _iterator = _createForOfIteratorHelper$1(props.node.children),
+        _step;
+
+    try {
+      for (_iterator.s(); !(_step = _iterator.n()).done;) {
+        var child = _step.value;
+        if (selectionKeys[child.key] && selectionKeys[child.key].checked) checkedChildCount++;else if (selectionKeys[child.key] && selectionKeys[child.key].partialChecked) childPartialSelected = true;
+      }
+    } catch (err) {
+      _iterator.e(err);
+    } finally {
+      _iterator.f();
+    }
+
+    if (check && checkedChildCount === props.node.children.length) {
+      selectionKeys[props.node.key] = {
+        checked: true,
+        partialChecked: false
+      };
+    } else {
+      if (!check) {
+        delete selectionKeys[props.node.key];
+      }
+
+      if (childPartialSelected || checkedChildCount > 0 && checkedChildCount !== props.node.children.length) selectionKeys[props.node.key] = {
+        checked: false,
+        partialChecked: true
+      };else delete selectionKeys[props.node.key];
+    }
+
+    if (props.propagateSelectionUp && props.onPropagateUp) {
+      props.onPropagateUp(event);
+    }
+  };
+
+  var propagateDown = function propagateDown(node, check, selectionKeys) {
+    if (check) selectionKeys[node.key] = {
+      checked: true,
+      partialChecked: false
+    };else delete selectionKeys[node.key];
+
+    if (node.children && node.children.length) {
+      for (var i = 0; i < node.children.length; i++) {
+        propagateDown(node.children[i], check, selectionKeys);
+      }
+    }
+  };
+
+  var isSelected = function isSelected() {
+    if (props.selectionMode && props.selectionKeys) return isSingleSelectionMode() ? props.selectionKeys === props.node.key : props.selectionKeys[props.node.key] !== undefined;else return false;
+  };
+
+  var isChecked = function isChecked() {
+    return props.selectionKeys ? props.selectionKeys[props.node.key] && props.selectionKeys[props.node.key].checked : false;
+  };
+
+  var isPartialChecked = function isPartialChecked() {
+    return props.selectionKeys ? props.selectionKeys[props.node.key] && props.selectionKeys[props.node.key].partialChecked : false;
+  };
+
+  var isSingleSelectionMode = function isSingleSelectionMode() {
+    return props.selectionMode && props.selectionMode === 'single';
+  };
+
+  var isMultipleSelectionMode = function isMultipleSelectionMode() {
+    return props.selectionMode && props.selectionMode === 'multiple';
+  };
+
+  var isCheckboxSelectionMode = function isCheckboxSelectionMode() {
+    return props.selectionMode && props.selectionMode === 'checkbox';
+  };
+
+  var onTouchEnd = function onTouchEnd() {
+    nodeTouched.current = true;
+  };
+
+  var onDropPoint = function onDropPoint(event, position) {
+    event.preventDefault();
+
+    if (props.node.droppable !== false) {
+      primereact_utils__WEBPACK_IMPORTED_MODULE_1__.DomHandler.removeClass(event.target, 'p-treenode-droppoint-active');
+
+      if (props.onDropPoint) {
+        var dropIndex = position === -1 ? props.index : props.index + 1;
+        props.onDropPoint({
+          originalEvent: event,
+          path: props.path,
+          index: dropIndex,
+          position: position
+        });
+      }
+    }
+  };
+
+  var onDropPointDragOver = function onDropPointDragOver(event) {
+    if (event.dataTransfer.types[1] === props.dragdropScope.toLocaleLowerCase()) {
+      event.dataTransfer.dropEffect = 'move';
+      event.preventDefault();
+    }
+  };
+
+  var onDropPointDragEnter = function onDropPointDragEnter(event) {
+    if (event.dataTransfer.types[1] === props.dragdropScope.toLocaleLowerCase()) {
+      primereact_utils__WEBPACK_IMPORTED_MODULE_1__.DomHandler.addClass(event.target, 'p-treenode-droppoint-active');
+    }
+  };
+
+  var onDropPointDragLeave = function onDropPointDragLeave(event) {
+    if (event.dataTransfer.types[1] === props.dragdropScope.toLocaleLowerCase()) {
+      primereact_utils__WEBPACK_IMPORTED_MODULE_1__.DomHandler.removeClass(event.target, 'p-treenode-droppoint-active');
+    }
+  };
+
+  var onDrop = function onDrop(event) {
+    if (props.dragdropScope && props.node.droppable !== false) {
+      primereact_utils__WEBPACK_IMPORTED_MODULE_1__.DomHandler.removeClass(contentRef.current, 'p-treenode-dragover');
+      event.preventDefault();
+      event.stopPropagation();
+
+      if (props.onDrop) {
+        props.onDrop({
+          originalEvent: event,
+          path: props.path,
+          index: props.index
+        });
+      }
+    }
+  };
+
+  var onDragOver = function onDragOver(event) {
+    if (event.dataTransfer.types[1] === props.dragdropScope.toLocaleLowerCase() && props.node.droppable !== false) {
+      event.dataTransfer.dropEffect = 'move';
+      event.preventDefault();
+      event.stopPropagation();
+    }
+  };
+
+  var onDragEnter = function onDragEnter(event) {
+    if (event.dataTransfer.types[1] === props.dragdropScope.toLocaleLowerCase() && props.node.droppable !== false) {
+      primereact_utils__WEBPACK_IMPORTED_MODULE_1__.DomHandler.addClass(contentRef.current, 'p-treenode-dragover');
+    }
+  };
+
+  var onDragLeave = function onDragLeave(event) {
+    if (event.dataTransfer.types[1] === props.dragdropScope.toLocaleLowerCase() && props.node.droppable !== false) {
+      var rect = event.currentTarget.getBoundingClientRect();
+
+      if (event.nativeEvent.x > rect.left + rect.width || event.nativeEvent.x < rect.left || event.nativeEvent.y >= Math.floor(rect.top + rect.height) || event.nativeEvent.y < rect.top) {
+        primereact_utils__WEBPACK_IMPORTED_MODULE_1__.DomHandler.removeClass(contentRef.current, 'p-treenode-dragover');
+      }
+    }
+  };
+
+  var onDragStart = function onDragStart(event) {
+    event.dataTransfer.setData('text', props.dragdropScope);
+    event.dataTransfer.setData(props.dragdropScope, props.dragdropScope);
+
+    if (props.onDragStart) {
+      props.onDragStart({
+        originalEvent: event,
+        path: props.path,
+        index: props.index
+      });
+    }
+  };
+
+  var onDragEnd = function onDragEnd(event) {
+    if (props.onDragEnd) {
+      props.onDragEnd({
+        originalEvent: event
+      });
+    }
+  };
+
+  var createLabel = function createLabel() {
+    var content = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
+      className: "p-treenode-label"
+    }, props.node.label);
+
+    if (props.nodeTemplate) {
+      var defaultContentOptions = {
+        onTogglerClick: onTogglerClick,
+        className: 'p-treenode-label',
+        element: content,
+        props: props,
+        expanded: expanded
+      };
+      content = primereact_utils__WEBPACK_IMPORTED_MODULE_1__.ObjectUtils.getJSXElement(props.nodeTemplate, props.node, defaultContentOptions);
+    }
+
+    return content;
+  };
+
+  var createCheckbox = function createCheckbox() {
+    if (isCheckboxSelectionMode() && props.node.selectable !== false) {
+      var checked = isChecked();
+      var partialChecked = isPartialChecked();
+      var className = (0,primereact_utils__WEBPACK_IMPORTED_MODULE_1__.classNames)('p-checkbox-box', {
+        'p-highlight': checked,
+        'p-indeterminate': partialChecked,
+        'p-disabled': props.disabled
+      });
+      var icon = (0,primereact_utils__WEBPACK_IMPORTED_MODULE_1__.classNames)('p-checkbox-icon p-c', {
+        'pi pi-check': checked,
+        'pi pi-minus': partialChecked
+      });
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+        className: "p-checkbox p-component"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+        className: className,
+        role: "checkbox",
+        "aria-checked": checked
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
+        className: icon
+      })));
+    }
+
+    return null;
+  };
+
+  var createIcon = function createIcon() {
+    var icon = props.node.icon || (expanded ? props.node.expandedIcon : props.node.collapsedIcon);
+
+    if (icon) {
+      var className = (0,primereact_utils__WEBPACK_IMPORTED_MODULE_1__.classNames)('p-treenode-icon', icon);
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
+        className: className
+      });
+    }
+
+    return null;
+  };
+
+  var createToggler = function createToggler() {
+    var label = expanded ? (0,primereact_api__WEBPACK_IMPORTED_MODULE_2__.ariaLabel)('collapseLabel') : (0,primereact_api__WEBPACK_IMPORTED_MODULE_2__.ariaLabel)('expandLabel');
+    var iconClassName = (0,primereact_utils__WEBPACK_IMPORTED_MODULE_1__.classNames)('p-tree-toggler-icon pi pi-fw', {
+      'pi-chevron-right': !expanded,
+      'pi-chevron-down': expanded
+    });
+    var content = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+      type: "button",
+      className: "p-tree-toggler p-link",
+      tabIndex: -1,
+      onClick: onTogglerClick,
+      "aria-label": label
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
+      className: iconClassName,
+      "aria-hidden": "true"
+    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(primereact_ripple__WEBPACK_IMPORTED_MODULE_3__.Ripple, null));
+
+    if (props.togglerTemplate) {
+      var defaultContentOptions = {
+        onClick: onTogglerClick,
+        containerClassName: 'p-tree-toggler p-link',
+        iconClassName: 'p-tree-toggler-icon',
+        element: content,
+        props: props,
+        expanded: expanded
+      };
+      content = primereact_utils__WEBPACK_IMPORTED_MODULE_1__.ObjectUtils.getJSXElement(props.togglerTemplate, props.node, defaultContentOptions);
+    }
+
+    return content;
+  };
+
+  var createDropPoint = function createDropPoint(position) {
+    if (props.dragdropScope) {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("li", {
+        className: "p-treenode-droppoint",
+        onDrop: function onDrop(event) {
+          return onDropPoint(event, position);
+        },
+        onDragOver: onDropPointDragOver,
+        onDragEnter: onDropPointDragEnter,
+        onDragLeave: onDropPointDragLeave
+      });
+    }
+
+    return null;
+  };
+
+  var createContent = function createContent() {
+    var selected = isSelected();
+    var checked = isChecked();
+    var className = (0,primereact_utils__WEBPACK_IMPORTED_MODULE_1__.classNames)('p-treenode-content', props.node.className, {
+      'p-treenode-selectable': props.selectionMode && props.node.selectable !== false,
+      'p-highlight': isCheckboxSelectionMode() ? checked : selected,
+      'p-highlight-contextmenu': props.contextMenuSelectionKey && props.contextMenuSelectionKey === props.node.key,
+      'p-disabled': props.disabled
+    });
+    var toggler = createToggler();
+    var checkbox = createCheckbox();
+    var icon = createIcon();
+    var label = createLabel();
+    var tabIndex = props.disabled ? undefined : 0;
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      ref: contentRef,
+      className: className,
+      style: props.node.style,
+      onClick: onClick,
+      onDoubleClick: onDoubleClick,
+      onContextMenu: onRightClick,
+      onTouchEnd: onTouchEnd,
+      draggable: props.dragdropScope && props.node.draggable !== false && !props.disabled,
+      onDrop: onDrop,
+      onDragOver: onDragOver,
+      onDragEnter: onDragEnter,
+      onDragLeave: onDragLeave,
+      onDragStart: onDragStart,
+      onDragEnd: onDragEnd,
+      tabIndex: tabIndex,
+      onKeyDown: onNodeKeyDown,
+      role: "treeitem",
+      "aria-posinset": props.index + 1,
+      "aria-expanded": expanded,
+      "aria-selected": checked || selected
+    }, toggler, checkbox, icon, label);
+  };
+
+  var createChildren = function createChildren() {
+    if (primereact_utils__WEBPACK_IMPORTED_MODULE_1__.ObjectUtils.isNotEmpty(props.node.children) && expanded) {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("ul", {
+        className: "p-treenode-children",
+        role: "group"
+      }, props.node.children.map(function (childNode, index) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(UITreeNode, {
+          key: childNode.key || childNode.label,
+          node: childNode,
+          parent: props.node,
+          index: index,
+          last: index === props.node.children.length - 1,
+          path: props.path + '-' + index,
+          disabled: props.disabled,
+          selectionMode: props.selectionMode,
+          selectionKeys: props.selectionKeys,
+          onSelectionChange: props.onSelectionChange,
+          metaKeySelection: props.metaKeySelection,
+          propagateSelectionDown: props.propagateSelectionDown,
+          propagateSelectionUp: props.propagateSelectionUp,
+          contextMenuSelectionKey: props.contextMenuSelectionKey,
+          onContextMenuSelectionChange: props.onContextMenuSelectionChange,
+          onContextMenu: props.onContextMenu,
+          onExpand: props.onExpand,
+          onCollapse: props.onCollapse,
+          onSelect: props.onSelect,
+          onUnselect: props.onUnselect,
+          onClick: props.onClick,
+          onDoubleClick: props.onDoubleClick,
+          expandedKeys: props.expandedKeys,
+          onToggle: props.onToggle,
+          onPropagateUp: propagateUp,
+          nodeTemplate: props.nodeTemplate,
+          togglerTemplate: props.togglerTemplate,
+          isNodeLeaf: props.isNodeLeaf,
+          dragdropScope: props.dragdropScope,
+          onDragStart: props.onDragStart,
+          onDragEnd: props.onDragEnd,
+          onDrop: props.onDrop,
+          onDropPoint: props.onDropPoint
+        });
+      }));
+    }
+
+    return null;
+  };
+
+  var createNode = function createNode() {
+    var className = (0,primereact_utils__WEBPACK_IMPORTED_MODULE_1__.classNames)('p-treenode', {
+      'p-treenode-leaf': isLeaf
+    }, props.node.className);
+    var content = createContent();
+    var children = createChildren();
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("li", {
+      className: className,
+      style: props.node.style
+    }, content, children);
+  };
+
+  var node = createNode();
+
+  if (props.dragdropScope && !props.disabled) {
+    var beforeDropPoint = createDropPoint(-1);
+    var afterDropPoint = props.last ? createDropPoint(1) : null;
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, beforeDropPoint, node, afterDropPoint);
+  }
+
+  return node;
+});
+UITreeNode.displayName = 'UITreeNode';
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+
+function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+var Tree = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.memo( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.forwardRef(function (props, ref) {
+  var _React$useState = react__WEBPACK_IMPORTED_MODULE_0__.useState(''),
+      _React$useState2 = _slicedToArray(_React$useState, 2),
+      filterValueState = _React$useState2[0],
+      setFilterValueState = _React$useState2[1];
+
+  var _React$useState3 = react__WEBPACK_IMPORTED_MODULE_0__.useState(props.expandedKeys),
+      _React$useState4 = _slicedToArray(_React$useState3, 2),
+      expandedKeysState = _React$useState4[0],
+      setExpandedKeysState = _React$useState4[1];
+
+  var elementRef = react__WEBPACK_IMPORTED_MODULE_0__.useRef(null);
+  var filteredNodes = react__WEBPACK_IMPORTED_MODULE_0__.useRef([]);
+  var dragState = react__WEBPACK_IMPORTED_MODULE_0__.useRef(null);
+  var filterChanged = react__WEBPACK_IMPORTED_MODULE_0__.useRef(false);
+  var filteredValue = props.onFilterValueChange ? props.filterValue : filterValueState;
+  var expandedKeys = props.onToggle ? props.expandedKeys : expandedKeysState;
+  var filterOptions = {
+    filter: function filter(e) {
+      return onFilterInputChange(e);
+    },
+    reset: function reset() {
+      return resetFilter();
+    }
+  };
+
+  var getRootNode = function getRootNode() {
+    return props.filter && filteredNodes.current ? filteredNodes.current : props.value;
+  };
+
+  var onToggle = function onToggle(event) {
+    if (props.onToggle) {
+      props.onToggle(event);
+    } else {
+      setExpandedKeysState(event.value);
+    }
+  };
+
+  var onDragStart = function onDragStart(event) {
+    dragState.current = {
+      path: event.path,
+      index: event.index
+    };
+  };
+
+  var onDragEnd = function onDragEnd() {
+    dragState.current = null;
+  };
+
+  var onDrop = function onDrop(event) {
+    if (validateDropNode(dragState.current.path, event.path)) {
+      var value = JSON.parse(JSON.stringify(props.value));
+      var dragPaths = dragState.current.path.split('-');
+      dragPaths.pop();
+      var dragNodeParent = findNode(value, dragPaths);
+      var dragNode = dragNodeParent ? dragNodeParent.children[dragState.current.index] : value[dragState.current.index];
+      var dropNode = findNode(value, event.path.split('-'));
+      if (dropNode.children) dropNode.children.push(dragNode);else dropNode.children = [dragNode];
+      if (dragNodeParent) dragNodeParent.children.splice(dragState.current.index, 1);else value.splice(dragState.current.index, 1);
+
+      if (props.onDragDrop) {
+        props.onDragDrop({
+          originalEvent: event.originalEvent,
+          value: value,
+          dragNode: dragNode,
+          dropNode: dropNode,
+          dropIndex: event.index
+        });
+      }
+    }
+  };
+
+  var onDropPoint = function onDropPoint(event) {
+    if (validateDropPoint(event)) {
+      var value = JSON.parse(JSON.stringify(props.value));
+      var dragPaths = dragState.current.path.split('-');
+      dragPaths.pop();
+      var dropPaths = event.path.split('-');
+      dropPaths.pop();
+      var dragNodeParent = findNode(value, dragPaths);
+      var dropNodeParent = findNode(value, dropPaths);
+      var dragNode = dragNodeParent ? dragNodeParent.children[dragState.current.index] : value[dragState.current.index];
+      var siblings = areSiblings(dragState.current.path, event.path);
+      if (dragNodeParent) dragNodeParent.children.splice(dragState.current.index, 1);else value.splice(dragState.current.index, 1);
+
+      if (event.position < 0) {
+        var dropIndex = siblings ? dragState.current.index > event.index ? event.index : event.index - 1 : event.index;
+        if (dropNodeParent) dropNodeParent.children.splice(dropIndex, 0, dragNode);else value.splice(dropIndex, 0, dragNode);
+      } else {
+        if (dropNodeParent) dropNodeParent.children.push(dragNode);else value.push(dragNode);
+      }
+
+      if (props.onDragDrop) {
+        props.onDragDrop({
+          originalEvent: event.originalEvent,
+          value: value,
+          dragNode: dragNode,
+          dropNode: dropNodeParent,
+          dropIndex: event.index
+        });
+      }
+    }
+  };
+
+  var validateDrop = function validateDrop(dragPath, dropPath) {
+    if (!dragPath) {
+      return false;
+    } else {
+      //same node
+      if (dragPath === dropPath) {
+        return false;
+      } //parent dropped on an descendant
+
+
+      if (dropPath.indexOf(dragPath) === 0) {
+        return false;
+      }
+
+      return true;
+    }
+  };
+
+  var validateDropNode = function validateDropNode(dragPath, dropPath) {
+    var _validateDrop = validateDrop(dragPath, dropPath);
+
+    if (_validateDrop) {
+      //child dropped on parent
+      if (dragPath.indexOf('-') > 0 && dragPath.substring(0, dragPath.lastIndexOf('-')) === dropPath) {
+        return false;
+      }
+
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+  var validateDropPoint = function validateDropPoint(event) {
+    var _validateDrop = validateDrop(dragState.current.path, event.path);
+
+    if (_validateDrop) {
+      //child dropped to next sibling's drop point
+      if (event.position === -1 && areSiblings(dragState.current.path, event.path) && dragState.current.index + 1 === event.index) {
+        return false;
+      }
+
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+  var areSiblings = function areSiblings(path1, path2) {
+    if (path1.length === 1 && path2.length === 1) return true;else return path1.substring(0, path1.lastIndexOf('-')) === path2.substring(0, path2.lastIndexOf('-'));
+  };
+
+  var findNode = function findNode(value, path) {
+    if (path.length === 0) {
+      return null;
+    } else {
+      var index = parseInt(path[0], 10);
+      var nextSearchRoot = value.children ? value.children[index] : value[index];
+
+      if (path.length === 1) {
+        return nextSearchRoot;
+      } else {
+        path.shift();
+        return findNode(nextSearchRoot, path);
+      }
+    }
+  };
+
+  var isNodeLeaf = function isNodeLeaf(node) {
+    return node.leaf === false ? false : !(node.children && node.children.length);
+  };
+
+  var onFilterInputKeyDown = function onFilterInputKeyDown(event) {
+    //enter
+    if (event.which === 13) {
+      event.preventDefault();
+    }
+  };
+
+  var onFilterInputChange = function onFilterInputChange(event) {
+    filterChanged.current = true;
+    var value = event.target.value;
+
+    if (props.onFilterValueChange) {
+      props.onFilterValueChange({
+        originalEvent: event,
+        value: value
+      });
+    } else {
+      setFilterValueState(value);
+    }
+  };
+
+  var filter = function filter(value) {
+    setFilterValueState(primereact_utils__WEBPACK_IMPORTED_MODULE_1__.ObjectUtils.isNotEmpty(value) ? value : '');
+
+    _filter();
+  };
+
+  var _filter = function _filter() {
+    if (!filterChanged.current) {
+      return;
+    }
+
+    if (primereact_utils__WEBPACK_IMPORTED_MODULE_1__.ObjectUtils.isEmpty(filteredValue)) {
+      filteredNodes.current = props.value;
+    } else {
+      filteredNodes.current = [];
+      var searchFields = props.filterBy.split(',');
+      var filterText = filteredValue.toLocaleLowerCase(props.filterLocale);
+      var isStrictMode = props.filterMode === 'strict';
+
+      var _iterator = _createForOfIteratorHelper(props.value),
+          _step;
+
+      try {
+        for (_iterator.s(); !(_step = _iterator.n()).done;) {
+          var node = _step.value;
+
+          var copyNode = _objectSpread({}, node);
+
+          var paramsWithoutNode = {
+            searchFields: searchFields,
+            filterText: filterText,
+            isStrictMode: isStrictMode
+          };
+
+          if (isStrictMode && (findFilteredNodes(copyNode, paramsWithoutNode) || isFilterMatched(copyNode, paramsWithoutNode)) || !isStrictMode && (isFilterMatched(copyNode, paramsWithoutNode) || findFilteredNodes(copyNode, paramsWithoutNode))) {
+            filteredNodes.current.push(copyNode);
+          }
+        }
+      } catch (err) {
+        _iterator.e(err);
+      } finally {
+        _iterator.f();
+      }
+    }
+
+    filterChanged.current = false;
+  };
+
+  var findFilteredNodes = function findFilteredNodes(node, paramsWithoutNode) {
+    if (node) {
+      var matched = false;
+
+      if (node.children) {
+        var childNodes = _toConsumableArray(node.children);
+
+        node.children = [];
+
+        var _iterator2 = _createForOfIteratorHelper(childNodes),
+            _step2;
+
+        try {
+          for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
+            var childNode = _step2.value;
+
+            var copyChildNode = _objectSpread({}, childNode);
+
+            if (isFilterMatched(copyChildNode, paramsWithoutNode)) {
+              matched = true;
+              node.children.push(copyChildNode);
+            }
+          }
+        } catch (err) {
+          _iterator2.e(err);
+        } finally {
+          _iterator2.f();
+        }
+      }
+
+      if (matched) {
+        node.expanded = true;
+        return true;
+      }
+    }
+  };
+
+  var isFilterMatched = function isFilterMatched(node, _ref) {
+    var searchFields = _ref.searchFields,
+        filterText = _ref.filterText,
+        isStrictMode = _ref.isStrictMode;
+    var matched = false;
+
+    var _iterator3 = _createForOfIteratorHelper(searchFields),
+        _step3;
+
+    try {
+      for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
+        var field = _step3.value;
+        var fieldValue = String(primereact_utils__WEBPACK_IMPORTED_MODULE_1__.ObjectUtils.resolveFieldData(node, field)).toLocaleLowerCase(props.filterLocale);
+
+        if (fieldValue.indexOf(filterText) > -1) {
+          matched = true;
+        }
+      }
+    } catch (err) {
+      _iterator3.e(err);
+    } finally {
+      _iterator3.f();
+    }
+
+    if (!matched || isStrictMode && !isNodeLeaf(node)) {
+      matched = findFilteredNodes(node, {
+        searchFields: searchFields,
+        filterText: filterText,
+        isStrictMode: isStrictMode
+      }) || matched;
+    }
+
+    return matched;
+  };
+
+  var resetFilter = function resetFilter() {
+    setFilterValueState('');
+  };
+
+  react__WEBPACK_IMPORTED_MODULE_0__.useImperativeHandle(ref, function () {
+    return {
+      props: props,
+      filter: filter,
+      getElement: function getElement() {
+        return elementRef.current;
+      }
+    };
+  });
+
+  var createRootChild = function createRootChild(node, index, last) {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(UITreeNode, {
+      key: node.key || node.label,
+      node: node,
+      index: index,
+      last: last,
+      path: String(index),
+      disabled: props.disabled,
+      selectionMode: props.selectionMode,
+      selectionKeys: props.selectionKeys,
+      onSelectionChange: props.onSelectionChange,
+      metaKeySelection: props.metaKeySelection,
+      contextMenuSelectionKey: props.contextMenuSelectionKey,
+      onContextMenuSelectionChange: props.onContextMenuSelectionChange,
+      onContextMenu: props.onContextMenu,
+      propagateSelectionDown: props.propagateSelectionDown,
+      propagateSelectionUp: props.propagateSelectionUp,
+      onExpand: props.onExpand,
+      onCollapse: props.onCollapse,
+      onSelect: props.onSelect,
+      onUnselect: props.onUnselect,
+      expandedKeys: expandedKeys,
+      onToggle: onToggle,
+      nodeTemplate: props.nodeTemplate,
+      togglerTemplate: props.togglerTemplate,
+      isNodeLeaf: isNodeLeaf,
+      dragdropScope: props.dragdropScope,
+      onDragStart: onDragStart,
+      onDragEnd: onDragEnd,
+      onDrop: onDrop,
+      onDropPoint: onDropPoint,
+      onClick: props.onNodeClick,
+      onDoubleClick: props.onNodeDoubleClick
+    });
+  };
+
+  var createRootChildren = function createRootChildren() {
+    if (props.filter) {
+      filterChanged.current = true;
+
+      _filter();
+    }
+
+    var value = getRootNode();
+    return value.map(function (node, index) {
+      return createRootChild(node, index, index === value.length - 1);
+    });
+  };
+
+  var createModel = function createModel() {
+    if (props.value) {
+      var rootNodes = createRootChildren();
+      var contentClass = (0,primereact_utils__WEBPACK_IMPORTED_MODULE_1__.classNames)('p-tree-container', props.contentClassName);
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("ul", _extends({
+        className: contentClass,
+        role: "tree",
+        style: props.contentStyle
+      }, ariaProps), rootNodes);
+    }
+
+    return null;
+  };
+
+  var createLoader = function createLoader() {
+    if (props.loading) {
+      var icon = (0,primereact_utils__WEBPACK_IMPORTED_MODULE_1__.classNames)('p-tree-loading-icon pi-spin', props.loadingIcon);
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+        className: "p-tree-loading-overlay p-component-overlay"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("i", {
+        className: icon
+      }));
+    }
+
+    return null;
+  };
+
+  var createFilter = function createFilter() {
+    if (props.filter) {
+      var value = primereact_utils__WEBPACK_IMPORTED_MODULE_1__.ObjectUtils.isNotEmpty(filteredValue) ? filteredValue : '';
+
+      var _content = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+        className: "p-tree-filter-container"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
+        type: "text",
+        value: value,
+        autoComplete: "off",
+        className: "p-tree-filter p-inputtext p-component",
+        placeholder: props.filterPlaceholder,
+        onKeyDown: onFilterInputKeyDown,
+        onChange: onFilterInputChange,
+        disabled: props.disabled
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
+        className: "p-tree-filter-icon pi pi-search"
+      }));
+
+      if (props.filterTemplate) {
+        var defaultContentOptions = {
+          className: 'p-tree-filter-container',
+          element: _content,
+          filterOptions: filterOptions,
+          filterInputKeyDown: onFilterInputKeyDown,
+          filterInputChange: onFilterInputChange,
+          filterIconClassName: 'p-dropdown-filter-icon pi pi-search',
+          props: props
+        };
+        _content = primereact_utils__WEBPACK_IMPORTED_MODULE_1__.ObjectUtils.getJSXElement(props.filterTemplate, defaultContentOptions);
+      }
+
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, _content);
+    }
+
+    return null;
+  };
+
+  var createHeader = function createHeader() {
+    if (props.showHeader) {
+      var filterElement = createFilter();
+      var _content2 = filterElement;
+
+      if (props.header) {
+        var defaultContentOptions = {
+          filterContainerClassName: 'p-tree-filter-container',
+          filterIconClasssName: 'p-tree-filter-icon pi pi-search',
+          filterInput: {
+            className: 'p-tree-filter p-inputtext p-component',
+            onKeyDown: onFilterInputKeyDown,
+            onChange: onFilterInputChange
+          },
+          filterElement: filterElement,
+          element: _content2,
+          props: props
+        };
+        _content2 = primereact_utils__WEBPACK_IMPORTED_MODULE_1__.ObjectUtils.getJSXElement(props.header, defaultContentOptions);
+      }
+
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+        className: "p-tree-header"
+      }, _content2);
+    }
+
+    return null;
+  };
+
+  var createFooter = function createFooter() {
+    var content = primereact_utils__WEBPACK_IMPORTED_MODULE_1__.ObjectUtils.getJSXElement(props.footer, props);
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      className: "p-tree-footer"
+    }, content);
+  };
+
+  var otherProps = primereact_utils__WEBPACK_IMPORTED_MODULE_1__.ObjectUtils.findDiffKeys(props, Tree.defaultProps);
+  var ariaProps = primereact_utils__WEBPACK_IMPORTED_MODULE_1__.ObjectUtils.reduceKeys(otherProps, primereact_utils__WEBPACK_IMPORTED_MODULE_1__.DomHandler.ARIA_PROPS);
+  var className = (0,primereact_utils__WEBPACK_IMPORTED_MODULE_1__.classNames)('p-tree p-component', props.className, {
+    'p-tree-selectable': props.selectionMode,
+    'p-tree-loading': props.loading,
+    'p-disabled': props.disabled
+  });
+  var loader = createLoader();
+  var content = createModel();
+  var header = createHeader();
+  var footer = createFooter();
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", _extends({
+    id: props.id,
+    ref: elementRef,
+    className: className,
+    style: props.style
+  }, otherProps), loader, header, content, footer);
+}));
+Tree.displayName = 'Tree';
+Tree.defaultProps = {
+  __TYPE: 'Tree',
+  id: null,
+  value: null,
+  disabled: false,
+  selectionMode: null,
+  selectionKeys: null,
+  onSelectionChange: null,
+  contextMenuSelectionKey: null,
+  onContextMenuSelectionChange: null,
+  expandedKeys: null,
+  style: null,
+  className: null,
+  contentStyle: null,
+  contentClassName: null,
+  metaKeySelection: true,
+  propagateSelectionUp: true,
+  propagateSelectionDown: true,
+  loading: false,
+  loadingIcon: 'pi pi-spinner',
+  dragdropScope: null,
+  header: null,
+  footer: null,
+  showHeader: true,
+  filter: false,
+  filterValue: null,
+  filterBy: 'label',
+  filterMode: 'lenient',
+  filterPlaceholder: null,
+  filterLocale: undefined,
+  filterTemplate: null,
+  nodeTemplate: null,
+  togglerTemplate: null,
+  onSelect: null,
+  onUnselect: null,
+  onExpand: null,
+  onCollapse: null,
+  onToggle: null,
+  onDragDrop: null,
+  onContextMenu: null,
+  onFilterValueChange: null,
+  onNodeClick: null,
+  onNodeDoubleClick: null
+};
+
+
+
+
+/***/ }),
+
+/***/ "./node_modules/primereact/treeselect/treeselect.esm.js":
+/*!**************************************************************!*\
+  !*** ./node_modules/primereact/treeselect/treeselect.esm.js ***!
+  \**************************************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "TreeSelect": function() { return /* binding */ TreeSelect; }
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var primereact_api__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! primereact/api */ "./node_modules/primereact/api/api.esm.js");
+/* harmony import */ var primereact_hooks__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! primereact/hooks */ "./node_modules/primereact/hooks/hooks.esm.js");
+/* harmony import */ var primereact_overlayservice__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! primereact/overlayservice */ "./node_modules/primereact/overlayservice/overlayservice.esm.js");
+/* harmony import */ var primereact_ripple__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! primereact/ripple */ "./node_modules/primereact/ripple/ripple.esm.js");
+/* harmony import */ var primereact_tree__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! primereact/tree */ "./node_modules/primereact/tree/tree.esm.js");
+/* harmony import */ var primereact_utils__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! primereact/utils */ "./node_modules/primereact/utils/utils.esm.js");
+/* harmony import */ var primereact_csstransition__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! primereact/csstransition */ "./node_modules/primereact/csstransition/csstransition.esm.js");
+/* harmony import */ var primereact_portal__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! primereact/portal */ "./node_modules/primereact/portal/portal.esm.js");
+
+
+
+
+
+
+
+
+
+
+function _extends() {
+  _extends = Object.assign ? Object.assign.bind() : function (target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i];
+
+      for (var key in source) {
+        if (Object.prototype.hasOwnProperty.call(source, key)) {
+          target[key] = source[key];
+        }
+      }
+    }
+
+    return target;
+  };
+  return _extends.apply(this, arguments);
+}
+
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+}
+
+function _arrayWithHoles(arr) {
+  if (Array.isArray(arr)) return arr;
+}
+
+function _iterableToArrayLimit(arr, i) {
+  var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"];
+
+  if (_i == null) return;
+  var _arr = [];
+  var _n = true;
+  var _d = false;
+
+  var _s, _e;
+
+  try {
+    for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) {
+      _arr.push(_s.value);
+
+      if (i && _arr.length === i) break;
+    }
+  } catch (err) {
+    _d = true;
+    _e = err;
+  } finally {
+    try {
+      if (!_n && _i["return"] != null) _i["return"]();
+    } finally {
+      if (_d) throw _e;
+    }
+  }
+
+  return _arr;
+}
+
+function _arrayLikeToArray$1(arr, len) {
+  if (len == null || len > arr.length) len = arr.length;
+
+  for (var i = 0, arr2 = new Array(len); i < len; i++) {
+    arr2[i] = arr[i];
+  }
+
+  return arr2;
+}
+
+function _unsupportedIterableToArray$1(o, minLen) {
+  if (!o) return;
+  if (typeof o === "string") return _arrayLikeToArray$1(o, minLen);
+  var n = Object.prototype.toString.call(o).slice(8, -1);
+  if (n === "Object" && o.constructor) n = o.constructor.name;
+  if (n === "Map" || n === "Set") return Array.from(o);
+  if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray$1(o, minLen);
+}
+
+function _nonIterableRest() {
+  throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+}
+
+function _slicedToArray(arr, i) {
+  return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray$1(arr, i) || _nonIterableRest();
+}
+
+var TreeSelectPanel = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.forwardRef(function (props, ref) {
+  var createElement = function createElement() {
+    var wrapperStyle = {
+      maxHeight: props.scrollHeight || 'auto'
+    };
+    var className = (0,primereact_utils__WEBPACK_IMPORTED_MODULE_6__.classNames)('p-treeselect-panel p-component', props.panelClassName);
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(primereact_csstransition__WEBPACK_IMPORTED_MODULE_7__.CSSTransition, {
+      nodeRef: ref,
+      classNames: "p-connected-overlay",
+      "in": props["in"],
+      timeout: {
+        enter: 120,
+        exit: 100
+      },
+      options: props.transitionOptions,
+      unmountOnExit: true,
+      onEnter: props.onEnter,
+      onEntering: props.onEntering,
+      onEntered: props.onEntered,
+      onExit: props.onExit,
+      onExited: props.onExited
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      ref: ref,
+      className: className,
+      style: props.panelStyle,
+      onClick: props.onClick
+    }, props.header, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      className: "p-treeselect-items-wrapper",
+      style: wrapperStyle
+    }, props.children), props.footer));
+  };
+
+  var element = createElement();
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(primereact_portal__WEBPACK_IMPORTED_MODULE_8__.Portal, {
+    element: element,
+    appendTo: props.appendTo
+  });
+});
+TreeSelectPanel.displayName = 'TreeSelectPanel';
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+
+function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+var TreeSelect = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.memo( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.forwardRef(function (props, ref) {
+  var _React$useState = react__WEBPACK_IMPORTED_MODULE_0__.useState(false),
+      _React$useState2 = _slicedToArray(_React$useState, 2),
+      focusedState = _React$useState2[0],
+      setFocusedState = _React$useState2[1];
+
+  var _React$useState3 = react__WEBPACK_IMPORTED_MODULE_0__.useState(false),
+      _React$useState4 = _slicedToArray(_React$useState3, 2),
+      overlayVisibleState = _React$useState4[0],
+      setOverlayVisibleState = _React$useState4[1];
+
+  var _React$useState5 = react__WEBPACK_IMPORTED_MODULE_0__.useState(props.expandedKeys),
+      _React$useState6 = _slicedToArray(_React$useState5, 2),
+      expandedKeysState = _React$useState6[0],
+      setExpandedKeysState = _React$useState6[1];
+
+  var _React$useState7 = react__WEBPACK_IMPORTED_MODULE_0__.useState(''),
+      _React$useState8 = _slicedToArray(_React$useState7, 2),
+      filterValueState = _React$useState8[0],
+      setFilterValueState = _React$useState8[1];
+
+  var elementRef = react__WEBPACK_IMPORTED_MODULE_0__.useRef(null);
+  var overlayRef = react__WEBPACK_IMPORTED_MODULE_0__.useRef(null);
+  var filterInputRef = react__WEBPACK_IMPORTED_MODULE_0__.useRef(null);
+  var focusInputRef = react__WEBPACK_IMPORTED_MODULE_0__.useRef(null);
+  var triggerRef = react__WEBPACK_IMPORTED_MODULE_0__.useRef(null);
+  var selfChange = react__WEBPACK_IMPORTED_MODULE_0__.useRef(null);
+  var expandedKeys = props.onToggle ? props.expandedKeys : expandedKeysState;
+  var filteredValue = props.onFilterValueChange ? props.filterValue : filterValueState;
+  var isValueEmpty = primereact_utils__WEBPACK_IMPORTED_MODULE_6__.ObjectUtils.isEmpty(props.value);
+  var hasNoOptions = primereact_utils__WEBPACK_IMPORTED_MODULE_6__.ObjectUtils.isEmpty(props.options);
+  var isSingleSelectionMode = props.selectionMode === 'single';
+  var isCheckboxSelectionMode = props.selectionMode === 'checkbox';
+  var filterOptions = {
+    filter: function filter(e) {
+      return onFilterInputChange(e);
+    },
+    reset: function reset() {
+      return resetFilter();
+    }
+  };
+
+  var _useOverlayListener = (0,primereact_hooks__WEBPACK_IMPORTED_MODULE_2__.useOverlayListener)({
+    target: elementRef,
+    overlay: overlayRef,
+    listener: function listener(event, _ref) {
+      var valid = _ref.valid;
+      valid && hide();
+    },
+    when: overlayVisibleState
+  }),
+      _useOverlayListener2 = _slicedToArray(_useOverlayListener, 2),
+      bindOverlayListener = _useOverlayListener2[0],
+      unbindOverlayListener = _useOverlayListener2[1];
+
+  var getLabel = function getLabel() {
+    return selectedNodes.length ? selectedNodes.map(function (node) {
+      return node.label;
+    }).join(', ') : props.placeholder;
+  };
+
+  var show = function show() {
+    setOverlayVisibleState(true);
+  };
+
+  var hide = function hide() {
+    setOverlayVisibleState(false);
+  };
+
+  var onInputFocus = function onInputFocus() {
+    setFocusedState(true);
+  };
+
+  var onInputBlur = function onInputBlur() {
+    setFocusedState(false);
+  };
+
+  var onClick = function onClick(event) {
+    if (!props.disabled && (!overlayRef.current || !overlayRef.current.contains(event.target)) && !primereact_utils__WEBPACK_IMPORTED_MODULE_6__.DomHandler.hasClass(event.target, 'p-treeselect-close')) {
+      primereact_utils__WEBPACK_IMPORTED_MODULE_6__.DomHandler.focus(focusInputRef.current);
+      overlayVisibleState ? hide() : show();
+    }
+  };
+
+  var onSelectionChange = function onSelectionChange(event) {
+    if (props.onChange) {
+      selfChange.current = true;
+      props.onChange({
+        originalEvent: event.originalEvent,
+        value: event.value,
+        stopPropagation: function stopPropagation() {},
+        preventDefault: function preventDefault() {},
+        target: {
+          name: props.name,
+          id: props.id,
+          value: event.value
+        }
+      });
+    }
+  };
+
+  var onNodeSelect = function onNodeSelect(node) {
+    props.onNodeSelect && props.onNodeSelect(node);
+    isSingleSelectionMode && hide();
+  };
+
+  var onNodeUnselect = function onNodeUnselect(node) {
+    props.onNodeUnselect && props.onNodeUnselect(node);
+  };
+
+  var onNodeToggle = function onNodeToggle(e) {
+    if (props.onToggle) {
+      props.onToggle(e);
+    } else {
+      setExpandedKeysState(e.value);
+    }
+  };
+
+  var onFilterValueChange = function onFilterValueChange(e) {
+    setFilterValueState(e.value);
+  };
+
+  var onOverlayClick = function onOverlayClick(event) {
+    primereact_overlayservice__WEBPACK_IMPORTED_MODULE_3__.OverlayService.emit('overlay-click', {
+      originalEvent: event,
+      target: elementRef.current
+    });
+  };
+
+  var onInputKeyDown = function onInputKeyDown(event) {
+    switch (event.which) {
+      //down
+      case 40:
+        if (!overlayVisibleState && event.altKey) {
+          show();
+        }
+
+        break;
+      //space
+
+      case 32:
+        if (!overlayVisibleState) {
+          show();
+          event.preventDefault();
+        }
+
+        break;
+      //enter and escape
+
+      case 13:
+      case 27:
+        if (overlayVisibleState) {
+          hide();
+          event.preventDefault();
+        }
+
+        break;
+      //tab
+
+      case 9:
+        hide();
+        break;
+    }
+  };
+
+  var onFilterInputKeyDown = function onFilterInputKeyDown(event) {
+    //enter
+    if (event.which === 13) {
+      event.preventDefault();
+    }
+  };
+
+  var onFilterInputChange = function onFilterInputChange(event) {
+    var value = event.target.value;
+
+    if (props.onFilterValueChange) {
+      props.onFilterValueChange({
+        originalEvent: event,
+        value: value
+      });
+    } else {
+      setFilterValueState(value);
+    }
+  };
+
+  var resetFilter = function resetFilter() {
+    setFilterValueState('');
+  };
+
+  var onOverlayEnter = function onOverlayEnter() {
+    primereact_utils__WEBPACK_IMPORTED_MODULE_6__.ZIndexUtils.set('overlay', overlayRef.current, primereact_api__WEBPACK_IMPORTED_MODULE_1__["default"].autoZIndex, primereact_api__WEBPACK_IMPORTED_MODULE_1__["default"].zIndex.overlay);
+    alignOverlay();
+    scrollInView();
+  };
+
+  var onOverlayEntered = function onOverlayEntered() {
+    bindOverlayListener();
+
+    if (props.filter && props.filterInputAutoFocus) {
+      primereact_utils__WEBPACK_IMPORTED_MODULE_6__.DomHandler.focus(filterInputRef.current, props.filterInputAutoFocus);
+    }
+
+    props.onShow && props.onShow();
+  };
+
+  var onOverlayExit = function onOverlayExit() {
+    unbindOverlayListener();
+  };
+
+  var onOverlayExited = function onOverlayExited() {
+    if (props.filter && props.resetFilterOnHide) {
+      resetFilter();
+    }
+
+    primereact_utils__WEBPACK_IMPORTED_MODULE_6__.ZIndexUtils.clear(overlayRef.current);
+    props.onHide && props.onHide();
+  };
+
+  var alignOverlay = function alignOverlay() {
+    primereact_utils__WEBPACK_IMPORTED_MODULE_6__.DomHandler.alignOverlay(overlayRef.current, triggerRef.current.parentElement, props.appendTo || primereact_api__WEBPACK_IMPORTED_MODULE_1__["default"].appendTo);
+  };
+
+  var scrollInView = function scrollInView() {
+    var highlightItem = primereact_utils__WEBPACK_IMPORTED_MODULE_6__.DomHandler.findSingle(overlayRef.current, '.p-treenode-content.p-highlight');
+
+    if (highlightItem && highlightItem.scrollIntoView) {
+      highlightItem.scrollIntoView({
+        block: 'nearest',
+        inline: 'start'
+      });
+    }
+  };
+
+  var findSelectedNodes = function findSelectedNodes(node, keys, selectedNodes) {
+    if (node) {
+      if (isSelected(node, keys)) {
+        selectedNodes.push(node);
+        delete keys[node.key];
+      }
+
+      if (Object.keys(keys).length && node.children) {
+        var _iterator = _createForOfIteratorHelper(node.children),
+            _step;
+
+        try {
+          for (_iterator.s(); !(_step = _iterator.n()).done;) {
+            var childNode = _step.value;
+            findSelectedNodes(childNode, keys, selectedNodes);
+          }
+        } catch (err) {
+          _iterator.e(err);
+        } finally {
+          _iterator.f();
+        }
+      }
+    } else {
+      var _iterator2 = _createForOfIteratorHelper(props.options),
+          _step2;
+
+      try {
+        for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
+          var _childNode = _step2.value;
+          findSelectedNodes(_childNode, keys, selectedNodes);
+        }
+      } catch (err) {
+        _iterator2.e(err);
+      } finally {
+        _iterator2.f();
+      }
+    }
+  };
+
+  var isSelected = function isSelected(node, keys) {
+    return isCheckboxSelectionMode ? keys[node.key] && keys[node.key].checked : keys[node.key];
+  };
+
+  var updateTreeState = function updateTreeState() {
+    var keys = isSingleSelectionMode ? _defineProperty({}, "".concat(props.value), true) : _objectSpread({}, props.value);
+    setExpandedKeysState({});
+
+    if (keys && props.options) {
+      updateTreeBranchState(null, null, keys);
+    }
+  };
+
+  var updateTreeBranchState = function updateTreeBranchState(node, path, keys) {
+    if (node) {
+      if (isSelected(node, keys)) {
+        expandPath(path);
+        delete keys[node.key];
+      }
+
+      if (Object.keys(keys).length && node.children) {
+        var _iterator3 = _createForOfIteratorHelper(node.children),
+            _step3;
+
+        try {
+          for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
+            var childNode = _step3.value;
+            path.push(node.key);
+            updateTreeBranchState(childNode, path, keys);
+          }
+        } catch (err) {
+          _iterator3.e(err);
+        } finally {
+          _iterator3.f();
+        }
+      }
+    } else {
+      var _iterator4 = _createForOfIteratorHelper(props.options),
+          _step4;
+
+      try {
+        for (_iterator4.s(); !(_step4 = _iterator4.n()).done;) {
+          var _childNode2 = _step4.value;
+          updateTreeBranchState(_childNode2, [], keys);
+        }
+      } catch (err) {
+        _iterator4.e(err);
+      } finally {
+        _iterator4.f();
+      }
+    }
+  };
+
+  var expandPath = function expandPath(path) {
+    if (path.length > 0) {
+      var _expandedKeys = _objectSpread({}, expandedKeysState || {});
+
+      var _iterator5 = _createForOfIteratorHelper(path),
+          _step5;
+
+      try {
+        for (_iterator5.s(); !(_step5 = _iterator5.n()).done;) {
+          var key = _step5.value;
+          _expandedKeys[key] = true;
+        }
+      } catch (err) {
+        _iterator5.e(err);
+      } finally {
+        _iterator5.f();
+      }
+
+      setExpandedKeysState(_expandedKeys);
+    }
+  };
+
+  var getSelectedNodes = function getSelectedNodes() {
+    var selectedNodes = [];
+
+    if (primereact_utils__WEBPACK_IMPORTED_MODULE_6__.ObjectUtils.isNotEmpty(props.value) && props.options) {
+      var keys = isSingleSelectionMode ? _defineProperty({}, "".concat(props.value), true) : _objectSpread({}, props.value);
+      findSelectedNodes(null, keys, selectedNodes);
+    }
+
+    return selectedNodes;
+  };
+
+  react__WEBPACK_IMPORTED_MODULE_0__.useImperativeHandle(ref, function () {
+    return {
+      props: props,
+      getElement: function getElement() {
+        return elementRef.current;
+      }
+    };
+  });
+  (0,primereact_hooks__WEBPACK_IMPORTED_MODULE_2__.useMountEffect)(function () {
+    updateTreeState();
+  });
+  (0,primereact_hooks__WEBPACK_IMPORTED_MODULE_2__.useUpdateEffect)(function () {
+    if (overlayVisibleState && props.filter) {
+      alignOverlay();
+    }
+  });
+  (0,primereact_hooks__WEBPACK_IMPORTED_MODULE_2__.useUpdateEffect)(function () {
+    updateTreeState();
+  }, [props.options]);
+  (0,primereact_hooks__WEBPACK_IMPORTED_MODULE_2__.useUpdateEffect)(function () {
+    if (overlayVisibleState && expandedKeysState) {
+      alignOverlay();
+    }
+  }, [expandedKeysState]);
+  (0,primereact_hooks__WEBPACK_IMPORTED_MODULE_2__.useUpdateEffect)(function () {
+    if (overlayVisibleState) {
+      if (!selfChange.current) {
+        updateTreeState();
+      }
+
+      selfChange.current = false;
+    }
+  }, [props.value]);
+  (0,primereact_hooks__WEBPACK_IMPORTED_MODULE_2__.useUnmountEffect)(function () {
+    primereact_utils__WEBPACK_IMPORTED_MODULE_6__.ZIndexUtils.clear(overlayRef.current);
+  });
+
+  var createKeyboardHelper = function createKeyboardHelper() {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      className: "p-hidden-accessible"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", _extends({
+      ref: focusInputRef,
+      role: "listbox",
+      id: props.inputId,
+      type: "text",
+      readOnly: true,
+      "aria-expanded": overlayVisibleState,
+      onFocus: onInputFocus,
+      onBlur: onInputBlur,
+      onKeyDown: onInputKeyDown,
+      disabled: props.disabled,
+      tabIndex: props.tabIndex
+    }, ariaProps)));
+  };
+
+  var createLabel = function createLabel() {
+    var labelClassName = (0,primereact_utils__WEBPACK_IMPORTED_MODULE_6__.classNames)('p-treeselect-label', {
+      'p-placeholder': getLabel() === props.placeholder,
+      'p-treeselect-label-empty': !props.placeholder && isValueEmpty
+    });
+    var content = null;
+
+    if (props.valueTemplate) {
+      content = primereact_utils__WEBPACK_IMPORTED_MODULE_6__.ObjectUtils.getJSXElement(props.valueTemplate, selectedNodes, props);
+    } else {
+      if (props.display === 'comma') {
+        content = getLabel() || 'empty';
+      } else if (props.display === 'chip') {
+        content = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, selectedNodes && selectedNodes.map(function (node, index) {
+          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+            className: "p-treeselect-token",
+            key: "".concat(node.key, "_").concat(index)
+          }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
+            className: "p-treeselect-token-label"
+          }, node.label));
+        }), isValueEmpty && (props.placeholder || 'empty'));
+      }
+    }
+
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      className: "p-treeselect-label-container"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      className: labelClassName
+    }, content));
+  };
+
+  var createDropdownIcon = function createDropdownIcon() {
+    var iconClassName = (0,primereact_utils__WEBPACK_IMPORTED_MODULE_6__.classNames)('p-treeselect-trigger-icon p-clickable', props.dropdownIcon);
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      ref: triggerRef,
+      className: "p-treeselect-trigger",
+      role: "button",
+      "aria-haspopup": "listbox",
+      "aria-expanded": overlayVisibleState
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
+      className: iconClassName
+    }));
+  };
+
+  var createContent = function createContent() {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(primereact_tree__WEBPACK_IMPORTED_MODULE_5__.Tree, {
+      value: props.options,
+      selectionMode: props.selectionMode,
+      selectionKeys: props.value,
+      metaKeySelection: props.metaKeySelection,
+      onSelectionChange: onSelectionChange,
+      onSelect: onNodeSelect,
+      onUnselect: onNodeUnselect,
+      expandedKeys: expandedKeys,
+      onToggle: onNodeToggle,
+      onExpand: props.onNodeExpand,
+      onCollapse: props.onNodeCollapse,
+      filter: props.filter,
+      filterValue: filteredValue,
+      filterBy: props.filterBy,
+      filterMode: props.filterMode,
+      filterPlaceholder: props.filterPlaceholder,
+      filterLocale: props.filterLocale,
+      showHeader: false,
+      onFilterValueChange: onFilterValueChange
+    }), hasNoOptions && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      className: "p-treeselect-empty-message"
+    }, props.emptyMessage || (0,primereact_api__WEBPACK_IMPORTED_MODULE_1__.localeOption)('emptyMessage')));
+  };
+
+  var createFilterElement = function createFilterElement() {
+    if (props.filter) {
+      var filterValue = primereact_utils__WEBPACK_IMPORTED_MODULE_6__.ObjectUtils.isNotEmpty(filteredValue) ? filteredValue : '';
+      var filterContent = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+        className: "p-treeselect-filter-container"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
+        ref: filterInputRef,
+        type: "text",
+        value: filterValue,
+        autoComplete: "off",
+        className: "p-treeselect-filter p-inputtext p-component",
+        placeholder: props.filterPlaceholder,
+        onKeyDown: onFilterInputKeyDown,
+        onChange: onFilterInputChange,
+        disabled: props.disabled
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
+        className: "p-treeselect-filter-icon pi pi-search"
+      }));
+
+      if (props.filterTemplate) {
+        var defaultContentOptions = {
+          className: 'p-treeselect-filter-container',
+          element: filterContent,
+          filterOptions: filterOptions,
+          filterInputKeyDown: onFilterInputKeyDown,
+          filterInputChange: onFilterInputChange,
+          filterIconClassName: 'p-dropdown-filter-icon pi pi-search',
+          props: props
+        };
+        filterContent = primereact_utils__WEBPACK_IMPORTED_MODULE_6__.ObjectUtils.getJSXElement(props.filterTemplate, defaultContentOptions);
+      }
+
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, filterContent);
+    }
+  };
+
+  var createHeader = function createHeader() {
+    var filterElement = createFilterElement();
+    var closeElement = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+      type: "button",
+      className: "p-treeselect-close p-link",
+      onClick: hide,
+      "aria-label": (0,primereact_api__WEBPACK_IMPORTED_MODULE_1__.localeOption)('close')
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
+      className: "p-treeselect-close-icon pi pi-times",
+      "aria-hidden": "true"
+    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(primereact_ripple__WEBPACK_IMPORTED_MODULE_4__.Ripple, null));
+    var content = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      className: "p-treeselect-header"
+    }, filterElement, closeElement);
+
+    if (props.panelHeaderTemplate) {
+      var defaultOptions = {
+        className: 'p-treeselect-header',
+        filterElement: filterElement,
+        closeElement: closeElement,
+        closeElementClassName: 'p-treeselect-close p-link',
+        closeIconClassName: 'p-treeselect-close-icon pi pi-times',
+        onCloseClick: hide,
+        element: content,
+        props: props
+      };
+      return primereact_utils__WEBPACK_IMPORTED_MODULE_6__.ObjectUtils.getJSXElement(props.panelHeaderTemplate, defaultOptions);
+    }
+
+    return content;
+  };
+
+  var createFooter = function createFooter() {
+    return primereact_utils__WEBPACK_IMPORTED_MODULE_6__.ObjectUtils.getJSXElement(props.panelFooterTemplate, props);
+  };
+
+  var selectedNodes = getSelectedNodes();
+  var otherProps = primereact_utils__WEBPACK_IMPORTED_MODULE_6__.ObjectUtils.findDiffKeys(props, TreeSelect.defaultProps);
+  var ariaProps = primereact_utils__WEBPACK_IMPORTED_MODULE_6__.ObjectUtils.reduceKeys(otherProps, primereact_utils__WEBPACK_IMPORTED_MODULE_6__.DomHandler.ARIA_PROPS);
+  var className = (0,primereact_utils__WEBPACK_IMPORTED_MODULE_6__.classNames)('p-treeselect p-component p-inputwrapper', {
+    'p-treeselect-chip': props.display === 'chip',
+    'p-disabled': props.disabled,
+    'p-focus': focusedState,
+    'p-inputwrapper-filled': !isValueEmpty,
+    'p-inputwrapper-focus': focusedState || overlayVisibleState
+  }, props.className);
+  var keyboardHelper = createKeyboardHelper();
+  var labelElement = createLabel();
+  var dropdownIcon = createDropdownIcon();
+  var content = createContent();
+  var header = createHeader();
+  var footer = createFooter();
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", _extends({
+    id: props.id,
+    ref: elementRef,
+    className: className,
+    style: props.style
+  }, otherProps, {
+    onClick: onClick
+  }), keyboardHelper, labelElement, dropdownIcon, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(TreeSelectPanel, {
+    ref: overlayRef,
+    appendTo: props.appendTo,
+    panelStyle: props.panelStyle,
+    panelClassName: props.panelClassName,
+    scrollHeight: props.scrollHeight,
+    onClick: onOverlayClick,
+    header: header,
+    footer: footer,
+    transitionOptions: props.transitionOptions,
+    "in": overlayVisibleState,
+    onEnter: onOverlayEnter,
+    onEntered: onOverlayEntered,
+    onExit: onOverlayExit,
+    onExited: onOverlayExited
+  }, content));
+}));
+TreeSelect.displayName = 'TreeSelect';
+TreeSelect.defaultProps = {
+  __TYPE: 'TreeSelect',
+  id: null,
+  value: null,
+  name: null,
+  style: null,
+  className: null,
+  disabled: false,
+  options: null,
+  scrollHeight: '400px',
+  placeholder: null,
+  tabIndex: null,
+  inputId: null,
+  ariaLabel: null,
+  ariaLabelledBy: null,
+  selectionMode: 'single',
+  expandedKeys: null,
+  panelStyle: null,
+  panelClassName: null,
+  appendTo: null,
+  emptyMessage: null,
+  display: 'comma',
+  metaKeySelection: true,
+  valueTemplate: null,
+  panelHeaderTemplate: null,
+  panelFooterTemplate: null,
+  transitionOptions: null,
+  dropdownIcon: 'pi pi-chevron-down',
+  filter: false,
+  filterTemplate: null,
+  filterValue: null,
+  filterBy: 'label',
+  filterMode: 'lenient',
+  filterPlaceholder: null,
+  filterLocale: undefined,
+  filterInputAutoFocus: true,
+  resetFilterOnHide: false,
+  onShow: null,
+  onHide: null,
+  onChange: null,
+  onNodeSelect: null,
+  onNodeUnselect: null,
+  onNodeExpand: null,
+  onNodeCollapse: null,
+  onFilterValueChange: null
 };
 
 

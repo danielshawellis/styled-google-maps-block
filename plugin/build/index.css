@@ -11682,4 +11682,18 @@
   width: 100%;
 }
 
+.p-dialog {
+  min-width: 700px;
+}
+
+@media (max-width: 768px) {
+  .p-dialog {
+    min-width: 95%;
+  }
+}
+.p-tree [role=treeitem] span[aria-hidden] {
+  font-size: 16px;
+  font-family: primeicons !important;
+}
+
 /*# sourceMappingURL=index.css.map*/

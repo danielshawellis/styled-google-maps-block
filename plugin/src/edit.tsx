@@ -37,11 +37,21 @@ const edit: React.ComponentType<BlockEditProps<MapSettings>> = function ({ attri
 	const blockProps = useBlockProps();
 	const iframeRef = useFocusableIframe() as React.LegacyRef<HTMLIFrameElement>;
 	const [stylerIsOpen, setStylerIsOpen] = useState(false);
+	const getStylesQueryString = (styles: MapSettings['styles']): string => styles.reduce((accumulator, { featureType, elementType, stylers }) => {
+		const stringComponents = [ 
+			...[featureType && `feature:${ featureType }`],
+			...[elementType && `element:${ elementType }`],
+			...[stylers.visibility && `visibility:${ stylers.visibility }`],
+			...[stylers.color && `color:${ stylers.color }`],
+			...[stylers.weight && `weight:${ stylers.weight }`],
+		];
+		return `${ accumulator }&style=${ stringComponents.join('|') }`;
+	}, '');
 
 	return (
 		<>
 			<div { ...blockProps }>
-				<iframe ref={ iframeRef } src={ `https://www.google.com/maps/embed/v1/${ attributes.mapmode }?q=${ attributes.q }&maptype=${ attributes.maptype }&zoom=${ attributes.zoom }&key=${ attributes.key }&language=${ attributes.language }&region=${ attributes.region }` } width="100%" height={ attributes.height } style={{ border: 0 }} allowFullScreen={ true } loading="lazy" referrerPolicy="no-referrer-when-downgrade"></iframe>
+				<iframe ref={ iframeRef } src={ `https://www.google.com/maps/embed/v1/${ attributes.mapmode }?q=${ attributes.q }&maptype=${ attributes.maptype }&zoom=${ attributes.zoom }&key=${ attributes.key }&language=${ attributes.language }&region=${ attributes.region }${ getStylesQueryString(attributes.styles) }` } width="100%" height={ attributes.height } style={{ border: 0 }} allowFullScreen={ true } loading="lazy" referrerPolicy="no-referrer-when-downgrade"></iframe>
 			</div>
 
 			<InspectorControls>
@@ -114,8 +124,10 @@ const edit: React.ComponentType<BlockEditProps<MapSettings>> = function ({ attri
 				<Panel>
 					<PanelBody title="Styles" initialOpen={ true }>
 						<PanelRow>
+							<div className="p-fluid" style={{ width: '100%' }}>
 								<Button label="Open Styler" onClick={ () => setStylerIsOpen(true) }/>
 								<Styler visible={ stylerIsOpen } onHide={ () => setStylerIsOpen(false) } attributes={ attributes } setAttributes={ setAttributes } />
+							</div>
 						</PanelRow>
 					</PanelBody>
 				</Panel>
