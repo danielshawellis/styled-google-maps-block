@@ -7,7 +7,7 @@ const place = function ({ attributes, setAttributes }: { attributes: MapSettings
       <PanelRow>
         <TextControl
           label="Query"
-          help={ <span>Defines the map marker's location. If necessary, a <a href="https://developers.google.com/maps/documentation/places/web-service/place-id#find-id" target="_blank" rel="noopener noreferrer"><strong>Google Maps Place ID</strong></a> can be used to target a specific location.</span> }
+          help={ <span>Defines the map marker's location. If necessary, a <a href="https://developers.google.com/maps/documentation/places/web-service/place-id#find-id" target="_blank" rel="noopener noreferrer"><strong>Google Maps Place ID</strong></a> prefixed with <strong>place_id:</strong> can be used to target a specific location.</span> }
           value={ attributes.q }
           onChange={ ( q ) => setAttributes({ q }) }
         />

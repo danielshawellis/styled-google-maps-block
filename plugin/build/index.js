@@ -278,7 +278,7 @@ const directions = function (_ref) {
       href: "https://developers.google.com/maps/documentation/places/web-service/place-id#find-id",
       target: "_blank",
       rel: "noopener noreferrer"
-    }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("strong", null, "Google Maps Place ID")), " can be used to target a specific location."),
+    }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("strong", null, "Google Maps Place ID")), " prefixed with ", (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("strong", null, "place_id:"), " can be used to target a specific location."),
     value: attributes.origin,
     onChange: origin => setAttributes({
       origin
@@ -289,7 +289,7 @@ const directions = function (_ref) {
       href: "https://developers.google.com/maps/documentation/places/web-service/place-id#find-id",
       target: "_blank",
       rel: "noopener noreferrer"
-    }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("strong", null, "Google Maps Place ID")), " can be used to target a specific location."),
+    }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("strong", null, "Google Maps Place ID")), " prefixed with ", (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("strong", null, "place_id:"), " can be used to target a specific location."),
     value: attributes.destination,
     onChange: destination => setAttributes({
       destination
@@ -387,7 +387,7 @@ const place = function (_ref) {
       href: "https://developers.google.com/maps/documentation/places/web-service/place-id#find-id",
       target: "_blank",
       rel: "noopener noreferrer"
-    }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("strong", null, "Google Maps Place ID")), " can be used to target a specific location."),
+    }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("strong", null, "Google Maps Place ID")), " prefixed with ", (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("strong", null, "place_id:"), " can be used to target a specific location."),
     value: attributes.q,
     onChange: q => setAttributes({
       q

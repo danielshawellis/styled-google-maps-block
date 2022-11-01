@@ -7,7 +7,7 @@ const directions = function ({ attributes, setAttributes }: { attributes: MapSet
       <PanelRow>
         <TextControl
           label="Origin"
-          help={ <span>Defines the starting point from which to display directions. If necessary, a <a href="https://developers.google.com/maps/documentation/places/web-service/place-id#find-id" target="_blank" rel="noopener noreferrer"><strong>Google Maps Place ID</strong></a> can be used to target a specific location.</span> }
+          help={ <span>Defines the starting point from which to display directions. If necessary, a <a href="https://developers.google.com/maps/documentation/places/web-service/place-id#find-id" target="_blank" rel="noopener noreferrer"><strong>Google Maps Place ID</strong></a> prefixed with <strong>place_id:</strong> can be used to target a specific location.</span> }
           value={ attributes.origin }
           onChange={ ( origin ) => setAttributes({ origin }) }
         />
@@ -15,7 +15,7 @@ const directions = function ({ attributes, setAttributes }: { attributes: MapSet
       <PanelRow>
         <TextControl
           label="Destination"
-          help={ <span>Defines the end point of the directions. If necessary, a <a href="https://developers.google.com/maps/documentation/places/web-service/place-id#find-id" target="_blank" rel="noopener noreferrer"><strong>Google Maps Place ID</strong></a> can be used to target a specific location.</span> }
+          help={ <span>Defines the end point of the directions. If necessary, a <a href="https://developers.google.com/maps/documentation/places/web-service/place-id#find-id" target="_blank" rel="noopener noreferrer"><strong>Google Maps Place ID</strong></a> prefixed with <strong>place_id:</strong> can be used to target a specific location.</span> }
           value={ attributes.destination }
           onChange={ ( destination ) => setAttributes({ destination }) }
         />
