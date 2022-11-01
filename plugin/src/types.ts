@@ -1,6 +1,6 @@
 export type MapSettings = {
   key: string,
-  height: string,
+  height: number,
   mapmode: 'place'| 'view'| 'directions'| 'streetview'| 'search',
   q: string,
   center: string,
@@ -13,7 +13,7 @@ export type MapSettings = {
   waypoints: string,
   mode: 'driving' | 'walking' | 'bicycling' | 'transit' | 'flying',
   avoid: string,
-  units: 'metric' | 'imperial',
+  units: '' | 'metric' | 'imperial',
   location: string,
   pano: string,
   heading: number,

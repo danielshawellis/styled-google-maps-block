@@ -25,11 +25,11 @@
 	"attributes": {
 		"key": {
 			"type": "string",
-			"default": "AIzaSyAjyDspiPfzEfjRSS5fQzm-3jHFjHxeXB4"
+			"default": "AIzaSyCRspsEADhOoOF4c2LhYKu_IAB0orV9ExA"
 		},
 		"height": {
-			"type": "string",
-			"default": "400px"
+			"type": "number",
+			"default": 400
 		},
 		"mapmode": {
 			"type": "string",
@@ -64,11 +64,11 @@
 		},
 		"language": {
 			"type": "string",
-			"default": "en"
+			"default": ""
 		},
 		"region": {
 			"type": "string",
-			"default": "US"
+			"default": ""
 		},
 		"origin": {
 			"type": "string",
@@ -100,10 +100,11 @@
 		"units": {
 			"type": "string",
 			"enum": [
+				"",
 				"metric",
 				"imperial"
 			],
-			"default": "metric"
+			"default": ""
 		},
 		"location": {
 			"type": "string",

@@ -5,9 +5,16 @@
  * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-block-editor/#useblockprops
  */
 import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
-import { Panel, PanelBody, PanelRow, BaseControl, TextControl, RangeControl, RadioControl, CheckboxControl } from '@wordpress/components';
+import { Panel, PanelBody, PanelRow, BaseControl, TextControl, RadioControl } from '@wordpress/components';
 import { useFocusableIframe } from '@wordpress/compose';
 import { BlockEditProps } from '@wordpress/blocks';
+
+import PlaceControls from './map-modes/place';
+import ViewControls from './map-modes/view';
+import DirectionsControls from './map-modes/directions';
+import StreetviewControls from './map-modes/streetview';
+import SearchControls from './map-modes/search';
+
 import { MapSettings } from './types';
 
 /**
@@ -28,24 +35,35 @@ const edit: React.ComponentType<BlockEditProps<MapSettings>> = function ({ attri
 	const blockProps = useBlockProps();
 	const iframeRef = useFocusableIframe() as React.LegacyRef<HTMLIFrameElement>;
 
-	const constructUrl = (acceptedParameters: (keyof Omit<MapSettings, 'mapmode' | 'height'>)[], _attributes: typeof attributes): string => {
-		const url = new URL(`https://www.google.com/maps/embed/v1/${ _attributes.mapmode }`);
+	const apiKeyHelp = <div>
+		<p>Please create your own API key before publishing a map. This is a Google requirement.</p>
+		<p>Here's how to create your own API key:</p>
+		<ol>
+			<li>Go to the <a href="https://console.cloud.google.com/project/_/google/maps-apis/credentials" target="_blank" rel="noopener noreferrer"><strong>Google Maps Platform &gt; Credentials</strong></a> page. If you haven't already, you may need to create an account and a Google Cloud project here.</li>
+			<li>On the <strong>Credentials</strong> page, click <strong>Create credentials &gt; API key</strong>. The <strong>API key created</strong> dialog displays your newly created API key.</li>
+			<li>Copy the new API key and paste it in the field above.</li>
+			<li>Go to the <a href="https://console.cloud.google.com/apis/library/maps-embed-backend.googleapis.com" target="_blank" rel="noopener noreferrer"><strong>Google Maps Embed API</strong></a> page, ensure that the correct project is selected, and click <strong>Enable</strong>.</li>
+		</ol>
+	</div>;
+
+	const constructUrl = (acceptedParameters: (keyof Omit<MapSettings, 'mapmode' | 'height'>)[], atts: typeof attributes): string => {
+		const url = new URL(`https://www.google.com/maps/embed/v1/${ atts.mapmode }`);
 		acceptedParameters.forEach(parameter => {
-			const value = _attributes[parameter];
-			if (value !== '') url.searchParams.append(parameter, typeof value === 'number' ? value.toString() : value)
+			const value = atts[parameter];
+			if (value !== '') url.searchParams.append(parameter, typeof value === 'number' ? value.toString() : value);
 		});
 		return url.href;
 	};
 
-	const getMapUrl = (_attributes: typeof attributes): string => {
-		switch (_attributes.mapmode) {
-			case 'place': return constructUrl(['key', 'q', 'zoom', 'maptype', 'language', 'region'], _attributes);
-			case 'view': return constructUrl(['key', 'center', 'zoom', 'maptype', 'language', 'region'], _attributes);
-			case 'directions': return constructUrl(['key', 'origin', 'destination', 'mode', 'units', 'zoom', 'maptype', 'language', 'region'], _attributes);
-			case 'streetview': return constructUrl(['key', 'location', 'pano', 'heading', 'pitch', 'fov', 'language', 'region'], _attributes);
-			case 'search': return constructUrl(['key', 'q', 'zoom', 'maptype', 'language', 'region'], _attributes);
+	const getMapUrl = (atts: typeof attributes): string => {
+		switch (atts.mapmode) {
+			case 'place': return constructUrl(['key', 'q', 'zoom', 'maptype', 'language', 'region'], atts);
+			case 'view': return constructUrl(['key', 'center', 'zoom', 'maptype', 'language', 'region'], atts);
+			case 'directions': return constructUrl(['key', 'origin', 'destination', 'mode', 'units', 'zoom', 'maptype', 'language', 'region'], atts);
+			case 'streetview': return constructUrl(['key', 'location', 'pano', 'heading', 'pitch', 'fov', 'language', 'region'], atts);
+			case 'search': return constructUrl(['key', 'q', 'zoom', 'maptype', 'language', 'region'], atts);
 		};
-	}; 
+	};
 
 	return (
 		<>
@@ -55,25 +73,30 @@ const edit: React.ComponentType<BlockEditProps<MapSettings>> = function ({ attri
 
 			<InspectorControls>
 				<Panel>
-					<PanelBody title="General" initialOpen={ true }>
+					<PanelBody title="Settings" initialOpen={ true }>
 						<PanelRow>
 							<TextControl
 								label="API Key"
-								help={ <p>Test content</p> }
+								help={ apiKeyHelp }
 								value={ attributes.key }
 								onChange={ ( key ) => setAttributes({ key }) }
 							/>
 						</PanelRow>
 						<PanelRow>
-							<TextControl
-								label="Height"
-								value={ attributes.height }
-								onChange={ ( height ) => setAttributes({ height }) }
-							/>
+							<BaseControl label="Height" help="The height in pixels of the Google Maps embed." id="height-input">
+								<input 
+									value={ attributes.height } 
+									onChange={ (event) => setAttributes({ height: parseInt(event.target.value) }) } 
+									type="number" 
+									min={0}
+									style={{ display: 'block', width: '100%', borderRadius: '2px' }}
+								/>
+							</BaseControl>
 						</PanelRow>
 						<PanelRow>
 							<RadioControl
 								label="Map Mode"
+								help="The format of the map embed. A number of other settings are dependent on this one."
 								selected={ attributes.mapmode }
 								options={ [
 									{ label: 'Place', value: 'place' },
@@ -85,70 +108,17 @@ const edit: React.ComponentType<BlockEditProps<MapSettings>> = function ({ attri
 								onChange={ ( mapmode: MapSettings['mapmode'] ) => setAttributes({ mapmode }) }
 							/>
 						</PanelRow>
-						<PanelRow>
-							<TextControl
-								label="Query"
-								value={ attributes.q }
-								onChange={ ( q ) => setAttributes({ q }) }
-							/>
-						</PanelRow>
-						<PanelRow>
-							<BaseControl label="Center" id="center-control">
-								<div style={{ display: 'flex', gap: '10px' }}>
-									<div>
-										<label style={{ display: 'block', marginBottom: '8px' }} htmlFor="center-latitude">Latitude</label>
-										<input 
-											value={ parseFloat(attributes.center.split(',')[0]) } 
-											onChange={ (event) => setAttributes({ center: `${event.target.value},${parseFloat(attributes.center.split(',')[1])}` }) } 
-											type="number" 
-											step={0.0001}
-											min={-90}
-											max={90}
-											size={8}
-											style={{ display: 'block', width: '100%' }}
-											id="center-latitude"
-										/>
-									</div>
-									<div>
-										<label style={{ display: 'block', marginBottom: '8px' }} htmlFor="center-longitude">Longitude</label>
-										<input 
-											value={ parseFloat(attributes.center.split(',')[1]) } 
-											onChange={ (event) => setAttributes({ center: `${parseFloat(attributes.center.split(',')[0])},${event.target.value}` }) } 
-											type="number" 
-											step={0.0001}
-											min={-180}
-											max={180}
-											size={8}
-											style={{ display: 'block', width: '100%' }}
-											id="center-longitude"
-										/>
-									</div>
-								</div>
-							</BaseControl>
-						</PanelRow>
-						<PanelRow>
-							<RangeControl
-								label="Zoom"
-								value={ attributes.zoom }
-								onChange={ ( zoom ) => setAttributes({ zoom }) }
-								min={ 1 }
-								max={ 21 }
-							/>
-						</PanelRow>
-						<PanelRow>
-							<RadioControl
-								label="Map Type"
-								selected={ attributes.maptype }
-								options={ [
-									{ label: 'Roadmap', value: 'roadmap' },
-									{ label: 'Satellite', value: 'satellite' },
-								] }
-								onChange={ ( maptype: MapSettings['maptype'] ) => setAttributes({ maptype }) }
-							/>
-						</PanelRow>
+
+						{ attributes.mapmode === 'place' && <PlaceControls attributes={ attributes } setAttributes={ setAttributes } /> }
+						{ attributes.mapmode === 'view' && <ViewControls attributes={ attributes } setAttributes={ setAttributes } /> }
+						{ attributes.mapmode === 'directions' && <DirectionsControls attributes={ attributes } setAttributes={ setAttributes } /> }
+						{ attributes.mapmode === 'streetview' && <StreetviewControls attributes={ attributes } setAttributes={ setAttributes } /> }
+						{ attributes.mapmode === 'search' && <SearchControls attributes={ attributes } setAttributes={ setAttributes } /> }
+
 						<PanelRow>
 							<TextControl
 								label="Language"
+								help={ <span>Defines the language to use for UI elements and for the display of labels on map tiles. By default, visitors will se a map in their own language. This parameter is only supported for some country tiles; if the specific language requested is not supported for the tile set, then the default language for that tileset will be used. Choose from <a href="https://developers.google.com/maps/faq#languagesupport" target="_blank" rel="noopener noreferrer"><strong>the language codes here</strong></a>.</span> }
 								value={ attributes.language }
 								onChange={ ( language ) => setAttributes({ language }) }
 							/>
@@ -156,115 +126,9 @@ const edit: React.ComponentType<BlockEditProps<MapSettings>> = function ({ attri
 						<PanelRow>
 							<TextControl
 								label="Region"
+								help={ <span>Defines the appropriate borders and labels to display, based on geo-political sensitivities. Choose from <a href="https://developers.google.com/maps/coverage" target="_blank" rel="noreferrer noopener"><strong>the region codes here</strong></a>.</span> }
 								value={ attributes.region }
 								onChange={ ( region ) => setAttributes({ region }) }
-							/>
-						</PanelRow>
-						<PanelRow>
-							<TextControl
-								label="Origin"
-								value={ attributes.origin }
-								onChange={ ( origin ) => setAttributes({ origin }) }
-							/>
-						</PanelRow>
-						<PanelRow>
-							<TextControl
-								label="Destination"
-								value={ attributes.destination }
-								onChange={ ( destination ) => setAttributes({ destination }) }
-							/>
-						</PanelRow>
-						<PanelRow>
-							<RadioControl
-								label="Mode"
-								selected={ attributes.mode }
-								options={ [
-									{ label: 'Driving', value: 'driving' },
-									{ label: 'Walking', value: 'walking' },
-									{ label: 'Bicycling', value: 'bycicling' },
-									{ label: 'Transit', value: 'transit' },
-									{ label: 'Flying', value: 'flying' },
-								] }
-								onChange={ ( maptype: MapSettings['maptype'] ) => setAttributes({ maptype }) }
-							/>
-						</PanelRow>
-						<PanelRow>
-							<RadioControl
-								label="Units"
-								selected={ attributes.units }
-								options={ [
-									{ label: 'Metric', value: 'metric' },
-									{ label: 'Imperial', value: 'imperial' },
-								] }
-								onChange={ ( units: MapSettings['units'] ) => setAttributes({ units }) }
-							/>
-						</PanelRow>
-						<PanelRow>
-							<BaseControl label="Location" id="location-control">
-								<div style={{ display: 'flex', gap: '10px' }}>
-									<div>
-										<label style={{ display: 'block', marginBottom: '8px' }} htmlFor="location-latitude">Latitude</label>
-										<input 
-											value={ parseFloat(attributes.location.split(',')[0]) } 
-											onChange={ (event) => setAttributes({ location: `${event.target.value},${parseFloat(attributes.location.split(',')[1])}` }) } 
-											type="number" 
-											step={0.0001}
-											min={-90}
-											max={90}
-											size={8}
-											style={{ display: 'block', width: '100%' }}
-											id="location-latitude"
-										/>
-									</div>
-									<div>
-										<label style={{ display: 'block', marginBottom: '8px' }} htmlFor="location-longitude">Longitude</label>
-										<input 
-											value={ parseFloat(attributes.location.split(',')[1]) } 
-											onChange={ (event) => setAttributes({ location: `${parseFloat(attributes.location.split(',')[0])},${event.target.value}` }) } 
-											type="number" 
-											step={0.0001}
-											min={-180}
-											max={180}
-											size={8}
-											style={{ display: 'block', width: '100%' }}
-											id="location-longitude"
-										/>
-									</div>
-								</div>
-							</BaseControl>
-						</PanelRow>
-						<PanelRow>
-							<TextControl
-								label="Panorama ID"
-								value={ attributes.pano }
-								onChange={ ( pano ) => setAttributes({ pano }) }
-							/>
-						</PanelRow>
-						<PanelRow>
-							<RangeControl
-								label="Heading"
-								value={ attributes.heading }
-								onChange={ ( heading ) => setAttributes({ heading }) }
-								min={ -180 }
-								max={ 180 }
-							/>
-						</PanelRow>
-						<PanelRow>
-							<RangeControl
-								label="Pitch"
-								value={ attributes.pitch }
-								onChange={ ( pitch ) => setAttributes({ pitch }) }
-								min={ -90 }
-								max={ 90 }
-							/>
-						</PanelRow>
-						<PanelRow>
-							<RangeControl
-								label="Field of View"
-								value={ attributes.fov }
-								onChange={ ( fov ) => setAttributes({ fov }) }
-								min={ 10 }
-								max={ 100 }
 							/>
 						</PanelRow>
 					</PanelBody>
