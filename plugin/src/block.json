@@ -48,7 +48,7 @@
 		},
 		"center": {
 			"type": "string",
-			"default": "40.7484,-73.9857"
+			"default": "40.74841,-73.98570"
 		},
 		"zoom": {
 			"type": "number",
@@ -108,7 +108,7 @@
 		},
 		"location": {
 			"type": "string",
-			"default": "40.7484,-73.9857"
+			"default": "40.74841,-73.98570"
 		},
 		"pano": {
 			"type": "string",
