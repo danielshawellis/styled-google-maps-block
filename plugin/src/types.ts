@@ -1,7 +1,7 @@
 export type MapSettings = {
   key: string,
   height: number,
-  mapmode: 'place'| 'view'| 'directions'| 'streetview'| 'search' | 'styled',
+  mapmode: 'place'| 'view'| 'directions'| 'streetview'| 'search' | 'themed',
   q: string,
   center: string,
   zoom: number,
@@ -20,7 +20,7 @@ export type MapSettings = {
   pitch: number,
   fov: number,
   styles: string,
-  styledmaptype: 'roadmap' | 'satellite' | 'hybrid' | 'terrain',
+  themedmaptype: 'roadmap' | 'satellite' | 'hybrid' | 'terrain',
   uivisibility: boolean,
   markervisibility: boolean,
 }

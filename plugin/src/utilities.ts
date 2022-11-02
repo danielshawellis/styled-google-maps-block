@@ -29,6 +29,10 @@ export const getMapObject = memoize((apiKey: string, element: HTMLElement) => ne
   .then(() => new google.maps.Map(element)));
 
 export const initializeMap = (map: MarkersMap, atts: Readonly<MapSettings>) => {
+  // TEMPORARY
+  console.log(atts);
+  
+
   // Define the position of the center of the map
   const center = { lat: parseFloat(atts.center.split(',')[0]), lng: parseFloat(atts.center.split(',')[1]) };
 
@@ -36,7 +40,7 @@ export const initializeMap = (map: MarkersMap, atts: Readonly<MapSettings>) => {
   map.setOptions({
     center,
     zoom: atts.zoom,
-    mapTypeId: atts.styledmaptype,
+    mapTypeId: atts.themedmaptype,
     disableDefaultUI: !atts.uivisibility,
     styles: JSON.parse(atts.styles)
   });

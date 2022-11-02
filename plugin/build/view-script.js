@@ -381,6 +381,9 @@ const getMapObject = (0,memoize_one__WEBPACK_IMPORTED_MODULE_1__["default"])((ap
   apiKey
 }).load().then(() => new google.maps.Map(element)));
 const initializeMap = (map, atts) => {
+  // TEMPORARY
+  console.log(atts);
+
   // Define the position of the center of the map
   const center = {
     lat: parseFloat(atts.center.split(',')[0]),
@@ -391,7 +394,7 @@ const initializeMap = (map, atts) => {
   map.setOptions({
     center,
     zoom: atts.zoom,
-    mapTypeId: atts.styledmaptype,
+    mapTypeId: atts.themedmaptype,
     disableDefaultUI: !atts.uivisibility,
     styles: JSON.parse(atts.styles)
   });

@@ -360,7 +360,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _map_modes_directions__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./map-modes/directions */ "./src/map-modes/directions.tsx");
 /* harmony import */ var _map_modes_streetview__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./map-modes/streetview */ "./src/map-modes/streetview.tsx");
 /* harmony import */ var _map_modes_search__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./map-modes/search */ "./src/map-modes/search.tsx");
-/* harmony import */ var _map_modes_styled__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./map-modes/styled */ "./src/map-modes/styled.tsx");
+/* harmony import */ var _map_modes_themed__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./map-modes/themed */ "./src/map-modes/themed.tsx");
 /* harmony import */ var _editor_scss__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./editor.scss */ "./src/editor.scss");
 
 /**
@@ -402,7 +402,7 @@ const edit = function (_ref) {
   const blockProps = (0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.useBlockProps)();
   const iframeRef = (0,_wordpress_compose__WEBPACK_IMPORTED_MODULE_3__.useFocusableIframe)();
   const containerRef = (0,react__WEBPACK_IMPORTED_MODULE_4__.useRef)(null);
-  const apiKeyHelp = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, "Please create your own API key before publishing a map. This is a Google requirement, and styled maps won't work without it."), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, "Here's how to create your own API key:"), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("ol", null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("li", null, "Go to the ", (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("a", {
+  const apiKeyHelp = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, "Please create your own API key before publishing a map. This is a Google requirement, and themed maps won't work without it."), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, "Here's how to create your own API key:"), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("ol", null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("li", null, "Go to the ", (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("a", {
     href: "https://console.cloud.google.com/project/_/google/maps-apis/credentials",
     target: "_blank",
     rel: "noopener noreferrer"
@@ -410,7 +410,7 @@ const edit = function (_ref) {
     href: "https://console.cloud.google.com/apis/library/maps-embed-backend.googleapis.com",
     target: "_blank",
     rel: "noopener noreferrer"
-  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("strong", null, "Google Maps Embed API")), " page, ensure that the correct project is selected, and click ", (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("strong", null, "Enable"), "."), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("li", null, "If you're using the ", (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("strong", null, "styled"), " map mode, go to the ", (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("a", {
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("strong", null, "Google Maps Embed API")), " page, ensure that the correct project is selected, and click ", (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("strong", null, "Enable"), "."), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("li", null, "If you're using the ", (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("strong", null, "themed"), " map mode, go to the ", (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("a", {
     href: "https://console.cloud.google.com/apis/library/maps-backend.googleapis.com",
     target: "_blank",
     rel: "noopener noreferrer"
@@ -426,7 +426,7 @@ const edit = function (_ref) {
   (0,react__WEBPACK_IMPORTED_MODULE_4__.useEffect)(() => {
     if (containerRef.current) (0,_utilities__WEBPACK_IMPORTED_MODULE_5__.getMapObject)(attributes.key, containerRef.current).then(map => (0,_utilities__WEBPACK_IMPORTED_MODULE_5__.initializeMap)(map, attributes));
   });
-  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", blockProps, attributes.mapmode === 'styled' ? (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", blockProps, attributes.mapmode === 'themed' ? (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "google-maps-gutenberg-block",
     ref: containerRef,
     style: {
@@ -491,8 +491,8 @@ const edit = function (_ref) {
       label: 'Search',
       value: 'search'
     }, {
-      label: 'Styled',
-      value: 'styled'
+      label: 'Themed',
+      value: 'themed'
     }],
     onChange: mapmode => setAttributes({
       mapmode
@@ -512,7 +512,7 @@ const edit = function (_ref) {
   }), attributes.mapmode === 'search' && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_map_modes_search__WEBPACK_IMPORTED_MODULE_10__["default"], {
     attributes: attributes,
     setAttributes: setAttributes
-  }), attributes.mapmode === 'styled' && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_map_modes_styled__WEBPACK_IMPORTED_MODULE_11__["default"], {
+  }), attributes.mapmode === 'themed' && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_map_modes_themed__WEBPACK_IMPORTED_MODULE_11__["default"], {
     attributes: attributes,
     setAttributes: setAttributes
   }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelRow, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
@@ -924,9 +924,9 @@ const streetview = function (_ref) {
 
 /***/ }),
 
-/***/ "./src/map-modes/styled.tsx":
+/***/ "./src/map-modes/themed.tsx":
 /*!**********************************!*\
-  !*** ./src/map-modes/styled.tsx ***!
+  !*** ./src/map-modes/themed.tsx ***!
   \**********************************/
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
@@ -935,9 +935,71 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _themes_standard_json__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../themes/standard.json */ "./src/themes/standard.json");
+/* harmony import */ var _themes_silver_json__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../themes/silver.json */ "./src/themes/silver.json");
+/* harmony import */ var _themes_retro_json__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../themes/retro.json */ "./src/themes/retro.json");
+/* harmony import */ var _themes_dark_json__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../themes/dark.json */ "./src/themes/dark.json");
+/* harmony import */ var _themes_night_json__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../themes/night.json */ "./src/themes/night.json");
+/* harmony import */ var _themes_aubergine_json__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../themes/aubergine.json */ "./src/themes/aubergine.json");
+/* harmony import */ var _images_standard_png__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../images/standard.png */ "./src/images/standard.png");
+/* harmony import */ var _images_silver_png__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../images/silver.png */ "./src/images/silver.png");
+/* harmony import */ var _images_retro_png__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../images/retro.png */ "./src/images/retro.png");
+/* harmony import */ var _images_dark_png__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../images/dark.png */ "./src/images/dark.png");
+/* harmony import */ var _images_night_png__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../images/night.png */ "./src/images/night.png");
+/* harmony import */ var _images_aubergine_png__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../images/aubergine.png */ "./src/images/aubergine.png");
 
 
-const styled = function (_ref) {
+
+
+
+
+
+
+
+// @ts-ignore
+
+// @ts-ignore
+
+// @ts-ignore
+
+// @ts-ignore
+
+// @ts-ignore
+
+// @ts-ignore
+
+const themes = [{
+  name: "Standard",
+  image: _images_standard_png__WEBPACK_IMPORTED_MODULE_8__,
+  styles: _themes_standard_json__WEBPACK_IMPORTED_MODULE_2__
+}, {
+  name: "Silver",
+  image: _images_silver_png__WEBPACK_IMPORTED_MODULE_9__,
+  styles: _themes_silver_json__WEBPACK_IMPORTED_MODULE_3__
+}, {
+  name: "Retro",
+  image: _images_retro_png__WEBPACK_IMPORTED_MODULE_10__,
+  styles: _themes_retro_json__WEBPACK_IMPORTED_MODULE_4__
+}, {
+  name: "Dark",
+  image: _images_dark_png__WEBPACK_IMPORTED_MODULE_11__,
+  styles: _themes_dark_json__WEBPACK_IMPORTED_MODULE_5__
+}, {
+  name: "Night",
+  image: _images_night_png__WEBPACK_IMPORTED_MODULE_12__,
+  styles: _themes_night_json__WEBPACK_IMPORTED_MODULE_6__
+}, {
+  name: "Aubergine",
+  image: _images_aubergine_png__WEBPACK_IMPORTED_MODULE_13__,
+  styles: _themes_aubergine_json__WEBPACK_IMPORTED_MODULE_7__
+}];
+const readFile = async file => new Promise((resolve, reject) => {
+  const reader = new FileReader();
+  reader.onload = event => resolve(event.target.result); // Since the file upload accepts only JSON, assume that this is a string
+  reader.onerror = reject;
+  reader.readAsText(file);
+});
+const themed = function (_ref) {
   let {
     attributes,
     setAttributes
@@ -983,7 +1045,73 @@ const styled = function (_ref) {
       width: '100%',
       borderRadius: '2px'
     }
-  })))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.PanelRow, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.RangeControl, {
+  })))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.PanelRow, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.BaseControl, {
+    label: "Select a Theme",
+    help: (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", null, "Select from a list of map themes or ", (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("a", {
+      href: "http://flagstaffintegrations.com/",
+      target: "_blank",
+      rel: "noopener noreferrer"
+    }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("strong", null, "download additional themes")), "."),
+    id: "theme-select"
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    style: {
+      display: 'grid',
+      gridTemplateColumns: '1fr 1fr',
+      gap: '8px'
+    }
+  }, themes.map(theme => (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    style: {
+      border: "1px solid rgb(224, 224, 224)",
+      cursor: "pointer"
+    },
+    onClick: () => setAttributes({
+      styles: JSON.stringify(theme.styles)
+    })
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("img", {
+    src: theme.image,
+    style: {
+      display: 'block',
+      borderBottom: "1px solid rgb(224, 224, 224)"
+    }
+  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    style: {
+      display: 'flex',
+      justifyContent: 'center'
+    }
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("label", {
+    style: {
+      padding: '4px',
+      marginRight: 0
+    }
+  }, theme.name))))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.Button, {
+    variant: "primary",
+    style: {
+      width: '100%',
+      marginTop: '8px',
+      justifyContent: 'center',
+      fontWeight: 700
+    },
+    onClick: () => window.open("http://flagstaffintegrations.com/", "_blank", "noopener noreferrer")
+  }, "Get Additional Themes"))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.PanelRow, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.BaseControl, {
+    label: "Upload Additional Themes",
+    help: (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", null, "Additional theme files can be downloaded from our ", (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("a", {
+      href: "http://flagstaffintegrations.com/",
+      target: "_blank",
+      rel: "noopener noreferrer"
+    }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("strong", null, "theme directory")), ". Click the button above to upload a theme and apply it to the map embed."),
+    id: "theme-file-upload"
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.FormFileUpload, {
+    accept: ".json",
+    style: {
+      width: '100%',
+      justifyContent: 'center',
+      fontWeight: 700
+    },
+    variant: "primary",
+    onChange: event => readFile(event.target.files.item(0)).then(contents => setAttributes({
+      styles: contents
+    }))
+  }, "Upload A Theme File"))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.PanelRow, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.RangeControl, {
     label: "Zoom",
     help: "Sets initial zoom level of the map.",
     value: attributes.zoom,
@@ -992,23 +1120,24 @@ const styled = function (_ref) {
     }),
     min: 1,
     max: 21
-  })), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.PanelRow, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.TextareaControl, {
-    label: "JSON-based Styles",
-    help: (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, "To generate map styles, open the ", (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("a", {
-      href: "https://mapstyle.withgoogle.com/",
-      target: "_blank",
-      rel: "noopener noreferrer"
-    }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("strong", null, "Google Maps Styling Wizard")), ", click ", (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("strong", null, "use the legacy JSON styling wizard"), ", create your styles, click ", (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("strong", null, "Finish"), ", and then click ", (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("strong", null, "Copy JSON"), ". Paste copied the JSON above."), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, "A large number of pre-made styles are also available on ", (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("a", {
-      href: "https://snazzymaps.com/"
-    }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("strong", null, "Snazzy Maps")), ". To use them, select a map, click ", (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("strong", null, "Expand Code"), ", copy the JSON code, and paste it above.")),
-    value: attributes.styles,
-    onChange: styles => setAttributes({
-      styles
+  })), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.PanelRow, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.CheckboxControl, {
+    label: "UI Visibility",
+    help: "Sets the visibility of the UI components in a themed map.",
+    checked: attributes.uivisibility,
+    onChange: uivisibility => setAttributes({
+      uivisibility
+    })
+  })), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.PanelRow, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.CheckboxControl, {
+    label: "Marker Visibility",
+    help: "Sets the visibility of the location marker in a themed map.",
+    checked: attributes.markervisibility,
+    onChange: markervisibility => setAttributes({
+      markervisibility
     })
   })), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.PanelRow, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.RadioControl, {
-    label: "Styled Map Type",
+    label: "Themed Map Type",
     help: (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", null, "Defines the type of map tiles to load. Some styles may not be applied when ", (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("strong", null, "Hybrid"), " or ", (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("strong", null, "Satellite"), " are selected."),
-    selected: attributes.styledmaptype,
+    selected: attributes.themedmaptype,
     options: [{
       label: 'Roadmap',
       value: 'roadmap'
@@ -1022,26 +1151,23 @@ const styled = function (_ref) {
       label: 'Terrain',
       value: 'terrain'
     }],
-    onChange: styledmaptype => setAttributes({
-      styledmaptype
+    onChange: themedmaptype => setAttributes({
+      themedmaptype
     })
-  })), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.PanelRow, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.CheckboxControl, {
-    label: "UI Visibility",
-    help: "Sets the visibility of the UI components in a styled map.",
-    checked: attributes.uivisibility,
-    onChange: uivisibility => setAttributes({
-      uivisibility
-    })
-  })), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.PanelRow, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.CheckboxControl, {
-    label: "Marker Visibility",
-    help: "Sets the visibility of the location marker in a styled map.",
-    checked: attributes.markervisibility,
-    onChange: markervisibility => setAttributes({
-      markervisibility
+  })), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.PanelRow, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.TextareaControl, {
+    label: "Theme JSON",
+    help: (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", null, "Advanced users can further customize their themes using JSON. Documentation can be found ", (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("a", {
+      href: "https://developers.google.com/maps/documentation/javascript/style-reference",
+      target: "_blank",
+      rel: "noopener noreferrer"
+    }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("strong", null, "here")), ". Note that misconfiguring theme JSON will cause errors."),
+    value: attributes.styles,
+    onChange: styles => setAttributes({
+      styles
     })
   })));
 };
-/* harmony default export */ __webpack_exports__["default"] = (styled);
+/* harmony default export */ __webpack_exports__["default"] = (themed);
 
 /***/ }),
 
@@ -1166,7 +1292,7 @@ const save = function (_ref) {
     attributes
   } = _ref;
   const blockProps = _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.useBlockProps.save();
-  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", blockProps, attributes.mapmode === 'styled' ? (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", blockProps, attributes.mapmode === 'themed' ? (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "google-maps-gutenberg-block",
     style: {
       width: '100%',
@@ -1233,6 +1359,9 @@ const getMapObject = (0,memoize_one__WEBPACK_IMPORTED_MODULE_1__["default"])((ap
   apiKey
 }).load().then(() => new google.maps.Map(element)));
 const initializeMap = (map, atts) => {
+  // TEMPORARY
+  console.log(atts);
+
   // Define the position of the center of the map
   const center = {
     lat: parseFloat(atts.center.split(',')[0]),
@@ -1243,7 +1372,7 @@ const initializeMap = (map, atts) => {
   map.setOptions({
     center,
     zoom: atts.zoom,
-    mapTypeId: atts.styledmaptype,
+    mapTypeId: atts.themedmaptype,
     disableDefaultUI: !atts.uivisibility,
     styles: JSON.parse(atts.styles)
   });
@@ -1405,6 +1534,66 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./src/images/aubergine.png":
+/*!**********************************!*\
+  !*** ./src/images/aubergine.png ***!
+  \**********************************/
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "images/aubergine.81c1a402.png";
+
+/***/ }),
+
+/***/ "./src/images/dark.png":
+/*!*****************************!*\
+  !*** ./src/images/dark.png ***!
+  \*****************************/
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "images/dark.16e3b1fc.png";
+
+/***/ }),
+
+/***/ "./src/images/night.png":
+/*!******************************!*\
+  !*** ./src/images/night.png ***!
+  \******************************/
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "images/night.3b28179d.png";
+
+/***/ }),
+
+/***/ "./src/images/retro.png":
+/*!******************************!*\
+  !*** ./src/images/retro.png ***!
+  \******************************/
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "images/retro.42465251.png";
+
+/***/ }),
+
+/***/ "./src/images/silver.png":
+/*!*******************************!*\
+  !*** ./src/images/silver.png ***!
+  \*******************************/
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "images/silver.45cc337c.png";
+
+/***/ }),
+
+/***/ "./src/images/standard.png":
+/*!*********************************!*\
+  !*** ./src/images/standard.png ***!
+  \*********************************/
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "images/standard.17a8ee34.png";
+
+/***/ }),
+
 /***/ "react":
 /*!************************!*\
   !*** external "React" ***!
@@ -1471,7 +1660,67 @@ module.exports = window["wp"]["element"];
   \************************/
 /***/ (function(module) {
 
-module.exports = JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":2,"name":"create-block/google-maps-gutenberg-block","version":"0.1.0","title":"Styled Google Maps","category":"widgets","description":"A highly-customizable Google Maps embed.","supports":{"html":false},"textdomain":"google-maps-gutenberg-block","editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css","viewScript":"file:./view-script.js","keywords":["google","maps","map","branded","styled","customized","embed"],"attributes":{"key":{"type":"string","default":"AIzaSyCRspsEADhOoOF4c2LhYKu_IAB0orV9ExA"},"height":{"type":"number","default":400},"mapmode":{"type":"string","default":"place","enum":["place","view","directions","streetview","search","styled"]},"q":{"type":"string","default":"Empire State Building"},"center":{"type":"string","default":"40.74841,-73.98570"},"zoom":{"type":"number","default":10},"maptype":{"type":"string","default":"roadmap","enum":["roadmap","satellite"]},"language":{"type":"string","default":""},"region":{"type":"string","default":""},"origin":{"type":"string","default":"Empire State Building"},"destination":{"type":"string","default":"Flatiron Building"},"waypoints":{"type":"string","default":""},"mode":{"type":"string","enum":["driving","walking","bicycling","transit","flying"],"default":"driving"},"avoid":{"type":"string","default":""},"units":{"type":"string","enum":["","metric","imperial"],"default":""},"location":{"type":"string","default":"40.74841,-73.98570"},"pano":{"type":"string","default":""},"heading":{"type":"number","default":0},"pitch":{"type":"number","default":0},"fov":{"type":"number","default":90},"styles":{"type":"string","default":"[]"},"styledmaptype":{"type":"string","enum":["roadmap","satellite","hybrid","terrain"],"default":"roadmap"},"uivisibility":{"type":"boolean","default":true},"markervisibility":{"type":"boolean","default":true}}}');
+module.exports = JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":2,"name":"create-block/google-maps-gutenberg-block","version":"0.1.0","title":"Styled Google Maps","category":"widgets","description":"A highly-customizable Google Maps embed.","supports":{"html":false},"textdomain":"google-maps-gutenberg-block","editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css","viewScript":"file:./view-script.js","keywords":["google","maps","map","branded","styled","customized","embed"],"attributes":{"key":{"type":"string","default":"AIzaSyCRspsEADhOoOF4c2LhYKu_IAB0orV9ExA"},"height":{"type":"number","default":400},"mapmode":{"type":"string","default":"place","enum":["place","view","directions","streetview","search","themed"]},"q":{"type":"string","default":"Empire State Building"},"center":{"type":"string","default":"40.74841,-73.98570"},"zoom":{"type":"number","default":10},"maptype":{"type":"string","default":"roadmap","enum":["roadmap","satellite"]},"language":{"type":"string","default":""},"region":{"type":"string","default":""},"origin":{"type":"string","default":"Empire State Building"},"destination":{"type":"string","default":"Flatiron Building"},"waypoints":{"type":"string","default":""},"mode":{"type":"string","enum":["driving","walking","bicycling","transit","flying"],"default":"driving"},"avoid":{"type":"string","default":""},"units":{"type":"string","enum":["","metric","imperial"],"default":""},"location":{"type":"string","default":"40.74841,-73.98570"},"pano":{"type":"string","default":""},"heading":{"type":"number","default":0},"pitch":{"type":"number","default":0},"fov":{"type":"number","default":90},"styles":{"type":"string","default":"[]"},"themedmaptype":{"type":"string","enum":["roadmap","satellite","hybrid","terrain"],"default":"roadmap"},"uivisibility":{"type":"boolean","default":true},"markervisibility":{"type":"boolean","default":true}}}');
+
+/***/ }),
+
+/***/ "./src/themes/aubergine.json":
+/*!***********************************!*\
+  !*** ./src/themes/aubergine.json ***!
+  \***********************************/
+/***/ (function(module) {
+
+module.exports = JSON.parse('[{"elementType":"geometry","stylers":[{"color":"#1d2c4d"}]},{"elementType":"labels.text.fill","stylers":[{"color":"#8ec3b9"}]},{"elementType":"labels.text.stroke","stylers":[{"color":"#1a3646"}]},{"featureType":"administrative.country","elementType":"geometry.stroke","stylers":[{"color":"#4b6878"}]},{"featureType":"administrative.land_parcel","elementType":"labels.text.fill","stylers":[{"color":"#64779e"}]},{"featureType":"administrative.province","elementType":"geometry.stroke","stylers":[{"color":"#4b6878"}]},{"featureType":"landscape.man_made","elementType":"geometry.stroke","stylers":[{"color":"#334e87"}]},{"featureType":"landscape.natural","elementType":"geometry","stylers":[{"color":"#023e58"}]},{"featureType":"poi","elementType":"geometry","stylers":[{"color":"#283d6a"}]},{"featureType":"poi","elementType":"labels.text.fill","stylers":[{"color":"#6f9ba5"}]},{"featureType":"poi","elementType":"labels.text.stroke","stylers":[{"color":"#1d2c4d"}]},{"featureType":"poi.park","elementType":"geometry.fill","stylers":[{"color":"#023e58"}]},{"featureType":"poi.park","elementType":"labels.text.fill","stylers":[{"color":"#3C7680"}]},{"featureType":"road","elementType":"geometry","stylers":[{"color":"#304a7d"}]},{"featureType":"road","elementType":"labels.text.fill","stylers":[{"color":"#98a5be"}]},{"featureType":"road","elementType":"labels.text.stroke","stylers":[{"color":"#1d2c4d"}]},{"featureType":"road.highway","elementType":"geometry","stylers":[{"color":"#2c6675"}]},{"featureType":"road.highway","elementType":"geometry.stroke","stylers":[{"color":"#255763"}]},{"featureType":"road.highway","elementType":"labels.text.fill","stylers":[{"color":"#b0d5ce"}]},{"featureType":"road.highway","elementType":"labels.text.stroke","stylers":[{"color":"#023e58"}]},{"featureType":"transit","elementType":"labels.text.fill","stylers":[{"color":"#98a5be"}]},{"featureType":"transit","elementType":"labels.text.stroke","stylers":[{"color":"#1d2c4d"}]},{"featureType":"transit.line","elementType":"geometry.fill","stylers":[{"color":"#283d6a"}]},{"featureType":"transit.station","elementType":"geometry","stylers":[{"color":"#3a4762"}]},{"featureType":"water","elementType":"geometry","stylers":[{"color":"#0e1626"}]},{"featureType":"water","elementType":"labels.text.fill","stylers":[{"color":"#4e6d70"}]}]');
+
+/***/ }),
+
+/***/ "./src/themes/dark.json":
+/*!******************************!*\
+  !*** ./src/themes/dark.json ***!
+  \******************************/
+/***/ (function(module) {
+
+module.exports = JSON.parse('[{"elementType":"geometry","stylers":[{"color":"#212121"}]},{"elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"elementType":"labels.text.fill","stylers":[{"color":"#757575"}]},{"elementType":"labels.text.stroke","stylers":[{"color":"#212121"}]},{"featureType":"administrative","elementType":"geometry","stylers":[{"color":"#757575"}]},{"featureType":"administrative.country","elementType":"labels.text.fill","stylers":[{"color":"#9e9e9e"}]},{"featureType":"administrative.land_parcel","stylers":[{"visibility":"off"}]},{"featureType":"administrative.locality","elementType":"labels.text.fill","stylers":[{"color":"#bdbdbd"}]},{"featureType":"poi","elementType":"labels.text.fill","stylers":[{"color":"#757575"}]},{"featureType":"poi.park","elementType":"geometry","stylers":[{"color":"#181818"}]},{"featureType":"poi.park","elementType":"labels.text.fill","stylers":[{"color":"#616161"}]},{"featureType":"poi.park","elementType":"labels.text.stroke","stylers":[{"color":"#1b1b1b"}]},{"featureType":"road","elementType":"geometry.fill","stylers":[{"color":"#2c2c2c"}]},{"featureType":"road","elementType":"labels.text.fill","stylers":[{"color":"#8a8a8a"}]},{"featureType":"road.arterial","elementType":"geometry","stylers":[{"color":"#373737"}]},{"featureType":"road.highway","elementType":"geometry","stylers":[{"color":"#3c3c3c"}]},{"featureType":"road.highway.controlled_access","elementType":"geometry","stylers":[{"color":"#4e4e4e"}]},{"featureType":"road.local","elementType":"labels.text.fill","stylers":[{"color":"#616161"}]},{"featureType":"transit","elementType":"labels.text.fill","stylers":[{"color":"#757575"}]},{"featureType":"water","elementType":"geometry","stylers":[{"color":"#000000"}]},{"featureType":"water","elementType":"labels.text.fill","stylers":[{"color":"#3d3d3d"}]}]');
+
+/***/ }),
+
+/***/ "./src/themes/night.json":
+/*!*******************************!*\
+  !*** ./src/themes/night.json ***!
+  \*******************************/
+/***/ (function(module) {
+
+module.exports = JSON.parse('[{"elementType":"geometry","stylers":[{"color":"#242f3e"}]},{"elementType":"labels.text.fill","stylers":[{"color":"#746855"}]},{"elementType":"labels.text.stroke","stylers":[{"color":"#242f3e"}]},{"featureType":"administrative.locality","elementType":"labels.text.fill","stylers":[{"color":"#d59563"}]},{"featureType":"poi","elementType":"labels.text.fill","stylers":[{"color":"#d59563"}]},{"featureType":"poi.park","elementType":"geometry","stylers":[{"color":"#263c3f"}]},{"featureType":"poi.park","elementType":"labels.text.fill","stylers":[{"color":"#6b9a76"}]},{"featureType":"road","elementType":"geometry","stylers":[{"color":"#38414e"}]},{"featureType":"road","elementType":"geometry.stroke","stylers":[{"color":"#212a37"}]},{"featureType":"road","elementType":"labels.text.fill","stylers":[{"color":"#9ca5b3"}]},{"featureType":"road.highway","elementType":"geometry","stylers":[{"color":"#746855"}]},{"featureType":"road.highway","elementType":"geometry.stroke","stylers":[{"color":"#1f2835"}]},{"featureType":"road.highway","elementType":"labels.text.fill","stylers":[{"color":"#f3d19c"}]},{"featureType":"transit","elementType":"geometry","stylers":[{"color":"#2f3948"}]},{"featureType":"transit.station","elementType":"labels.text.fill","stylers":[{"color":"#d59563"}]},{"featureType":"water","elementType":"geometry","stylers":[{"color":"#17263c"}]},{"featureType":"water","elementType":"labels.text.fill","stylers":[{"color":"#515c6d"}]},{"featureType":"water","elementType":"labels.text.stroke","stylers":[{"color":"#17263c"}]}]');
+
+/***/ }),
+
+/***/ "./src/themes/retro.json":
+/*!*******************************!*\
+  !*** ./src/themes/retro.json ***!
+  \*******************************/
+/***/ (function(module) {
+
+module.exports = JSON.parse('[{"elementType":"geometry","stylers":[{"color":"#ebe3cd"}]},{"elementType":"labels.text.fill","stylers":[{"color":"#523735"}]},{"elementType":"labels.text.stroke","stylers":[{"color":"#f5f1e6"}]},{"featureType":"administrative","elementType":"geometry.stroke","stylers":[{"color":"#c9b2a6"}]},{"featureType":"administrative.land_parcel","elementType":"geometry.stroke","stylers":[{"color":"#dcd2be"}]},{"featureType":"administrative.land_parcel","elementType":"labels.text.fill","stylers":[{"color":"#ae9e90"}]},{"featureType":"landscape.natural","elementType":"geometry","stylers":[{"color":"#dfd2ae"}]},{"featureType":"poi","elementType":"geometry","stylers":[{"color":"#dfd2ae"}]},{"featureType":"poi","elementType":"labels.text.fill","stylers":[{"color":"#93817c"}]},{"featureType":"poi.park","elementType":"geometry.fill","stylers":[{"color":"#a5b076"}]},{"featureType":"poi.park","elementType":"labels.text.fill","stylers":[{"color":"#447530"}]},{"featureType":"road","elementType":"geometry","stylers":[{"color":"#f5f1e6"}]},{"featureType":"road.arterial","elementType":"geometry","stylers":[{"color":"#fdfcf8"}]},{"featureType":"road.highway","elementType":"geometry","stylers":[{"color":"#f8c967"}]},{"featureType":"road.highway","elementType":"geometry.stroke","stylers":[{"color":"#e9bc62"}]},{"featureType":"road.highway.controlled_access","elementType":"geometry","stylers":[{"color":"#e98d58"}]},{"featureType":"road.highway.controlled_access","elementType":"geometry.stroke","stylers":[{"color":"#db8555"}]},{"featureType":"road.local","elementType":"labels.text.fill","stylers":[{"color":"#806b63"}]},{"featureType":"transit.line","elementType":"geometry","stylers":[{"color":"#dfd2ae"}]},{"featureType":"transit.line","elementType":"labels.text.fill","stylers":[{"color":"#8f7d77"}]},{"featureType":"transit.line","elementType":"labels.text.stroke","stylers":[{"color":"#ebe3cd"}]},{"featureType":"transit.station","elementType":"geometry","stylers":[{"color":"#dfd2ae"}]},{"featureType":"water","elementType":"geometry.fill","stylers":[{"color":"#b9d3c2"}]},{"featureType":"water","elementType":"labels.text.fill","stylers":[{"color":"#92998d"}]}]');
+
+/***/ }),
+
+/***/ "./src/themes/silver.json":
+/*!********************************!*\
+  !*** ./src/themes/silver.json ***!
+  \********************************/
+/***/ (function(module) {
+
+module.exports = JSON.parse('[{"elementType":"geometry","stylers":[{"color":"#f5f5f5"}]},{"elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"elementType":"labels.text.fill","stylers":[{"color":"#616161"}]},{"elementType":"labels.text.stroke","stylers":[{"color":"#f5f5f5"}]},{"featureType":"administrative.land_parcel","elementType":"labels.text.fill","stylers":[{"color":"#bdbdbd"}]},{"featureType":"poi","elementType":"geometry","stylers":[{"color":"#eeeeee"}]},{"featureType":"poi","elementType":"labels.text.fill","stylers":[{"color":"#757575"}]},{"featureType":"poi.park","elementType":"geometry","stylers":[{"color":"#e5e5e5"}]},{"featureType":"poi.park","elementType":"labels.text.fill","stylers":[{"color":"#9e9e9e"}]},{"featureType":"road","elementType":"geometry","stylers":[{"color":"#ffffff"}]},{"featureType":"road.arterial","elementType":"labels.text.fill","stylers":[{"color":"#757575"}]},{"featureType":"road.highway","elementType":"geometry","stylers":[{"color":"#dadada"}]},{"featureType":"road.highway","elementType":"labels.text.fill","stylers":[{"color":"#616161"}]},{"featureType":"road.local","elementType":"labels.text.fill","stylers":[{"color":"#9e9e9e"}]},{"featureType":"transit.line","elementType":"geometry","stylers":[{"color":"#e5e5e5"}]},{"featureType":"transit.station","elementType":"geometry","stylers":[{"color":"#eeeeee"}]},{"featureType":"water","elementType":"geometry","stylers":[{"color":"#c9c9c9"}]},{"featureType":"water","elementType":"labels.text.fill","stylers":[{"color":"#9e9e9e"}]}]');
+
+/***/ }),
+
+/***/ "./src/themes/standard.json":
+/*!**********************************!*\
+  !*** ./src/themes/standard.json ***!
+  \**********************************/
+/***/ (function(module) {
+
+module.exports = [];
 
 /***/ })
 
@@ -1563,6 +1812,18 @@ module.exports = JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json
 /******/ 		};
 /******/ 	}();
 /******/ 	
+/******/ 	/* webpack/runtime/global */
+/******/ 	!function() {
+/******/ 		__webpack_require__.g = (function() {
+/******/ 			if (typeof globalThis === 'object') return globalThis;
+/******/ 			try {
+/******/ 				return this || new Function('return this')();
+/******/ 			} catch (e) {
+/******/ 				if (typeof window === 'object') return window;
+/******/ 			}
+/******/ 		})();
+/******/ 	}();
+/******/ 	
 /******/ 	/* webpack/runtime/hasOwnProperty shorthand */
 /******/ 	!function() {
 /******/ 		__webpack_require__.o = function(obj, prop) { return Object.prototype.hasOwnProperty.call(obj, prop); }
@@ -1577,6 +1838,26 @@ module.exports = JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json
 /******/ 			}
 /******/ 			Object.defineProperty(exports, '__esModule', { value: true });
 /******/ 		};
+/******/ 	}();
+/******/ 	
+/******/ 	/* webpack/runtime/publicPath */
+/******/ 	!function() {
+/******/ 		var scriptUrl;
+/******/ 		if (__webpack_require__.g.importScripts) scriptUrl = __webpack_require__.g.location + "";
+/******/ 		var document = __webpack_require__.g.document;
+/******/ 		if (!scriptUrl && document) {
+/******/ 			if (document.currentScript)
+/******/ 				scriptUrl = document.currentScript.src
+/******/ 			if (!scriptUrl) {
+/******/ 				var scripts = document.getElementsByTagName("script");
+/******/ 				if(scripts.length) scriptUrl = scripts[scripts.length - 1].src
+/******/ 			}
+/******/ 		}
+/******/ 		// When supporting browsers where an automatic publicPath is not supported you must specify an output.publicPath manually via configuration
+/******/ 		// or pass an empty string ("") and set the __webpack_public_path__ variable from your code to use your own logic.
+/******/ 		if (!scriptUrl) throw new Error("Automatic publicPath is not supported in this browser");
+/******/ 		scriptUrl = scriptUrl.replace(/#.*$/, "").replace(/\?.*$/, "").replace(/\/[^\/]+$/, "/");
+/******/ 		__webpack_require__.p = scriptUrl;
 /******/ 	}();
 /******/ 	
 /******/ 	/* webpack/runtime/jsonp chunk loading */

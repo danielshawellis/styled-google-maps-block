@@ -18,7 +18,7 @@ import ViewControls from './map-modes/view';
 import DirectionsControls from './map-modes/directions';
 import StreetviewControls from './map-modes/streetview';
 import SearchControls from './map-modes/search';
-import StyledControls from './map-modes/styled';
+import ThemedControls from './map-modes/themed';
 
 import { MapSettings } from './types';
 
@@ -42,14 +42,14 @@ const edit: React.ComponentType<BlockEditProps<MapSettings>> = function ({ attri
 	const containerRef = useRef<HTMLDivElement | null>(null);
 
 	const apiKeyHelp = <div>
-		<p>Please create your own API key before publishing a map. This is a Google requirement, and styled maps won't work without it.</p>
+		<p>Please create your own API key before publishing a map. This is a Google requirement, and themed maps won't work without it.</p>
 		<p>Here's how to create your own API key:</p>
 		<ol>
 			<li>Go to the <a href="https://console.cloud.google.com/project/_/google/maps-apis/credentials" target="_blank" rel="noopener noreferrer"><strong>Google Maps Platform &gt; Credentials</strong></a> page. If you haven't already, you may need to create an account and a Google Cloud project here.</li>
 			<li>On the <strong>Credentials</strong> page, click <strong>Create credentials &gt; API key</strong>. The <strong>API key created</strong> dialog displays your newly created API key.</li>
 			<li>Copy the new API key and paste it in the field above.</li>
 			<li>Go to the <a href="https://console.cloud.google.com/apis/library/maps-embed-backend.googleapis.com" target="_blank" rel="noopener noreferrer"><strong>Google Maps Embed API</strong></a> page, ensure that the correct project is selected, and click <strong>Enable</strong>.</li>
-			<li>If you're using the <strong>styled</strong> map mode, go to the <a href="https://console.cloud.google.com/apis/library/maps-backend.googleapis.com" target="_blank" rel="noopener noreferrer"><strong>Google Maps JavaScript API</strong></a> page, ensure that the correct project is selected, and click <strong>Enable</strong>. This is a pay-as-you-go API, so be aware that <a href="https://developers.google.com/maps/documentation/javascript/usage-and-billing" target="_blank" rel="noopener noreferrer"><strong>you may incur charges</strong></a>.</li>
+			<li>If you're using the <strong>themed</strong> map mode, go to the <a href="https://console.cloud.google.com/apis/library/maps-backend.googleapis.com" target="_blank" rel="noopener noreferrer"><strong>Google Maps JavaScript API</strong></a> page, ensure that the correct project is selected, and click <strong>Enable</strong>. This is a pay-as-you-go API, so be aware that <a href="https://developers.google.com/maps/documentation/javascript/usage-and-billing" target="_blank" rel="noopener noreferrer"><strong>you may incur charges</strong></a>.</li>
 			<li>Optionally, you can <a href="https://developers.google.com/maps/documentation/embed/get-api-key#restrict_key" target="_blank" rel="noopener noreferrer"><strong>restrict your API keys</strong></a> to improve security. Google strongly recommends this.</li>
 		</ol>
 	</div>;
@@ -62,7 +62,7 @@ const edit: React.ComponentType<BlockEditProps<MapSettings>> = function ({ attri
 	return (
 		<>
 			<div { ...blockProps }>
-				{ attributes.mapmode === 'styled' ?
+				{ attributes.mapmode === 'themed' ?
 					<div className="google-maps-gutenberg-block" ref={ containerRef } style={{ width: '100%', height: `${attributes.height}px` }} data-attributes={ JSON.stringify(attributes) } /> :
 					<iframe ref={ iframeRef } src={ getMapUrl(attributes) } width="100%" height={ attributes.height } style={{ border: 0 }} allowFullScreen={ true } loading="lazy" referrerPolicy="no-referrer-when-downgrade"></iframe>
 				}
@@ -101,7 +101,7 @@ const edit: React.ComponentType<BlockEditProps<MapSettings>> = function ({ attri
 									{ label: 'Directions', value: 'directions' },
 									{ label: 'Street View', value: 'streetview' },
 									{ label: 'Search', value: 'search' },
-									{ label: 'Styled', value: 'styled' },
+									{ label: 'Themed', value: 'themed' },
 								] }
 								onChange={ ( mapmode: MapSettings['mapmode'] ) => setAttributes({ mapmode }) }
 							/>
@@ -112,7 +112,7 @@ const edit: React.ComponentType<BlockEditProps<MapSettings>> = function ({ attri
 						{ attributes.mapmode === 'directions' && <DirectionsControls attributes={ attributes } setAttributes={ setAttributes } /> }
 						{ attributes.mapmode === 'streetview' && <StreetviewControls attributes={ attributes } setAttributes={ setAttributes } /> }
 						{ attributes.mapmode === 'search' && <SearchControls attributes={ attributes } setAttributes={ setAttributes } /> }
-						{ attributes.mapmode === 'styled' && <StyledControls attributes={ attributes } setAttributes={ setAttributes } /> }
+						{ attributes.mapmode === 'themed' && <ThemedControls attributes={ attributes } setAttributes={ setAttributes } /> }
 
 						<PanelRow>
 							<TextControl

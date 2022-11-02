@@ -22,7 +22,7 @@ const save: React.ComponentType<BlockSaveProps<MapSettings>> = function ({ attri
 	const blockProps = useBlockProps.save();
 	return (
 		<div { ...blockProps }>
-			{ attributes.mapmode === 'styled' ?
+			{ attributes.mapmode === 'themed' ?
 				<div className="google-maps-gutenberg-block" style={{ width: '100%', height: `${attributes.height}px` }} data-attributes={ JSON.stringify(attributes) } /> :
 				<iframe src={ getMapUrl(attributes) } width="100%" height={ attributes.height } style={{ border: 0 }} allowFullScreen={ true } loading="lazy" referrerPolicy="no-referrer-when-downgrade"></iframe>
 			}

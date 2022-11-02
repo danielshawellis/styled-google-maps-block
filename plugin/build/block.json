@@ -41,7 +41,7 @@
         "directions",
         "streetview",
         "search",
-        "styled"
+        "themed"
       ]
     },
     "q": {
@@ -132,7 +132,7 @@
       "type": "string",
       "default": "[]"
     },
-    "styledmaptype": {
+    "themedmaptype": {
       "type": "string",
       "enum": [
         "roadmap",
