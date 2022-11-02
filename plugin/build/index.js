@@ -942,7 +942,48 @@ const styled = function (_ref) {
     attributes,
     setAttributes
   } = _ref;
-  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.PanelRow, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.RangeControl, {
+  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.PanelRow, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.BaseControl, {
+    label: "Center",
+    help: (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", null, "The longitude and latitude respectively of the center of the map. Open ", (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("a", {
+      href: "https://maps.google.com/",
+      target: "_blank",
+      rel: "noopener noreferrer"
+    }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("strong", null, "Google Maps")), " and right click on any point to see its coordinates in decimal format."),
+    id: "center-control"
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    style: {
+      display: 'flex',
+      gap: '10px'
+    }
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("input", {
+    value: parseFloat(attributes.center.split(',')[0]),
+    onChange: event => setAttributes({
+      center: `${event.target.value},${parseFloat(attributes.center.split(',')[1])}`
+    }),
+    type: "number",
+    step: 0.00001,
+    min: -90,
+    max: 90,
+    style: {
+      display: 'block',
+      width: '100%',
+      borderRadius: '2px'
+    }
+  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("input", {
+    value: parseFloat(attributes.center.split(',')[1]),
+    onChange: event => setAttributes({
+      center: `${parseFloat(attributes.center.split(',')[0])},${event.target.value}`
+    }),
+    type: "number",
+    step: 0.00001,
+    min: -180,
+    max: 180,
+    style: {
+      display: 'block',
+      width: '100%',
+      borderRadius: '2px'
+    }
+  })))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.PanelRow, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.RangeControl, {
     label: "Zoom",
     help: "Sets initial zoom level of the map.",
     value: attributes.zoom,
