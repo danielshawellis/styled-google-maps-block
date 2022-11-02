@@ -353,6 +353,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _googlemaps_js_api_loader__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @googlemaps/js-api-loader */ "./node_modules/@googlemaps/js-api-loader/dist/index.esm.js");
 
 
+;
 const constructUrl = (acceptedParameters, atts) => {
   const url = new URL(`https://www.google.com/maps/embed/v1/${atts.mapmode}`);
   acceptedParameters.forEach(parameter => {
@@ -394,6 +395,23 @@ const initializeMap = (map, atts) => {
     disableDefaultUI: !atts.uivisibility,
     styles: JSON.parse(atts.styles)
   });
+
+  // Remove any existing markers
+  if (Array.isArray(map.markers)) {
+    map.markers.forEach(marker => marker.setMap(null));
+    map.markers = undefined;
+  }
+
+  // Add a new marker to the center of the map if necessary
+  if (atts.markervisibility) {
+    var _map$markers;
+    const marker = new google.maps.Marker({
+      position: center,
+      map
+    });
+    map.markers = [...((_map$markers = map.markers) !== null && _map$markers !== void 0 ? _map$markers : []), marker];
+  }
+  ;
 };
 
 /***/ }),

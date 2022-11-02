@@ -75,6 +75,14 @@ const styled = function ({ attributes, setAttributes }: { attributes: MapSetting
           onChange={ ( uivisibility: MapSettings['uivisibility'] ) => setAttributes({ uivisibility }) }
         />
       </PanelRow>
+      <PanelRow>
+        <CheckboxControl
+          label="Marker Visibility"
+          help="Sets the visibility of the location marker in a styled map."
+          checked={ attributes.markervisibility }
+          onChange={ ( markervisibility: MapSettings['markervisibility'] ) => setAttributes({ markervisibility }) }
+        />
+      </PanelRow>
     </>
   );
 };

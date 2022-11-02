@@ -1032,6 +1032,13 @@ const styled = function (_ref) {
     onChange: uivisibility => setAttributes({
       uivisibility
     })
+  })), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.PanelRow, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.CheckboxControl, {
+    label: "Marker Visibility",
+    help: "Sets the visibility of the location marker in a styled map.",
+    checked: attributes.markervisibility,
+    onChange: markervisibility => setAttributes({
+      markervisibility
+    })
   })));
 };
 /* harmony default export */ __webpack_exports__["default"] = (styled);
@@ -1198,6 +1205,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _googlemaps_js_api_loader__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @googlemaps/js-api-loader */ "./node_modules/@googlemaps/js-api-loader/dist/index.esm.js");
 
 
+;
 const constructUrl = (acceptedParameters, atts) => {
   const url = new URL(`https://www.google.com/maps/embed/v1/${atts.mapmode}`);
   acceptedParameters.forEach(parameter => {
@@ -1239,6 +1247,23 @@ const initializeMap = (map, atts) => {
     disableDefaultUI: !atts.uivisibility,
     styles: JSON.parse(atts.styles)
   });
+
+  // Remove any existing markers
+  if (Array.isArray(map.markers)) {
+    map.markers.forEach(marker => marker.setMap(null));
+    map.markers = undefined;
+  }
+
+  // Add a new marker to the center of the map if necessary
+  if (atts.markervisibility) {
+    var _map$markers;
+    const marker = new google.maps.Marker({
+      position: center,
+      map
+    });
+    map.markers = [...((_map$markers = map.markers) !== null && _map$markers !== void 0 ? _map$markers : []), marker];
+  }
+  ;
 };
 
 /***/ }),

@@ -21,5 +21,6 @@ export type MapSettings = {
   fov: number,
   styles: string,
   styledmaptype: 'roadmap' | 'satellite' | 'hybrid' | 'terrain',
-  uivisibility: boolean
+  uivisibility: boolean,
+  markervisibility: boolean,
 }

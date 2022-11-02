@@ -2,6 +2,10 @@ import memoize from 'memoize-one';
 import { Loader as GoogleMapsLoader } from "@googlemaps/js-api-loader";
 import { MapSettings } from './types';
 
+interface MarkersMap extends google.maps.Map {
+  markers?: google.maps.Marker[];
+};
+
 const constructUrl = (acceptedParameters: (keyof Omit<MapSettings, 'mapmode' | 'height' | 'styles' | 'uivisibility' | 'markervisibility'>)[], atts: Readonly<MapSettings>): string => {
   const url = new URL(`https://www.google.com/maps/embed/v1/${ atts.mapmode }`);
   acceptedParameters.forEach(parameter => {
@@ -24,7 +28,7 @@ export const getMapUrl = (atts: Readonly<MapSettings>): string => {
 export const getMapObject = memoize((apiKey: string, element: HTMLElement) => new GoogleMapsLoader({ apiKey }).load()
   .then(() => new google.maps.Map(element)));
 
-export const initializeMap = (map: google.maps.Map, atts: Readonly<MapSettings>) => {
+export const initializeMap = (map: MarkersMap, atts: Readonly<MapSettings>) => {
   // Define the position of the center of the map
   const center = { lat: parseFloat(atts.center.split(',')[0]), lng: parseFloat(atts.center.split(',')[1]) };
 
@@ -36,4 +40,19 @@ export const initializeMap = (map: google.maps.Map, atts: Readonly<MapSettings>)
     disableDefaultUI: !atts.uivisibility,
     styles: JSON.parse(atts.styles)
   });
+
+  // Remove any existing markers
+  if (Array.isArray(map.markers)) {
+    map.markers.forEach(marker => marker.setMap(null));
+    map.markers = undefined;
+  }
+
+  // Add a new marker to the center of the map if necessary
+  if (atts.markervisibility) {
+    const marker = new google.maps.Marker({ 
+      position: center, 
+      map,
+    });
+    map.markers = [ ...(map.markers ?? []), marker ];
+  };
 };
