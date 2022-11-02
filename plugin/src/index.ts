@@ -16,19 +16,13 @@ import { MapSettings } from './types';
 import './style.scss';
 
 /**
- * PrimeReact styles
- */
-import "primereact/resources/themes/lara-light-indigo/theme.css";  //theme
-import "primereact/resources/primereact.min.css";                  //core css
-import "primeicons/primeicons.css";                                //icons
-import 'primeflex/primeflex.css';                                  //flex utility
-
-/**
  * Internal dependencies
  */
 import edit from './edit';
 import save from './save';
 import metadata from './block.json';
+
+import icon from './images/icon';
 
 /**
  * Every block starts by registering a new block type definition.
@@ -36,5 +30,5 @@ import metadata from './block.json';
  * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-registration/
  */
 // @ts-ignore TODO: Fix the typing here
-registerBlockType<MapSettings>( metadata.name, { edit, save } );
+registerBlockType<MapSettings>( metadata.name, { icon, edit, save } );
 

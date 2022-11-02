@@ -5,7 +5,7 @@
 	"version": "0.1.0",
 	"title": "Styled Google Maps",
 	"category": "widgets",
-	"description": "A highly-customizable Google Maps embed.",
+	"description": "A highly-customizable Google Maps embed. Supports custom styles, directions, and street view.",
 	"supports": {
 		"html": false
 	},

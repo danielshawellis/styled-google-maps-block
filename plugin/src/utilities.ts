@@ -29,10 +29,6 @@ export const getMapObject = memoize((apiKey: string, element: HTMLElement) => ne
   .then(() => new google.maps.Map(element)));
 
 export const initializeMap = (map: MarkersMap, atts: Readonly<MapSettings>) => {
-  // TEMPORARY
-  console.log(atts);
-  
-
   // Define the position of the center of the map
   const center = { lat: parseFloat(atts.center.split(',')[0]), lng: parseFloat(atts.center.split(',')[1]) };
 
