@@ -1,9 +1,19 @@
-import { PanelRow, TextareaControl, RadioControl, CheckboxControl } from '@wordpress/components';
+import { PanelRow, TextareaControl, RadioControl, RangeControl, CheckboxControl } from '@wordpress/components';
 import { MapSettings } from '../types';
 
 const styled = function ({ attributes, setAttributes }: { attributes: MapSettings, setAttributes: (atts: Partial<MapSettings>) => void }) {
   return (
     <>
+      <PanelRow>
+        <RangeControl
+          label="Zoom"
+          help="Sets initial zoom level of the map."
+          value={ attributes.zoom }
+          onChange={ ( zoom ) => setAttributes({ zoom }) }
+          min={ 1 }
+          max={ 21 }
+        />
+      </PanelRow>
       <PanelRow>
         <TextareaControl
           label="JSON-based Styles"
