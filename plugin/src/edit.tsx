@@ -57,7 +57,7 @@ const edit: React.ComponentType<BlockEditProps<MapSettings>> = function ({ attri
 	useEffect(() => {
 		if (containerRef.current) getMapObject(attributes.key, containerRef.current)
 			.then(map => initializeMap(map, attributes));
-	}, [containerRef.current, attributes.center, attributes.zoom, attributes.styles, attributes.styledmaptype, attributes.uivisibility]);
+	});
 
 	return (
 		<>

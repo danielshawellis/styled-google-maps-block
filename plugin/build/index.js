@@ -425,7 +425,7 @@ const edit = function (_ref) {
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("strong", null, "restrict your API keys")), " to improve security. Google strongly recommends this.")));
   (0,react__WEBPACK_IMPORTED_MODULE_4__.useEffect)(() => {
     if (containerRef.current) (0,_utilities__WEBPACK_IMPORTED_MODULE_5__.getMapObject)(attributes.key, containerRef.current).then(map => (0,_utilities__WEBPACK_IMPORTED_MODULE_5__.initializeMap)(map, attributes));
-  }, [containerRef.current, attributes.center, attributes.zoom, attributes.styles, attributes.styledmaptype, attributes.uivisibility]);
+  });
   return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", blockProps, attributes.mapmode === 'styled' ? (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "google-maps-gutenberg-block",
     ref: containerRef,
