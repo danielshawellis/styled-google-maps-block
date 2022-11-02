@@ -1,8 +1,9 @@
 import { getMapObject, initializeMap } from "./utilities";
+import { MapSettings } from './types';
 
 window.addEventListener('DOMContentLoaded', () => {
-  document.querySelectorAll('.google-maps-gutenberg-block').forEach(element => {
-    const attributes = JSON.parse(element.dataset.attributes);
+  document.querySelectorAll('div.google-maps-gutenberg-block').forEach((element) => {
+    const attributes = JSON.parse((element as HTMLDivElement).dataset.attributes) as MapSettings;
     getMapObject(attributes.key, element as HTMLDivElement).then(map => initializeMap(map, attributes));
   })
 });

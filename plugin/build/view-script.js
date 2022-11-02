@@ -529,7 +529,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _utilities__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./utilities */ "./src/utilities.ts");
 
 window.addEventListener('DOMContentLoaded', () => {
-  document.querySelectorAll('.google-maps-gutenberg-block').forEach(element => {
+  document.querySelectorAll('div.google-maps-gutenberg-block').forEach(element => {
     const attributes = JSON.parse(element.dataset.attributes);
     (0,_utilities__WEBPACK_IMPORTED_MODULE_0__.getMapObject)(attributes.key, element).then(map => (0,_utilities__WEBPACK_IMPORTED_MODULE_0__.initializeMap)(map, attributes));
   });
