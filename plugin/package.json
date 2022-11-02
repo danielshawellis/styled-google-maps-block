@@ -23,9 +23,6 @@
 	"dependencies": {
 		"@googlemaps/js-api-loader": "^1.14.3",
 		"@wordpress/compose": "^5.18.0",
-		"memoize-one": "^6.0.0",
-		"primeflex": "^2.0.0",
-		"primeicons": "^6.0.1",
-		"primereact": "^8.7.0"
+		"memoize-one": "^6.0.0"
 	}
 }
