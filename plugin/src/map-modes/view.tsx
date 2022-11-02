@@ -15,20 +15,18 @@ const view = function ({ attributes, setAttributes }: { attributes: MapSettings,
               value={ parseFloat(attributes.center.split(',')[0]) } 
               onChange={ (event) => setAttributes({ center: `${event.target.value},${parseFloat(attributes.center.split(',')[1])}` }) } 
               type="number" 
-              step={0.0001}
+              step={0.00001}
               min={-90}
               max={90}
-              size={8}
               style={{ display: 'block', width: '100%', borderRadius: '2px' }}
             />
             <input 
               value={ parseFloat(attributes.center.split(',')[1]) } 
               onChange={ (event) => setAttributes({ center: `${parseFloat(attributes.center.split(',')[0])},${event.target.value}` }) } 
               type="number" 
-              step={0.0001}
+              step={0.00001}
               min={-180}
               max={180}
-              size={8}
               style={{ display: 'block', width: '100%', borderRadius: '2px' }}
             />
           </div>

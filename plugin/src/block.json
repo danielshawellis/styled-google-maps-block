@@ -13,6 +13,7 @@
 	"editorScript": "file:./index.js",
 	"editorStyle": "file:./index.css",
 	"style": "file:./style-index.css",
+	"viewScript": "file:./view-script.js",
 	"keywords": [
 		"google",
 		"maps",
@@ -39,7 +40,8 @@
 				"view",
 				"directions",
 				"streetview",
-				"search"
+				"search",
+				"styled"
 			]
 		},
 		"q": {
@@ -127,8 +129,26 @@
 			"default": 90
 		},
 		"styles": {
-			"type": "array",
-			"default": []
+			"type": "string",
+			"default": "[]"
+		},
+		"styledmaptype": {
+			"type": "string",
+			"enum": [
+				"roadmap",
+				"satellite",
+				"hybrid",
+				"terrain"
+			],
+			"default": "roadmap"
+		},
+		"uivisibility": {
+			"type": "boolean",
+			"default": true
+		},
+		"markervisibility": {
+			"type": "boolean",
+			"default": true
 		}
 	}
 }

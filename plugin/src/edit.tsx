@@ -9,11 +9,16 @@ import { Panel, PanelBody, PanelRow, BaseControl, TextControl, RadioControl } fr
 import { useFocusableIframe } from '@wordpress/compose';
 import { BlockEditProps } from '@wordpress/blocks';
 
+import { useRef, useEffect } from 'react';
+
+import { getMapUrl, getMapObject, initializeMap } from './utilities';
+
 import PlaceControls from './map-modes/place';
 import ViewControls from './map-modes/view';
 import DirectionsControls from './map-modes/directions';
 import StreetviewControls from './map-modes/streetview';
 import SearchControls from './map-modes/search';
+import StyledControls from './map-modes/styled';
 
 import { MapSettings } from './types';
 
@@ -34,41 +39,33 @@ import './editor.scss';
 const edit: React.ComponentType<BlockEditProps<MapSettings>> = function ({ attributes, setAttributes }) {
 	const blockProps = useBlockProps();
 	const iframeRef = useFocusableIframe() as React.LegacyRef<HTMLIFrameElement>;
+	const containerRef = useRef<HTMLDivElement | null>(null);
 
 	const apiKeyHelp = <div>
-		<p>Please create your own API key before publishing a map. This is a Google requirement.</p>
+		<p>Please create your own API key before publishing a map. This is a Google requirement, and styled maps won't work without it.</p>
 		<p>Here's how to create your own API key:</p>
 		<ol>
 			<li>Go to the <a href="https://console.cloud.google.com/project/_/google/maps-apis/credentials" target="_blank" rel="noopener noreferrer"><strong>Google Maps Platform &gt; Credentials</strong></a> page. If you haven't already, you may need to create an account and a Google Cloud project here.</li>
 			<li>On the <strong>Credentials</strong> page, click <strong>Create credentials &gt; API key</strong>. The <strong>API key created</strong> dialog displays your newly created API key.</li>
 			<li>Copy the new API key and paste it in the field above.</li>
 			<li>Go to the <a href="https://console.cloud.google.com/apis/library/maps-embed-backend.googleapis.com" target="_blank" rel="noopener noreferrer"><strong>Google Maps Embed API</strong></a> page, ensure that the correct project is selected, and click <strong>Enable</strong>.</li>
+			<li>If you're using the <strong>styled</strong> map mode, go to the <a href="https://console.cloud.google.com/apis/library/maps-backend.googleapis.com" target="_blank" rel="noopener noreferrer"><strong>Google Maps JavaScript API</strong></a> page, ensure that the correct project is selected, and click <strong>Enable</strong>. This is a pay-as-you-go API, so be aware that <a href="https://developers.google.com/maps/documentation/javascript/usage-and-billing" target="_blank" rel="noopener noreferrer"><strong>you may incur charges</strong></a>.</li>
+			<li>Optionally, you can <a href="https://developers.google.com/maps/documentation/embed/get-api-key#restrict_key" target="_blank" rel="noopener noreferrer"><strong>restrict your API keys</strong></a> to improve security. Google strongly recommends this.</li>
 		</ol>
 	</div>;
 
-	const constructUrl = (acceptedParameters: (keyof Omit<MapSettings, 'mapmode' | 'height'>)[], atts: typeof attributes): string => {
-		const url = new URL(`https://www.google.com/maps/embed/v1/${ atts.mapmode }`);
-		acceptedParameters.forEach(parameter => {
-			const value = atts[parameter];
-			if (value !== '') url.searchParams.append(parameter, typeof value === 'number' ? value.toString() : value);
-		});
-		return url.href;
-	};
-
-	const getMapUrl = (atts: typeof attributes): string => {
-		switch (atts.mapmode) {
-			case 'place': return constructUrl(['key', 'q', 'zoom', 'maptype', 'language', 'region'], atts);
-			case 'view': return constructUrl(['key', 'center', 'zoom', 'maptype', 'language', 'region'], atts);
-			case 'directions': return constructUrl(['key', 'origin', 'destination', 'mode', 'units', 'zoom', 'maptype', 'language', 'region'], atts);
-			case 'streetview': return constructUrl(['key', 'location', 'pano', 'heading', 'pitch', 'fov', 'language', 'region'], atts);
-			case 'search': return constructUrl(['key', 'q', 'zoom', 'maptype', 'language', 'region'], atts);
-		};
-	};
+	useEffect(() => {
+		if (containerRef.current) getMapObject(attributes.key, containerRef.current)
+			.then(map => initializeMap(map, attributes));
+	}, [containerRef.current, attributes.center, attributes.zoom, attributes.styles, attributes.styledmaptype, attributes.uivisibility]);
 
 	return (
 		<>
 			<div { ...blockProps }>
-				<iframe ref={ iframeRef } src={ getMapUrl(attributes) } width="100%" height={ attributes.height } style={{ border: 0 }} allowFullScreen={ true } loading="lazy" referrerPolicy="no-referrer-when-downgrade"></iframe>
+				{ attributes.mapmode === 'styled' ?
+					<div className="google-maps-gutenberg-block" ref={ containerRef } style={{ width: '100%', height: `${attributes.height}px` }} data-attributes={ JSON.stringify(attributes) } /> :
+					<iframe ref={ iframeRef } src={ getMapUrl(attributes) } width="100%" height={ attributes.height } style={{ border: 0 }} allowFullScreen={ true } loading="lazy" referrerPolicy="no-referrer-when-downgrade"></iframe>
+				}
 			</div>
 
 			<InspectorControls>
@@ -104,6 +101,7 @@ const edit: React.ComponentType<BlockEditProps<MapSettings>> = function ({ attri
 									{ label: 'Directions', value: 'directions' },
 									{ label: 'Street View', value: 'streetview' },
 									{ label: 'Search', value: 'search' },
+									{ label: 'Styled', value: 'styled' },
 								] }
 								onChange={ ( mapmode: MapSettings['mapmode'] ) => setAttributes({ mapmode }) }
 							/>
@@ -114,6 +112,7 @@ const edit: React.ComponentType<BlockEditProps<MapSettings>> = function ({ attri
 						{ attributes.mapmode === 'directions' && <DirectionsControls attributes={ attributes } setAttributes={ setAttributes } /> }
 						{ attributes.mapmode === 'streetview' && <StreetviewControls attributes={ attributes } setAttributes={ setAttributes } /> }
 						{ attributes.mapmode === 'search' && <SearchControls attributes={ attributes } setAttributes={ setAttributes } /> }
+						{ attributes.mapmode === 'styled' && <StyledControls attributes={ attributes } setAttributes={ setAttributes } /> }
 
 						<PanelRow>
 							<TextControl

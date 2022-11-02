@@ -15,20 +15,18 @@ const streetview = function ({ attributes, setAttributes }: { attributes: MapSet
               value={ parseFloat(attributes.location.split(',')[0]) } 
               onChange={ (event) => setAttributes({ location: `${event.target.value},${parseFloat(attributes.location.split(',')[1])}` }) } 
               type="number" 
-              step={0.0001}
+              step={0.00001}
               min={-90}
               max={90}
-              size={8}
               style={{ display: 'block', width: '100%', borderRadius: '2px' }}
             />
             <input 
               value={ parseFloat(attributes.location.split(',')[1]) } 
               onChange={ (event) => setAttributes({ location: `${parseFloat(attributes.location.split(',')[0])},${event.target.value}` }) } 
               type="number" 
-              step={0.0001}
+              step={0.00001}
               min={-180}
               max={180}
-              size={8}
               style={{ display: 'block', width: '100%', borderRadius: '2px' }}
             />
           </div>

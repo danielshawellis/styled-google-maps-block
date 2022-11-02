@@ -6,6 +6,9 @@
  */
 import { useBlockProps } from '@wordpress/block-editor';
 import { BlockSaveProps } from '@wordpress/blocks';
+
+import { getMapUrl } from './utilities';
+
 import { MapSettings } from './types';
 
 /**
@@ -19,7 +22,10 @@ const save: React.ComponentType<BlockSaveProps<MapSettings>> = function ({ attri
 	const blockProps = useBlockProps.save();
 	return (
 		<div { ...blockProps }>
-			<iframe src={ `https://www.google.com/maps/embed/v1/place?q=${ attributes.location }&maptype=${ attributes.maptype }&zoom=${ attributes.zoom }&key=${ attributes.key }` } width="100%" height={ attributes.height } style={{ border: 0 }} allowFullScreen={ true } loading="lazy" referrerPolicy="no-referrer-when-downgrade"></iframe>
+			{ attributes.mapmode === 'styled' ?
+				<div className="google-maps-gutenberg-block" style={{ width: '100%', height: `${attributes.height}px` }} data-attributes={ JSON.stringify(attributes) } /> :
+				<iframe src={ getMapUrl(attributes) } width="100%" height={ attributes.height } style={{ border: 0 }} allowFullScreen={ true } loading="lazy" referrerPolicy="no-referrer-when-downgrade"></iframe>
+			}
 		</div>
 	);
 };

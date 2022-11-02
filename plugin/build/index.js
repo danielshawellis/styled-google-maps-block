@@ -2,6 +2,341 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
+/***/ "./node_modules/@googlemaps/js-api-loader/dist/index.esm.js":
+/*!******************************************************************!*\
+  !*** ./node_modules/@googlemaps/js-api-loader/dist/index.esm.js ***!
+  \******************************************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "DEFAULT_ID": function() { return /* binding */ DEFAULT_ID; },
+/* harmony export */   "Loader": function() { return /* binding */ Loader; },
+/* harmony export */   "LoaderStatus": function() { return /* binding */ LoaderStatus; }
+/* harmony export */ });
+// do not edit .js files directly - edit src/index.jst
+
+
+
+var fastDeepEqual = function equal(a, b) {
+  if (a === b) return true;
+
+  if (a && b && typeof a == 'object' && typeof b == 'object') {
+    if (a.constructor !== b.constructor) return false;
+
+    var length, i, keys;
+    if (Array.isArray(a)) {
+      length = a.length;
+      if (length != b.length) return false;
+      for (i = length; i-- !== 0;)
+        if (!equal(a[i], b[i])) return false;
+      return true;
+    }
+
+
+
+    if (a.constructor === RegExp) return a.source === b.source && a.flags === b.flags;
+    if (a.valueOf !== Object.prototype.valueOf) return a.valueOf() === b.valueOf();
+    if (a.toString !== Object.prototype.toString) return a.toString() === b.toString();
+
+    keys = Object.keys(a);
+    length = keys.length;
+    if (length !== Object.keys(b).length) return false;
+
+    for (i = length; i-- !== 0;)
+      if (!Object.prototype.hasOwnProperty.call(b, keys[i])) return false;
+
+    for (i = length; i-- !== 0;) {
+      var key = keys[i];
+
+      if (!equal(a[key], b[key])) return false;
+    }
+
+    return true;
+  }
+
+  // true if both NaN, false otherwise
+  return a!==a && b!==b;
+};
+
+/**
+ * Copyright 2019 Google LLC. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at.
+ *
+ *      Http://www.apache.org/licenses/LICENSE-2.0.
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+const DEFAULT_ID = "__googleMapsScriptId";
+/**
+ * The status of the [[Loader]].
+ */
+var LoaderStatus;
+(function (LoaderStatus) {
+    LoaderStatus[LoaderStatus["INITIALIZED"] = 0] = "INITIALIZED";
+    LoaderStatus[LoaderStatus["LOADING"] = 1] = "LOADING";
+    LoaderStatus[LoaderStatus["SUCCESS"] = 2] = "SUCCESS";
+    LoaderStatus[LoaderStatus["FAILURE"] = 3] = "FAILURE";
+})(LoaderStatus || (LoaderStatus = {}));
+/**
+ * [[Loader]] makes it easier to add Google Maps JavaScript API to your application
+ * dynamically using
+ * [Promises](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise).
+ * It works by dynamically creating and appending a script node to the the
+ * document head and wrapping the callback function so as to return a promise.
+ *
+ * ```
+ * const loader = new Loader({
+ *   apiKey: "",
+ *   version: "weekly",
+ *   libraries: ["places"]
+ * });
+ *
+ * loader.load().then((google) => {
+ *   const map = new google.maps.Map(...)
+ * })
+ * ```
+ */
+class Loader {
+    /**
+     * Creates an instance of Loader using [[LoaderOptions]]. No defaults are set
+     * using this library, instead the defaults are set by the Google Maps
+     * JavaScript API server.
+     *
+     * ```
+     * const loader = Loader({apiKey, version: 'weekly', libraries: ['places']});
+     * ```
+     */
+    constructor({ apiKey, authReferrerPolicy, channel, client, id = DEFAULT_ID, language, libraries = [], mapIds, nonce, region, retries = 3, url = "https://maps.googleapis.com/maps/api/js", version, }) {
+        this.CALLBACK = "__googleMapsCallback";
+        this.callbacks = [];
+        this.done = false;
+        this.loading = false;
+        this.errors = [];
+        this.apiKey = apiKey;
+        this.authReferrerPolicy = authReferrerPolicy;
+        this.channel = channel;
+        this.client = client;
+        this.id = id || DEFAULT_ID; // Do not allow empty string
+        this.language = language;
+        this.libraries = libraries;
+        this.mapIds = mapIds;
+        this.nonce = nonce;
+        this.region = region;
+        this.retries = retries;
+        this.url = url;
+        this.version = version;
+        if (Loader.instance) {
+            if (!fastDeepEqual(this.options, Loader.instance.options)) {
+                throw new Error(`Loader must not be called again with different options. ${JSON.stringify(this.options)} !== ${JSON.stringify(Loader.instance.options)}`);
+            }
+            return Loader.instance;
+        }
+        Loader.instance = this;
+    }
+    get options() {
+        return {
+            version: this.version,
+            apiKey: this.apiKey,
+            channel: this.channel,
+            client: this.client,
+            id: this.id,
+            libraries: this.libraries,
+            language: this.language,
+            region: this.region,
+            mapIds: this.mapIds,
+            nonce: this.nonce,
+            url: this.url,
+            authReferrerPolicy: this.authReferrerPolicy,
+        };
+    }
+    get status() {
+        if (this.errors.length) {
+            return LoaderStatus.FAILURE;
+        }
+        if (this.done) {
+            return LoaderStatus.SUCCESS;
+        }
+        if (this.loading) {
+            return LoaderStatus.LOADING;
+        }
+        return LoaderStatus.INITIALIZED;
+    }
+    get failed() {
+        return this.done && !this.loading && this.errors.length >= this.retries + 1;
+    }
+    /**
+     * CreateUrl returns the Google Maps JavaScript API script url given the [[LoaderOptions]].
+     *
+     * @ignore
+     */
+    createUrl() {
+        let url = this.url;
+        url += `?callback=${this.CALLBACK}`;
+        if (this.apiKey) {
+            url += `&key=${this.apiKey}`;
+        }
+        if (this.channel) {
+            url += `&channel=${this.channel}`;
+        }
+        if (this.client) {
+            url += `&client=${this.client}`;
+        }
+        if (this.libraries.length > 0) {
+            url += `&libraries=${this.libraries.join(",")}`;
+        }
+        if (this.language) {
+            url += `&language=${this.language}`;
+        }
+        if (this.region) {
+            url += `&region=${this.region}`;
+        }
+        if (this.version) {
+            url += `&v=${this.version}`;
+        }
+        if (this.mapIds) {
+            url += `&map_ids=${this.mapIds.join(",")}`;
+        }
+        if (this.authReferrerPolicy) {
+            url += `&auth_referrer_policy=${this.authReferrerPolicy}`;
+        }
+        return url;
+    }
+    deleteScript() {
+        const script = document.getElementById(this.id);
+        if (script) {
+            script.remove();
+        }
+    }
+    /**
+     * Load the Google Maps JavaScript API script and return a Promise.
+     */
+    load() {
+        return this.loadPromise();
+    }
+    /**
+     * Load the Google Maps JavaScript API script and return a Promise.
+     *
+     * @ignore
+     */
+    loadPromise() {
+        return new Promise((resolve, reject) => {
+            this.loadCallback((err) => {
+                if (!err) {
+                    resolve(window.google);
+                }
+                else {
+                    reject(err.error);
+                }
+            });
+        });
+    }
+    /**
+     * Load the Google Maps JavaScript API script with a callback.
+     */
+    loadCallback(fn) {
+        this.callbacks.push(fn);
+        this.execute();
+    }
+    /**
+     * Set the script on document.
+     */
+    setScript() {
+        if (document.getElementById(this.id)) {
+            // TODO wrap onerror callback for cases where the script was loaded elsewhere
+            this.callback();
+            return;
+        }
+        const url = this.createUrl();
+        const script = document.createElement("script");
+        script.id = this.id;
+        script.type = "text/javascript";
+        script.src = url;
+        script.onerror = this.loadErrorCallback.bind(this);
+        script.defer = true;
+        script.async = true;
+        if (this.nonce) {
+            script.nonce = this.nonce;
+        }
+        document.head.appendChild(script);
+    }
+    /**
+     * Reset the loader state.
+     */
+    reset() {
+        this.deleteScript();
+        this.done = false;
+        this.loading = false;
+        this.errors = [];
+        this.onerrorEvent = null;
+    }
+    resetIfRetryingFailed() {
+        if (this.failed) {
+            this.reset();
+        }
+    }
+    loadErrorCallback(e) {
+        this.errors.push(e);
+        if (this.errors.length <= this.retries) {
+            const delay = this.errors.length * Math.pow(2, this.errors.length);
+            console.log(`Failed to load Google Maps script, retrying in ${delay} ms.`);
+            setTimeout(() => {
+                this.deleteScript();
+                this.setScript();
+            }, delay);
+        }
+        else {
+            this.onerrorEvent = e;
+            this.callback();
+        }
+    }
+    setCallback() {
+        window.__googleMapsCallback = this.callback.bind(this);
+    }
+    callback() {
+        this.done = true;
+        this.loading = false;
+        this.callbacks.forEach((cb) => {
+            cb(this.onerrorEvent);
+        });
+        this.callbacks = [];
+    }
+    execute() {
+        this.resetIfRetryingFailed();
+        if (this.done) {
+            this.callback();
+        }
+        else {
+            // short circuit and warn if google.maps is already loaded
+            if (window.google && window.google.maps && window.google.maps.version) {
+                console.warn("Google Maps already loaded outside @googlemaps/js-api-loader." +
+                    "This may result in undesirable behavior as options and script parameters may not match.");
+                this.callback();
+                return;
+            }
+            if (this.loading) ;
+            else {
+                this.loading = true;
+                this.setCallback();
+                this.setScript();
+            }
+        }
+    }
+}
+
+
+//# sourceMappingURL=index.esm.js.map
+
+
+/***/ }),
+
 /***/ "./src/edit.tsx":
 /*!**********************!*\
   !*** ./src/edit.tsx ***!
@@ -17,12 +352,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _wordpress_compose__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/compose */ "@wordpress/compose");
 /* harmony import */ var _wordpress_compose__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_compose__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _map_modes_place__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./map-modes/place */ "./src/map-modes/place.tsx");
-/* harmony import */ var _map_modes_view__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./map-modes/view */ "./src/map-modes/view.tsx");
-/* harmony import */ var _map_modes_directions__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./map-modes/directions */ "./src/map-modes/directions.tsx");
-/* harmony import */ var _map_modes_streetview__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./map-modes/streetview */ "./src/map-modes/streetview.tsx");
-/* harmony import */ var _map_modes_search__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./map-modes/search */ "./src/map-modes/search.tsx");
-/* harmony import */ var _editor_scss__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./editor.scss */ "./src/editor.scss");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _utilities__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./utilities */ "./src/utilities.ts");
+/* harmony import */ var _map_modes_place__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./map-modes/place */ "./src/map-modes/place.tsx");
+/* harmony import */ var _map_modes_view__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./map-modes/view */ "./src/map-modes/view.tsx");
+/* harmony import */ var _map_modes_directions__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./map-modes/directions */ "./src/map-modes/directions.tsx");
+/* harmony import */ var _map_modes_streetview__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./map-modes/streetview */ "./src/map-modes/streetview.tsx");
+/* harmony import */ var _map_modes_search__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./map-modes/search */ "./src/map-modes/search.tsx");
+/* harmony import */ var _map_modes_styled__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./map-modes/styled */ "./src/map-modes/styled.tsx");
+/* harmony import */ var _editor_scss__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./editor.scss */ "./src/editor.scss");
 
 /**
  * React hook that is used to mark the block wrapper element.
@@ -30,6 +369,9 @@ __webpack_require__.r(__webpack_exports__);
  *
  * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-block-editor/#useblockprops
  */
+
+
+
 
 
 
@@ -59,7 +401,8 @@ const edit = function (_ref) {
   } = _ref;
   const blockProps = (0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.useBlockProps)();
   const iframeRef = (0,_wordpress_compose__WEBPACK_IMPORTED_MODULE_3__.useFocusableIframe)();
-  const apiKeyHelp = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, "Please create your own API key before publishing a map. This is a Google requirement."), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, "Here's how to create your own API key:"), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("ol", null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("li", null, "Go to the ", (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("a", {
+  const containerRef = (0,react__WEBPACK_IMPORTED_MODULE_4__.useRef)(null);
+  const apiKeyHelp = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, "Please create your own API key before publishing a map. This is a Google requirement, and styled maps won't work without it."), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, "Here's how to create your own API key:"), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("ol", null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("li", null, "Go to the ", (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("a", {
     href: "https://console.cloud.google.com/project/_/google/maps-apis/credentials",
     target: "_blank",
     rel: "noopener noreferrer"
@@ -67,33 +410,33 @@ const edit = function (_ref) {
     href: "https://console.cloud.google.com/apis/library/maps-embed-backend.googleapis.com",
     target: "_blank",
     rel: "noopener noreferrer"
-  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("strong", null, "Google Maps Embed API")), " page, ensure that the correct project is selected, and click ", (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("strong", null, "Enable"), ".")));
-  const constructUrl = (acceptedParameters, atts) => {
-    const url = new URL(`https://www.google.com/maps/embed/v1/${atts.mapmode}`);
-    acceptedParameters.forEach(parameter => {
-      const value = atts[parameter];
-      if (value !== '') url.searchParams.append(parameter, typeof value === 'number' ? value.toString() : value);
-    });
-    return url.href;
-  };
-  const getMapUrl = atts => {
-    switch (atts.mapmode) {
-      case 'place':
-        return constructUrl(['key', 'q', 'zoom', 'maptype', 'language', 'region'], atts);
-      case 'view':
-        return constructUrl(['key', 'center', 'zoom', 'maptype', 'language', 'region'], atts);
-      case 'directions':
-        return constructUrl(['key', 'origin', 'destination', 'mode', 'units', 'zoom', 'maptype', 'language', 'region'], atts);
-      case 'streetview':
-        return constructUrl(['key', 'location', 'pano', 'heading', 'pitch', 'fov', 'language', 'region'], atts);
-      case 'search':
-        return constructUrl(['key', 'q', 'zoom', 'maptype', 'language', 'region'], atts);
-    }
-    ;
-  };
-  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", blockProps, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("iframe", {
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("strong", null, "Google Maps Embed API")), " page, ensure that the correct project is selected, and click ", (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("strong", null, "Enable"), "."), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("li", null, "If you're using the ", (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("strong", null, "styled"), " map mode, go to the ", (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("a", {
+    href: "https://console.cloud.google.com/apis/library/maps-backend.googleapis.com",
+    target: "_blank",
+    rel: "noopener noreferrer"
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("strong", null, "Google Maps JavaScript API")), " page, ensure that the correct project is selected, and click ", (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("strong", null, "Enable"), ". This is a pay-as-you-go API, so be aware that ", (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("a", {
+    href: "https://developers.google.com/maps/documentation/javascript/usage-and-billing",
+    target: "_blank",
+    rel: "noopener noreferrer"
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("strong", null, "you may incur charges")), "."), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("li", null, "Optionally, you can ", (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("a", {
+    href: "https://developers.google.com/maps/documentation/embed/get-api-key#restrict_key",
+    target: "_blank",
+    rel: "noopener noreferrer"
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("strong", null, "restrict your API keys")), " to improve security. Google strongly recommends this.")));
+  (0,react__WEBPACK_IMPORTED_MODULE_4__.useEffect)(() => {
+    if (containerRef.current) (0,_utilities__WEBPACK_IMPORTED_MODULE_5__.getMapObject)(attributes.key, containerRef.current).then(map => (0,_utilities__WEBPACK_IMPORTED_MODULE_5__.initializeMap)(map, attributes));
+  }, [containerRef.current, attributes.center, attributes.zoom, attributes.styles, attributes.styledmaptype, attributes.uivisibility]);
+  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", blockProps, attributes.mapmode === 'styled' ? (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "google-maps-gutenberg-block",
+    ref: containerRef,
+    style: {
+      width: '100%',
+      height: `${attributes.height}px`
+    },
+    "data-attributes": JSON.stringify(attributes)
+  }) : (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("iframe", {
     ref: iframeRef,
-    src: getMapUrl(attributes),
+    src: (0,_utilities__WEBPACK_IMPORTED_MODULE_5__.getMapUrl)(attributes),
     width: "100%",
     height: attributes.height,
     style: {
@@ -147,23 +490,29 @@ const edit = function (_ref) {
     }, {
       label: 'Search',
       value: 'search'
+    }, {
+      label: 'Styled',
+      value: 'styled'
     }],
     onChange: mapmode => setAttributes({
       mapmode
     })
-  })), attributes.mapmode === 'place' && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_map_modes_place__WEBPACK_IMPORTED_MODULE_4__["default"], {
+  })), attributes.mapmode === 'place' && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_map_modes_place__WEBPACK_IMPORTED_MODULE_6__["default"], {
     attributes: attributes,
     setAttributes: setAttributes
-  }), attributes.mapmode === 'view' && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_map_modes_view__WEBPACK_IMPORTED_MODULE_5__["default"], {
+  }), attributes.mapmode === 'view' && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_map_modes_view__WEBPACK_IMPORTED_MODULE_7__["default"], {
     attributes: attributes,
     setAttributes: setAttributes
-  }), attributes.mapmode === 'directions' && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_map_modes_directions__WEBPACK_IMPORTED_MODULE_6__["default"], {
+  }), attributes.mapmode === 'directions' && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_map_modes_directions__WEBPACK_IMPORTED_MODULE_8__["default"], {
     attributes: attributes,
     setAttributes: setAttributes
-  }), attributes.mapmode === 'streetview' && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_map_modes_streetview__WEBPACK_IMPORTED_MODULE_7__["default"], {
+  }), attributes.mapmode === 'streetview' && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_map_modes_streetview__WEBPACK_IMPORTED_MODULE_9__["default"], {
     attributes: attributes,
     setAttributes: setAttributes
-  }), attributes.mapmode === 'search' && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_map_modes_search__WEBPACK_IMPORTED_MODULE_8__["default"], {
+  }), attributes.mapmode === 'search' && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_map_modes_search__WEBPACK_IMPORTED_MODULE_10__["default"], {
+    attributes: attributes,
+    setAttributes: setAttributes
+  }), attributes.mapmode === 'styled' && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_map_modes_styled__WEBPACK_IMPORTED_MODULE_11__["default"], {
     attributes: attributes,
     setAttributes: setAttributes
   }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelRow, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
@@ -512,10 +861,9 @@ const streetview = function (_ref) {
       location: `${event.target.value},${parseFloat(attributes.location.split(',')[1])}`
     }),
     type: "number",
-    step: 0.0001,
+    step: 0.00001,
     min: -90,
     max: 90,
-    size: 8,
     style: {
       display: 'block',
       width: '100%',
@@ -527,10 +875,9 @@ const streetview = function (_ref) {
       location: `${parseFloat(attributes.location.split(',')[0])},${event.target.value}`
     }),
     type: "number",
-    step: 0.0001,
+    step: 0.00001,
     min: -180,
     max: 180,
-    size: 8,
     style: {
       display: 'block',
       width: '100%',
@@ -577,6 +924,70 @@ const streetview = function (_ref) {
 
 /***/ }),
 
+/***/ "./src/map-modes/styled.tsx":
+/*!**********************************!*\
+  !*** ./src/map-modes/styled.tsx ***!
+  \**********************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__);
+
+
+const styled = function (_ref) {
+  let {
+    attributes,
+    setAttributes
+  } = _ref;
+  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.PanelRow, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.TextareaControl, {
+    label: "JSON-based Styles",
+    help: (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, "To generate map styles, open the ", (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("a", {
+      href: "https://mapstyle.withgoogle.com/",
+      target: "_blank",
+      rel: "noopener noreferrer"
+    }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("strong", null, "Google Maps Styling Wizard")), ", click ", (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("strong", null, "use the legacy JSON styling wizard"), ", create your styles, click ", (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("strong", null, "Finish"), ", and then click ", (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("strong", null, "Copy JSON"), ". Paste copied the JSON above."), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, "A large number of pre-made styles are also available on ", (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("a", {
+      href: "https://snazzymaps.com/"
+    }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("strong", null, "Snazzy Maps")), ". To use them, select a map, click ", (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("strong", null, "Expand Code"), ", copy the JSON code, and paste it above.")),
+    value: attributes.styles,
+    onChange: styles => setAttributes({
+      styles
+    })
+  })), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.PanelRow, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.RadioControl, {
+    label: "Styled Map Type",
+    help: (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", null, "Defines the type of map tiles to load. Some styles may not be applied when ", (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("strong", null, "Hybrid"), " or ", (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("strong", null, "Satellite"), " are selected."),
+    selected: attributes.styledmaptype,
+    options: [{
+      label: 'Roadmap',
+      value: 'roadmap'
+    }, {
+      label: 'Satellite',
+      value: 'satellite'
+    }, {
+      label: 'Hybrid',
+      value: 'hybrid'
+    }, {
+      label: 'Terrain',
+      value: 'terrain'
+    }],
+    onChange: styledmaptype => setAttributes({
+      styledmaptype
+    })
+  })), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.PanelRow, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.CheckboxControl, {
+    label: "UI Visibility",
+    help: "Sets the visibility of the UI components in a styled map.",
+    checked: attributes.uivisibility,
+    onChange: uivisibility => setAttributes({
+      uivisibility
+    })
+  })));
+};
+/* harmony default export */ __webpack_exports__["default"] = (styled);
+
+/***/ }),
+
 /***/ "./src/map-modes/view.tsx":
 /*!********************************!*\
   !*** ./src/map-modes/view.tsx ***!
@@ -614,10 +1025,9 @@ const view = function (_ref) {
       center: `${event.target.value},${parseFloat(attributes.center.split(',')[1])}`
     }),
     type: "number",
-    step: 0.0001,
+    step: 0.00001,
     min: -90,
     max: 90,
-    size: 8,
     style: {
       display: 'block',
       width: '100%',
@@ -629,10 +1039,9 @@ const view = function (_ref) {
       center: `${parseFloat(attributes.center.split(',')[0])},${event.target.value}`
     }),
     type: "number",
-    step: 0.0001,
+    step: 0.00001,
     min: -180,
     max: 180,
-    size: 8,
     style: {
       display: 'block',
       width: '100%',
@@ -678,6 +1087,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/block-editor */ "@wordpress/block-editor");
 /* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _utilities__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./utilities */ "./src/utilities.ts");
 
 /**
  * React hook that is used to mark the block wrapper element.
@@ -685,6 +1095,7 @@ __webpack_require__.r(__webpack_exports__);
  *
  * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-block-editor/#useblockprops
  */
+
 
 /**
  * The save function defines the way in which the different attributes should
@@ -698,8 +1109,15 @@ const save = function (_ref) {
     attributes
   } = _ref;
   const blockProps = _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.useBlockProps.save();
-  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", blockProps, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("iframe", {
-    src: `https://www.google.com/maps/embed/v1/place?q=${attributes.location}&maptype=${attributes.maptype}&zoom=${attributes.zoom}&key=${attributes.key}`,
+  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", blockProps, attributes.mapmode === 'styled' ? (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "google-maps-gutenberg-block",
+    style: {
+      width: '100%',
+      height: `${attributes.height}px`
+    },
+    "data-attributes": JSON.stringify(attributes)
+  }) : (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("iframe", {
+    src: (0,_utilities__WEBPACK_IMPORTED_MODULE_2__.getMapUrl)(attributes),
     width: "100%",
     height: attributes.height,
     style: {
@@ -711,6 +1129,132 @@ const save = function (_ref) {
   }));
 };
 /* harmony default export */ __webpack_exports__["default"] = (save);
+
+/***/ }),
+
+/***/ "./src/utilities.ts":
+/*!**************************!*\
+  !*** ./src/utilities.ts ***!
+  \**************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "getMapObject": function() { return /* binding */ getMapObject; },
+/* harmony export */   "getMapUrl": function() { return /* binding */ getMapUrl; },
+/* harmony export */   "initializeMap": function() { return /* binding */ initializeMap; }
+/* harmony export */ });
+/* harmony import */ var memoize_one__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! memoize-one */ "./node_modules/memoize-one/dist/memoize-one.esm.js");
+/* harmony import */ var _googlemaps_js_api_loader__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @googlemaps/js-api-loader */ "./node_modules/@googlemaps/js-api-loader/dist/index.esm.js");
+
+
+const constructUrl = (acceptedParameters, atts) => {
+  const url = new URL(`https://www.google.com/maps/embed/v1/${atts.mapmode}`);
+  acceptedParameters.forEach(parameter => {
+    const value = atts[parameter];
+    if (value !== '') url.searchParams.append(parameter, typeof value === 'number' ? value.toString() : value);
+  });
+  return url.href;
+};
+const getMapUrl = atts => {
+  switch (atts.mapmode) {
+    case 'place':
+      return constructUrl(['key', 'q', 'zoom', 'maptype', 'language', 'region'], atts);
+    case 'view':
+      return constructUrl(['key', 'center', 'zoom', 'maptype', 'language', 'region'], atts);
+    case 'directions':
+      return constructUrl(['key', 'origin', 'destination', 'mode', 'units', 'zoom', 'maptype', 'language', 'region'], atts);
+    case 'streetview':
+      return constructUrl(['key', 'location', 'pano', 'heading', 'pitch', 'fov', 'language', 'region'], atts);
+    case 'search':
+      return constructUrl(['key', 'q', 'zoom', 'maptype', 'language', 'region'], atts);
+  }
+  ;
+};
+const getMapObject = (0,memoize_one__WEBPACK_IMPORTED_MODULE_1__["default"])((apiKey, element) => new _googlemaps_js_api_loader__WEBPACK_IMPORTED_MODULE_0__.Loader({
+  apiKey
+}).load().then(() => new google.maps.Map(element)));
+const initializeMap = (map, atts) => {
+  // Define the position of the center of the map
+  const center = {
+    lat: parseFloat(atts.center.split(',')[0]),
+    lng: parseFloat(atts.center.split(',')[1])
+  };
+
+  // Set the base options and styles
+  map.setOptions({
+    center,
+    zoom: atts.zoom,
+    mapTypeId: atts.styledmaptype,
+    disableDefaultUI: !atts.uivisibility,
+    styles: JSON.parse(atts.styles)
+  });
+};
+
+/***/ }),
+
+/***/ "./node_modules/memoize-one/dist/memoize-one.esm.js":
+/*!**********************************************************!*\
+  !*** ./node_modules/memoize-one/dist/memoize-one.esm.js ***!
+  \**********************************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": function() { return /* binding */ memoizeOne; }
+/* harmony export */ });
+var safeIsNaN = Number.isNaN ||
+    function ponyfill(value) {
+        return typeof value === 'number' && value !== value;
+    };
+function isEqual(first, second) {
+    if (first === second) {
+        return true;
+    }
+    if (safeIsNaN(first) && safeIsNaN(second)) {
+        return true;
+    }
+    return false;
+}
+function areInputsEqual(newInputs, lastInputs) {
+    if (newInputs.length !== lastInputs.length) {
+        return false;
+    }
+    for (var i = 0; i < newInputs.length; i++) {
+        if (!isEqual(newInputs[i], lastInputs[i])) {
+            return false;
+        }
+    }
+    return true;
+}
+
+function memoizeOne(resultFn, isEqual) {
+    if (isEqual === void 0) { isEqual = areInputsEqual; }
+    var cache = null;
+    function memoized() {
+        var newArgs = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            newArgs[_i] = arguments[_i];
+        }
+        if (cache && cache.lastThis === this && isEqual(newArgs, cache.lastArgs)) {
+            return cache.lastResult;
+        }
+        var lastResult = resultFn.apply(this, newArgs);
+        cache = {
+            lastResult: lastResult,
+            lastArgs: newArgs,
+            lastThis: this,
+        };
+        return lastResult;
+    }
+    memoized.clear = function clear() {
+        cache = null;
+    };
+    return memoized;
+}
+
+
+
 
 /***/ }),
 
@@ -786,6 +1330,16 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "react":
+/*!************************!*\
+  !*** external "React" ***!
+  \************************/
+/***/ (function(module) {
+
+module.exports = window["React"];
+
+/***/ }),
+
 /***/ "@wordpress/block-editor":
 /*!*************************************!*\
   !*** external ["wp","blockEditor"] ***!
@@ -842,7 +1396,7 @@ module.exports = window["wp"]["element"];
   \************************/
 /***/ (function(module) {
 
-module.exports = JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":2,"name":"create-block/google-maps-gutenberg-block","version":"0.1.0","title":"Styled Google Maps","category":"widgets","description":"A highly-customizable Google Maps embed.","supports":{"html":false},"textdomain":"google-maps-gutenberg-block","editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css","keywords":["google","maps","map","branded","styled","customized","embed"],"attributes":{"key":{"type":"string","default":"AIzaSyCRspsEADhOoOF4c2LhYKu_IAB0orV9ExA"},"height":{"type":"number","default":400},"mapmode":{"type":"string","default":"place","enum":["place","view","directions","streetview","search"]},"q":{"type":"string","default":"Empire State Building"},"center":{"type":"string","default":"40.7484,-73.9857"},"zoom":{"type":"number","default":10},"maptype":{"type":"string","default":"roadmap","enum":["roadmap","satellite"]},"language":{"type":"string","default":""},"region":{"type":"string","default":""},"origin":{"type":"string","default":"Empire State Building"},"destination":{"type":"string","default":"Flatiron Building"},"waypoints":{"type":"string","default":""},"mode":{"type":"string","enum":["driving","walking","bicycling","transit","flying"],"default":"driving"},"avoid":{"type":"string","default":""},"units":{"type":"string","enum":["","metric","imperial"],"default":""},"location":{"type":"string","default":"40.7484,-73.9857"},"pano":{"type":"string","default":""},"heading":{"type":"number","default":0},"pitch":{"type":"number","default":0},"fov":{"type":"number","default":90},"styles":{"type":"array","default":[]}}}');
+module.exports = JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":2,"name":"create-block/google-maps-gutenberg-block","version":"0.1.0","title":"Styled Google Maps","category":"widgets","description":"A highly-customizable Google Maps embed.","supports":{"html":false},"textdomain":"google-maps-gutenberg-block","editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css","viewScript":"file:./view-script.js","keywords":["google","maps","map","branded","styled","customized","embed"],"attributes":{"key":{"type":"string","default":"AIzaSyCRspsEADhOoOF4c2LhYKu_IAB0orV9ExA"},"height":{"type":"number","default":400},"mapmode":{"type":"string","default":"place","enum":["place","view","directions","streetview","search","styled"]},"q":{"type":"string","default":"Empire State Building"},"center":{"type":"string","default":"40.74841,-73.98570"},"zoom":{"type":"number","default":10},"maptype":{"type":"string","default":"roadmap","enum":["roadmap","satellite"]},"language":{"type":"string","default":""},"region":{"type":"string","default":""},"origin":{"type":"string","default":"Empire State Building"},"destination":{"type":"string","default":"Flatiron Building"},"waypoints":{"type":"string","default":""},"mode":{"type":"string","enum":["driving","walking","bicycling","transit","flying"],"default":"driving"},"avoid":{"type":"string","default":""},"units":{"type":"string","enum":["","metric","imperial"],"default":""},"location":{"type":"string","default":"40.74841,-73.98570"},"pano":{"type":"string","default":""},"heading":{"type":"number","default":0},"pitch":{"type":"number","default":0},"fov":{"type":"number","default":90},"styles":{"type":"string","default":"[]"},"styledmaptype":{"type":"string","enum":["roadmap","satellite","hybrid","terrain"],"default":"roadmap"},"uivisibility":{"type":"boolean","default":true},"markervisibility":{"type":"boolean","default":true}}}');
 
 /***/ })
 
