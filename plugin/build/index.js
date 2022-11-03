@@ -95,7 +95,20 @@ const edit = function (_ref) {
   (0,react__WEBPACK_IMPORTED_MODULE_4__.useEffect)(() => {
     if (containerRef.current) (0,_utilities__WEBPACK_IMPORTED_MODULE_5__.getMapObject)(attributes.key, containerRef.current, attributes.language, attributes.region).then(map => (0,_utilities__WEBPACK_IMPORTED_MODULE_5__.initializeMap)(map, attributes));
   });
-  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", blockProps, attributes.mapmode === 'themed' ? (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", blockProps, attributes.mapmode === 'themed' ? attributes.key === 'AIzaSyCRspsEADhOoOF4c2LhYKu_IAB0orV9ExA' ? (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("section", {
+    style: {
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      height: `${attributes.height}px`,
+      textAlign: 'center',
+      backgroundColor: 'rgb(240, 240, 240)'
+    }
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", {
+    style: {
+      padding: '20px'
+    }
+  }, "You must set your own Google Maps API key and enable the Google Maps JavaScript API to use themed maps.")) : (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "google-maps-gutenberg-block",
     ref: containerRef,
     style: {
@@ -2010,7 +2023,13 @@ const save = function (_ref) {
     attributes
   } = _ref;
   const blockProps = _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.useBlockProps.save();
-  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", blockProps, attributes.mapmode === 'themed' ? (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", blockProps, attributes.mapmode === 'themed' ? attributes.key === 'AIzaSyCRspsEADhOoOF4c2LhYKu_IAB0orV9ExA' ? (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("section", {
+    style: {
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center"
+    }
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, "You must set your own Google Maps API key and enable the Google Maps JavaScript API to use themed maps.")) : (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "google-maps-gutenberg-block",
     style: {
       width: '100%',
