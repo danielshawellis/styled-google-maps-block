@@ -25,7 +25,7 @@ export const getMapUrl = (atts: Readonly<MapSettings>): string => {
   };
 };
 
-const loadScript = memoizeOne((url: string): Promise<HTMLScriptElement> => new Promise((resolve, reject) => {
+const loadScript = (url: string): Promise<HTMLScriptElement> => new Promise((resolve, reject) => {
   // Create the script element and set its source
   const script = document.createElement('script');
   script.async = true;
@@ -37,15 +37,20 @@ const loadScript = memoizeOne((url: string): Promise<HTMLScriptElement> => new P
 
   // Load the script into the DOM
   document.body.appendChild(script);
-}));
+});
 
-export const getMapObject = memoizeOne(async (apiKey: string, element: HTMLElement, language: string, region: string) => {
+const loadMapsScript = memoizeOne(async (apiKey: string, language: string, region: string) => {
   // Delete the Google Maps object from the window if it exists
-  if (window?.google?.maps) console.warn('The google.maps window property was reset. This is normal in the editor, but it can break other Google maps integrations.');
+  if (window?.google?.maps) console.warn('The google.maps window property was reset. This is normal in the editor, but it can indicate problems on a published page.');
 
   // Load the new script into the DOM, deleting out any existing identical scripts
   const scriptUrl = `https://maps.googleapis.com/maps/api/js?key=${apiKey}${language ? '&language=' + language : ''}${region ? '&region=' + region : ''}`;
   await loadScript(scriptUrl);
+});  
+
+export const getMapObject = memoizeOne(async (apiKey: string, element: HTMLElement, language: string, region: string) => {
+  // If a new script is needed, load it
+  await loadMapsScript(apiKey, language, region);
 
   // Use the newly loaded script to create a map object
   return new window.google.maps.Map(element);

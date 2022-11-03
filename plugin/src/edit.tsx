@@ -55,6 +55,7 @@ const edit: React.ComponentType<BlockEditProps<MapSettings>> = function ({ attri
 			<li>If you're using the <strong>themed</strong> map mode, go to the <a href="https://console.cloud.google.com/apis/library/maps-backend.googleapis.com" target="_blank" rel="noopener noreferrer"><strong>Google Maps JavaScript API</strong></a> page, ensure that the correct project is selected, and click <strong>Enable</strong>. This is a pay-as-you-go API, so be aware that <a href="https://developers.google.com/maps/documentation/javascript/usage-and-billing" target="_blank" rel="noopener noreferrer"><strong>you may incur charges</strong></a>.</li>
 			<li>Optionally, you can <a href="https://developers.google.com/maps/documentation/embed/get-api-key#restrict_key" target="_blank" rel="noopener noreferrer"><strong>restrict your API keys</strong></a> to improve security. Google strongly recommends this.</li>
 		</ol>
+		<p><i>*Loading multiple maps with different API keys onto the same web page may cause errors.</i></p>
 	</div>;
 
 	useEffect(() => {
@@ -120,7 +121,10 @@ const edit: React.ComponentType<BlockEditProps<MapSettings>> = function ({ attri
 						<PanelRow>
 							<ComboboxControl
 								label="Language"
-								help="Defines the language to use for UI elements and for the display of labels on map tiles. By default, visitors will see a map in their own language."
+								help={ <div>
+									<p>Defines the language to use for UI elements and for the display of labels on map tiles. By default, visitors will see a map in their own language.</p>
+									<p><i>*Loading multiple maps with different language settings onto the same web page may cause errors.</i></p>
+								</div> }
 								value={ attributes.language }
 								onChange={ ( language ) => setAttributes({ language: language ?? '' }) }
 								options={ languageOptions }
@@ -129,7 +133,10 @@ const edit: React.ComponentType<BlockEditProps<MapSettings>> = function ({ attri
 						<PanelRow>
 							<ComboboxControl
 								label="Region"
-								help={ <span>Defines the appropriate borders and labels to display, based on geo-political sensitivities. <a href="https://developers.google.com/maps/coverage" target="_blank" rel="noreferrer noopener"><strong>Google's coverage</strong></a> varies by region</span> }
+								help={ <div>
+									<p>Defines the appropriate borders and labels to display, based on geo-political sensitivities. <a href="https://developers.google.com/maps/coverage" target="_blank" rel="noreferrer noopener"><strong>Google's coverage</strong></a> varies by region</p>
+									<p><i>*Loading multiple maps with different region settings onto the same web page may cause errors.</i></p>
+								</div> }
 								value={ attributes.region }
 								onChange={ ( region ) => setAttributes({ region: region ?? '' }) }
 								options={ regionOptions }

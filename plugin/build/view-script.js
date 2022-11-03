@@ -40,7 +40,7 @@ const getMapUrl = atts => {
   }
   ;
 };
-const loadScript = (0,memoize_one__WEBPACK_IMPORTED_MODULE_0__["default"])(url => new Promise((resolve, reject) => {
+const loadScript = url => new Promise((resolve, reject) => {
   // Create the script element and set its source
   const script = document.createElement('script');
   script.async = true;
@@ -52,15 +52,19 @@ const loadScript = (0,memoize_one__WEBPACK_IMPORTED_MODULE_0__["default"])(url =
 
   // Load the script into the DOM
   document.body.appendChild(script);
-}));
-const getMapObject = (0,memoize_one__WEBPACK_IMPORTED_MODULE_0__["default"])(async (apiKey, element, language, region) => {
+});
+const loadMapsScript = (0,memoize_one__WEBPACK_IMPORTED_MODULE_0__["default"])(async (apiKey, language, region) => {
   var _window, _window$google;
   // Delete the Google Maps object from the window if it exists
-  if ((_window = window) !== null && _window !== void 0 && (_window$google = _window.google) !== null && _window$google !== void 0 && _window$google.maps) console.warn('The google.maps window property was reset. This is normal in the editor, but it can break other Google maps integrations.');
+  if ((_window = window) !== null && _window !== void 0 && (_window$google = _window.google) !== null && _window$google !== void 0 && _window$google.maps) console.warn('The google.maps window property was reset. This is normal in the editor, but it can indicate problems on a published page.');
 
   // Load the new script into the DOM, deleting out any existing identical scripts
   const scriptUrl = `https://maps.googleapis.com/maps/api/js?key=${apiKey}${language ? '&language=' + language : ''}${region ? '&region=' + region : ''}`;
   await loadScript(scriptUrl);
+});
+const getMapObject = (0,memoize_one__WEBPACK_IMPORTED_MODULE_0__["default"])(async (apiKey, element, language, region) => {
+  // If a new script is needed, load it
+  await loadMapsScript(apiKey, language, region);
 
   // Use the newly loaded script to create a map object
   return new window.google.maps.Map(element);

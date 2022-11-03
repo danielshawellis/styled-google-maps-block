@@ -91,7 +91,7 @@ const edit = function (_ref) {
     href: "https://developers.google.com/maps/documentation/embed/get-api-key#restrict_key",
     target: "_blank",
     rel: "noopener noreferrer"
-  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("strong", null, "restrict your API keys")), " to improve security. Google strongly recommends this.")));
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("strong", null, "restrict your API keys")), " to improve security. Google strongly recommends this.")), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("i", null, "*Loading multiple maps with different API keys onto the same web page may cause errors.")));
   (0,react__WEBPACK_IMPORTED_MODULE_4__.useEffect)(() => {
     if (containerRef.current) (0,_utilities__WEBPACK_IMPORTED_MODULE_5__.getMapObject)(attributes.key, containerRef.current, attributes.language, attributes.region).then(map => (0,_utilities__WEBPACK_IMPORTED_MODULE_5__.initializeMap)(map, attributes));
   });
@@ -186,7 +186,7 @@ const edit = function (_ref) {
     setAttributes: setAttributes
   }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelRow, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.ComboboxControl, {
     label: "Language",
-    help: "Defines the language to use for UI elements and for the display of labels on map tiles. By default, visitors will see a map in their own language.",
+    help: (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, "Defines the language to use for UI elements and for the display of labels on map tiles. By default, visitors will see a map in their own language."), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("i", null, "*Loading multiple maps with different language settings onto the same web page may cause errors."))),
     value: attributes.language,
     onChange: language => setAttributes({
       language: language !== null && language !== void 0 ? language : ''
@@ -194,11 +194,11 @@ const edit = function (_ref) {
     options: _options_languages__WEBPACK_IMPORTED_MODULE_12__["default"]
   })), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelRow, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.ComboboxControl, {
     label: "Region",
-    help: (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", null, "Defines the appropriate borders and labels to display, based on geo-political sensitivities. ", (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("a", {
+    help: (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, "Defines the appropriate borders and labels to display, based on geo-political sensitivities. ", (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("a", {
       href: "https://developers.google.com/maps/coverage",
       target: "_blank",
       rel: "noreferrer noopener"
-    }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("strong", null, "Google's coverage")), " varies by region"),
+    }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("strong", null, "Google's coverage")), " varies by region"), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("i", null, "*Loading multiple maps with different region settings onto the same web page may cause errors."))),
     value: attributes.region,
     onChange: region => setAttributes({
       region: region !== null && region !== void 0 ? region : ''
@@ -2071,7 +2071,7 @@ const getMapUrl = atts => {
   }
   ;
 };
-const loadScript = (0,memoize_one__WEBPACK_IMPORTED_MODULE_0__["default"])(url => new Promise((resolve, reject) => {
+const loadScript = url => new Promise((resolve, reject) => {
   // Create the script element and set its source
   const script = document.createElement('script');
   script.async = true;
@@ -2083,15 +2083,19 @@ const loadScript = (0,memoize_one__WEBPACK_IMPORTED_MODULE_0__["default"])(url =
 
   // Load the script into the DOM
   document.body.appendChild(script);
-}));
-const getMapObject = (0,memoize_one__WEBPACK_IMPORTED_MODULE_0__["default"])(async (apiKey, element, language, region) => {
+});
+const loadMapsScript = (0,memoize_one__WEBPACK_IMPORTED_MODULE_0__["default"])(async (apiKey, language, region) => {
   var _window, _window$google;
   // Delete the Google Maps object from the window if it exists
-  if ((_window = window) !== null && _window !== void 0 && (_window$google = _window.google) !== null && _window$google !== void 0 && _window$google.maps) console.warn('The google.maps window property was reset. This is normal in the editor, but it can break other Google maps integrations.');
+  if ((_window = window) !== null && _window !== void 0 && (_window$google = _window.google) !== null && _window$google !== void 0 && _window$google.maps) console.warn('The google.maps window property was reset. This is normal in the editor, but it can indicate problems on a published page.');
 
   // Load the new script into the DOM, deleting out any existing identical scripts
   const scriptUrl = `https://maps.googleapis.com/maps/api/js?key=${apiKey}${language ? '&language=' + language : ''}${region ? '&region=' + region : ''}`;
   await loadScript(scriptUrl);
+});
+const getMapObject = (0,memoize_one__WEBPACK_IMPORTED_MODULE_0__["default"])(async (apiKey, element, language, region) => {
+  // If a new script is needed, load it
+  await loadMapsScript(apiKey, language, region);
 
   // Use the newly loaded script to create a map object
   return new window.google.maps.Map(element);
