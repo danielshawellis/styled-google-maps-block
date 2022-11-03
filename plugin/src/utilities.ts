@@ -1,4 +1,4 @@
-import memoize from 'memoize-one';
+import memoizeOne from 'memoize-one';
 import { Loader as GoogleMapsLoader } from "@googlemaps/js-api-loader";
 import { MapSettings } from './types';
 
@@ -25,8 +25,31 @@ export const getMapUrl = (atts: Readonly<MapSettings>): string => {
   };
 };
 
-export const getMapObject = memoize((apiKey: string, element: HTMLElement) => new GoogleMapsLoader({ apiKey }).load()
-  .then(() => new google.maps.Map(element)));
+const loadScript = memoizeOne((url: string): Promise<HTMLScriptElement> => new Promise((resolve, reject) => {
+  // Create the script element and set its source
+  const script = document.createElement('script');
+  script.async = true;
+  script.setAttribute('src', url);
+
+  // Connect the load and error events to the promise
+  script.onload = () => resolve(script);
+  script.onerror = reject;
+
+  // Load the script into the DOM
+  document.body.appendChild(script);
+}));
+
+export const getMapObject = memoizeOne(async (apiKey: string, element: HTMLElement, language: string, region: string) => {
+  // Delete the Google Maps object from the window if it exists
+  if (window?.google?.maps) console.warn('The google.maps window property was reset. This is normal in the editor, but it can break other Google maps integrations.');
+
+  // Load the new script into the DOM, deleting out any existing identical scripts
+  const scriptUrl = `https://maps.googleapis.com/maps/api/js?key=${apiKey}${language ? '&language=' + language : ''}${region ? '&region=' + region : ''}`;
+  await loadScript(scriptUrl);
+
+  // Use the newly loaded script to create a map object
+  return new window.google.maps.Map(element);
+});
 
 export const initializeMap = (map: MarkersMap, atts: Readonly<MapSettings>) => {
   // Define the position of the center of the map

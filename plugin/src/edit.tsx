@@ -5,7 +5,7 @@
  * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-block-editor/#useblockprops
  */
 import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
-import { Panel, PanelBody, PanelRow, BaseControl, TextControl, RadioControl } from '@wordpress/components';
+import { Panel, PanelBody, PanelRow, BaseControl, TextControl, RadioControl, ComboboxControl } from '@wordpress/components';
 import { useFocusableIframe } from '@wordpress/compose';
 import { BlockEditProps } from '@wordpress/blocks';
 
@@ -19,6 +19,9 @@ import DirectionsControls from './map-modes/directions';
 import StreetviewControls from './map-modes/streetview';
 import SearchControls from './map-modes/search';
 import ThemedControls from './map-modes/themed';
+
+import languageOptions from './options/languages';
+import regionOptions from './options/regions';
 
 import { MapSettings } from './types';
 
@@ -55,7 +58,7 @@ const edit: React.ComponentType<BlockEditProps<MapSettings>> = function ({ attri
 	</div>;
 
 	useEffect(() => {
-		if (containerRef.current) getMapObject(attributes.key, containerRef.current)
+		if (containerRef.current) getMapObject(attributes.key, containerRef.current, attributes.language, attributes.region)
 			.then(map => initializeMap(map, attributes));
 	});
 
@@ -115,19 +118,21 @@ const edit: React.ComponentType<BlockEditProps<MapSettings>> = function ({ attri
 						{ attributes.mapmode === 'themed' && <ThemedControls attributes={ attributes } setAttributes={ setAttributes } /> }
 
 						<PanelRow>
-							<TextControl
+							<ComboboxControl
 								label="Language"
-								help={ <span>Defines the language to use for UI elements and for the display of labels on map tiles. By default, visitors will se a map in their own language. This parameter is only supported for some country tiles; if the specific language requested is not supported for the tile set, then the default language for that tileset will be used. Choose from <a href="https://developers.google.com/maps/faq#languagesupport" target="_blank" rel="noopener noreferrer"><strong>the language codes here</strong></a>.</span> }
+								help="Defines the language to use for UI elements and for the display of labels on map tiles. By default, visitors will see a map in their own language."
 								value={ attributes.language }
-								onChange={ ( language ) => setAttributes({ language }) }
+								onChange={ ( language ) => setAttributes({ language: language ?? '' }) }
+								options={ languageOptions }
 							/>
 						</PanelRow>
 						<PanelRow>
-							<TextControl
+							<ComboboxControl
 								label="Region"
-								help={ <span>Defines the appropriate borders and labels to display, based on geo-political sensitivities. Choose from <a href="https://developers.google.com/maps/coverage" target="_blank" rel="noreferrer noopener"><strong>the region codes here</strong></a>.</span> }
+								help={ <span>Defines the appropriate borders and labels to display, based on geo-political sensitivities. <a href="https://developers.google.com/maps/coverage" target="_blank" rel="noreferrer noopener"><strong>Google's coverage</strong></a> varies by region</span> }
 								value={ attributes.region }
-								onChange={ ( region ) => setAttributes({ region }) }
+								onChange={ ( region ) => setAttributes({ region: region ?? '' }) }
+								options={ regionOptions }
 							/>
 						</PanelRow>
 					</PanelBody>
