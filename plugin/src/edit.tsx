@@ -5,7 +5,7 @@
  * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-block-editor/#useblockprops
  */
 import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
-import { Panel, PanelBody, PanelRow, BaseControl, TextControl, RadioControl, ComboboxControl } from '@wordpress/components';
+import { Panel, PanelBody, PanelRow, Dropdown, Button, BaseControl, TextControl, RadioControl, ComboboxControl } from '@wordpress/components';
 import { useFocusableIframe } from '@wordpress/compose';
 import { BlockEditProps } from '@wordpress/blocks';
 
@@ -44,9 +44,8 @@ const edit: React.ComponentType<BlockEditProps<MapSettings>> = function ({ attri
 	const iframeRef = useFocusableIframe() as React.LegacyRef<HTMLIFrameElement>;
 	const containerRef = useRef<HTMLDivElement | null>(null);
 
-	const apiKeyHelp = <div>
-		<p>Please create your own API key before publishing a map. This is a Google requirement, and themed maps won't work without it.</p>
-		<p>Here's how to create your own API key:</p>
+	const apiKeyHelpInner = <div style={{ minWidth: '320px', padding: '10px' }}>
+		<p><strong>Here's how to create your own API key:</strong></p>
 		<ol>
 			<li>Go to the <a href="https://console.cloud.google.com/project/_/google/maps-apis/credentials" target="_blank" rel="noopener noreferrer"><strong>Google Maps Platform &gt; Credentials</strong></a> page. If you haven't already, you may need to create an account and a Google Cloud project here.</li>
 			<li>On the <strong>Credentials</strong> page, click <strong>Create credentials &gt; API key</strong>. The <strong>API key created</strong> dialog displays your newly created API key.</li>
@@ -56,6 +55,22 @@ const edit: React.ComponentType<BlockEditProps<MapSettings>> = function ({ attri
 			<li>Optionally, you can <a href="https://developers.google.com/maps/documentation/embed/get-api-key#restrict_key" target="_blank" rel="noopener noreferrer"><strong>restrict your API keys</strong></a> to improve security. Google strongly recommends this.</li>
 		</ol>
 		<p><i>*Loading multiple maps with different API keys onto the same web page may cause errors.</i></p>
+	</div>
+
+	const apiKeyHelp = <div>
+		<p>Please create your own API key before publishing a map. This is a Google requirement, and themed maps won't work without it.</p>
+		<Dropdown
+			renderToggle={ ( { isOpen, onToggle } ) => (
+				<Button
+					variant="primary"
+					onClick={ onToggle }
+					aria-expanded={ isOpen }
+				>
+					How to Create an API Key
+				</Button>
+			) }
+			renderContent={ () => apiKeyHelpInner }
+		/>		
 	</div>;
 
 	useEffect(() => {
