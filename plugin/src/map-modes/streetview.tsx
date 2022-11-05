@@ -1,7 +1,31 @@
-import { PanelRow, BaseControl, TextControl, RangeControl } from '@wordpress/components';
+import { PanelRow, Dropdown, Button, BaseControl, TextControl, RangeControl } from '@wordpress/components';
 import { MapSettings } from '../types';
+import { useState } from 'react';
 
 const streetview = function ({ attributes, setAttributes }: { attributes: MapSettings, setAttributes: (atts: Partial<MapSettings>) => void }) {
+  const [panoramaUrl, setPanoramaUrl] = useState("");
+
+  const panoramaIdFinder = <div style={{ minWidth: '320px', padding: '10px' }}>
+    <p><strong>How to find the ID of a Google Maps panorama:</strong></p>
+    <ol>
+      <li>Open the panorama within Google Maps in a web browser.</li>
+      <li>Copy the URL of the page and paste it into the text <strong>Panorama URL</strong> input below.</li>
+      <li>The panorama's ID will appear in the <strong>Panorama ID</strong> input below.</li>
+    </ol>
+    <div style={{ display: 'flex', gap: '8px' }}>
+      <TextControl
+        label="Panorama URL"
+        value={ panoramaUrl }
+        onChange={ ( url ) => setPanoramaUrl( url ) }
+      />
+      <TextControl
+        label="Panorama ID"
+        value={ (panoramaUrl.includes("!1s") && panoramaUrl.includes("!2e")) ? panoramaUrl.split("!1s")[1].split("!2e")[0].replace(/%2F/g,'/') : "" }
+        onChange={ ( id ) => {} }
+      />
+    </div>
+  </div>;
+  
   return (
     <>
       <PanelRow>
@@ -35,7 +59,21 @@ const streetview = function ({ attributes, setAttributes }: { attributes: MapSet
       <PanelRow>
         <TextControl
           label="Panorama ID"
-          help="A specific panorama ID. If you specify a panorama ID you may also specify a location. The location will be only be used if the API cannot find the panorama ID." // TODO: Improve the documentation here
+          help={ <div>
+            <p>The ID of a specific Google Maps panorama. If you specify a panorama ID you may also specify a location. The location will be only be used if the API cannot find the panorama ID.</p>
+            <Dropdown
+              renderToggle={ ( { isOpen, onToggle } ) => (
+                <Button
+                  variant="primary"
+                  onClick={ onToggle }
+                  aria-expanded={ isOpen }
+                >
+                  How to Find a Panorama's Id
+                </Button>
+              ) }
+              renderContent={ () => panoramaIdFinder }
+            />
+          </div> }
           value={ attributes.pano }
           onChange={ ( pano ) => setAttributes({ pano }) }
         />
