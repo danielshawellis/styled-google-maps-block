@@ -1,15 +1,15 @@
 {
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 2,
-	"name": "create-block/google-maps-gutenberg-block",
+	"name": "styled-google-maps-block/main-block",
 	"version": "0.1.0",
 	"title": "Styled Google Maps",
-	"category": "widgets",
+	"category": "embed",
 	"description": "A highly-customizable Google Maps block. Supports custom themes, directions, and Google Street View.",
 	"supports": {
 		"html": false
 	},
-	"textdomain": "google-maps-gutenberg-block",
+	"textdomain": "styled-google-maps-block",
 	"editorScript": "file:./index.js",
 	"editorStyle": "file:./index.css",
 	"style": "file:./style-index.css",

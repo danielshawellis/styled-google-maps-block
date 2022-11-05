@@ -1,16 +1,15 @@
 <?php
 /**
- * Plugin Name:       Google Maps Gutenberg Block
- * Description:       A highly-customizable Google Maps block for Gutenberg. Supports custom styles, directions, and street view.
+ * Plugin Name:       Styled Google Maps Block
+ * Description:       A highly-customizable Google Maps block. Supports custom themes, directions, and Google Street View.
  * Requires at least: 5.9
  * Requires PHP:      7.0
  * Version:           1.0.0
  * Author:            Daniel Ellis
+ * Author URI:				https://danielellisdevelopment.com/
  * License:           GPL-2.0-or-later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain:       google-maps-gutenberg-block
- *
- * @package           create-block
+ * Text Domain:       styled-google-maps-block
  */
 
 /**
