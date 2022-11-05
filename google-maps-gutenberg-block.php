@@ -19,7 +19,6 @@
  *
  * @see https://developer.wordpress.org/reference/functions/register_block_type/
  */
-function create_block_google_maps_gutenberg_block_block_init() {
+add_action( 'init', function () {
 	register_block_type( __DIR__ . '/build' );
-}
-add_action( 'init', 'create_block_google_maps_gutenberg_block_block_init' );
+} );
