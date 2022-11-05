@@ -30,12 +30,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _options_regions__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./options/regions */ "./src/options/regions.ts");
 /* harmony import */ var _editor_scss__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./editor.scss */ "./src/editor.scss");
 
-/**
- * React hook that is used to mark the block wrapper element.
- * It provides all the necessary props like the class name.
- *
- * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-block-editor/#useblockprops
- */
+// Import core WordPress and React dependencies
+
+
+
+
+
+// Import utilities
+
+
+// Import types
+
+// Import option templates for each map mode
 
 
 
@@ -43,26 +49,14 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+// Import options for comboboxes
 
 
 
+// Import styles
 
 
-
-/**
- * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
- * Those files can contain any CSS code that gets applied to the editor.
- *
- * @see https://www.npmjs.com/package/@wordpress/scripts#using-css
- */
-
-
-/**
- * The edit function describes the structure of your block in the context of the
- * editor. This represents what the editor will render when the block is used.
- *
- * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-edit-save/#edit
- */
+// Define the block's interface in the editor
 const edit = function (_ref) {
   let {
     attributes,
@@ -377,7 +371,7 @@ const directions = function (_ref) {
     })
   })), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.PanelRow, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.RangeControl, {
     label: "Zoom",
-    help: "Sets initial zoom level of the map.",
+    help: "Sets the initial zoom level of the map. One displays the world, ten displays an entire city, and twenty displays individual buildings. One displays the world, ten displays an entire city, and twenty displays individual buildings.",
     value: attributes.zoom,
     onChange: zoom => setAttributes({
       zoom
@@ -452,7 +446,7 @@ const place = function (_ref) {
     })
   })), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.PanelRow, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.RangeControl, {
     label: "Zoom",
-    help: "Sets the initial zoom level of the map.",
+    help: "Sets the initial zoom level of the map. One displays the world, ten displays an entire city, and twenty displays individual buildings.",
     value: attributes.zoom,
     onChange: zoom => setAttributes({
       zoom
@@ -506,7 +500,7 @@ const search = function (_ref) {
     })
   })), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.PanelRow, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.RangeControl, {
     label: "Zoom",
-    help: "Sets initial zoom level of the map.",
+    help: "Sets the initial zoom level of the map. One displays the world, ten displays an entire city, and twenty displays individual buildings.",
     value: attributes.zoom,
     onChange: zoom => setAttributes({
       zoom
@@ -840,7 +834,7 @@ const themed = function (_ref) {
     })
   })), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.PanelRow, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.RangeControl, {
     label: "Zoom",
-    help: "Sets initial zoom level of the map.",
+    help: "Sets the initial zoom level of the map. One displays the world, ten displays an entire city, and twenty displays individual buildings.",
     value: attributes.zoom,
     onChange: zoom => setAttributes({
       zoom
@@ -948,7 +942,7 @@ const view = function (_ref) {
     }
   })))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.PanelRow, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.RangeControl, {
     label: "Zoom",
-    help: "Sets the initial zoom level of the map.",
+    help: "Sets the initial zoom level of the map. One displays the world, ten displays an entire city, and twenty displays individual buildings.",
     value: attributes.zoom,
     onChange: zoom => setAttributes({
       zoom
@@ -2029,21 +2023,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _utilities__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./utilities */ "./src/utilities.ts");
 
-/**
- * React hook that is used to mark the block wrapper element.
- * It provides all the necessary props like the class name.
- *
- * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-block-editor/#useblockprops
- */
+// Import core WordPress dependencies
+
+// Import utilities
 
 
-/**
- * The save function defines the way in which the different attributes should
- * be combined into the final markup, which is then serialized by the block
- * editor into `post_content`.
- *
- * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-edit-save/#save
- */
+// Import types
+
+// Define the HTML outputted by the block on save
 const save = function (_ref) {
   let {
     attributes

@@ -1,18 +1,17 @@
-/**
- * React hook that is used to mark the block wrapper element.
- * It provides all the necessary props like the class name.
- *
- * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-block-editor/#useblockprops
- */
+// Import core WordPress and React dependencies
 import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
 import { Panel, PanelBody, PanelRow, Dropdown, Button, BaseControl, TextControl, RadioControl, ComboboxControl } from '@wordpress/components';
 import { useFocusableIframe } from '@wordpress/compose';
 import { BlockEditProps } from '@wordpress/blocks';
-
 import { useRef, useEffect } from 'react';
 
+// Import utilities
 import { getMapUrl, getMapObject, initializeMap } from './utilities';
 
+// Import types
+import { MapSettings } from './types';
+
+// Import option templates for each map mode
 import PlaceControls from './map-modes/place';
 import ViewControls from './map-modes/view';
 import DirectionsControls from './map-modes/directions';
@@ -20,25 +19,14 @@ import StreetviewControls from './map-modes/streetview';
 import SearchControls from './map-modes/search';
 import ThemedControls from './map-modes/themed';
 
+// Import options for comboboxes
 import languageOptions from './options/languages';
 import regionOptions from './options/regions';
 
-import { MapSettings } from './types';
-
-/**
- * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
- * Those files can contain any CSS code that gets applied to the editor.
- *
- * @see https://www.npmjs.com/package/@wordpress/scripts#using-css
- */
+// Import styles
 import './editor.scss';
 
-/**
- * The edit function describes the structure of your block in the context of the
- * editor. This represents what the editor will render when the block is used.
- *
- * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-edit-save/#edit
- */
+// Define the block's interface in the editor
 const edit: React.ComponentType<BlockEditProps<MapSettings>> = function ({ attributes, setAttributes }) {
 	const blockProps = useBlockProps();
 	const iframeRef = useFocusableIframe() as React.LegacyRef<HTMLIFrameElement>;

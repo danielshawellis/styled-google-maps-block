@@ -15,7 +15,7 @@ const search = function ({ attributes, setAttributes }: { attributes: MapSetting
       <PanelRow>
         <RangeControl
           label="Zoom"
-          help="Sets initial zoom level of the map."
+          help="Sets the initial zoom level of the map. One displays the world, ten displays an entire city, and twenty displays individual buildings."
           value={ attributes.zoom }
           onChange={ ( zoom ) => setAttributes({ zoom }) }
           min={ 1 }
