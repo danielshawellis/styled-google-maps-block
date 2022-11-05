@@ -29,6 +29,6 @@ import icon from './images/icon';
  *
  * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-registration/
  */
-// @ts-ignore TODO: Fix the typing here
+// @ts-ignore TypeScript fails here because it does not narrow the string enums from the block.json file
 registerBlockType<MapSettings>( metadata.name, { icon, edit, save } );
 
