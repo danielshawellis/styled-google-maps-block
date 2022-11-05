@@ -5,7 +5,7 @@
 	"version": "0.1.0",
 	"title": "Styled Google Maps",
 	"category": "embed",
-	"description": "A highly-customizable Google Maps block. Supports custom themes, directions, and Google Street View.",
+	"description": "A highly-customizable Google Maps block. Supports custom themes, navigational directions, and Google Street View.",
 	"supports": {
 		"html": false
 	},

@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name:       Styled Google Maps Block
- * Description:       A highly-customizable Google Maps block. Supports custom themes, directions, and Google Street View.
+ * Description:       A highly-customizable Google Maps block. Supports custom themes, navigational directions, and Google Street View.
  * Requires at least: 5.9
  * Requires PHP:      7.0
  * Version:           1.0.0
