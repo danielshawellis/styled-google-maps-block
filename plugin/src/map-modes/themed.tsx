@@ -95,8 +95,8 @@ const themed = function ({ attributes, setAttributes }: { attributes: MapSetting
       </PanelRow>
       <PanelRow>
         <BaseControl 
-          label="Select a Theme" 
-          help={ <span>Select from a list of map themes or <a href="http://flagstaffintegrations.com/" target="_blank" rel="noopener noreferrer"><strong>download additional themes</strong></a>.</span> } 
+          label="Select a Basic Theme" 
+          help="Select from this list of basic map themes or create your own theme below."
           id="theme-select"
         >
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
@@ -109,21 +109,15 @@ const themed = function ({ attributes, setAttributes }: { attributes: MapSetting
               </div>
             )) }
           </div>
-          <Button variant="primary" style={{ width: '100%', marginTop: '8px', justifyContent: 'center', fontWeight: 700 }} onClick={ () => window.open("http://flagstaffintegrations.com/", "_blank", "noopener noreferrer") }>
-            Get Additional Themes
-          </Button>
         </BaseControl>
       </PanelRow>
       <PanelRow>
-        <BaseControl 
-          label="Upload Additional Themes"
-          help={ <span>Additional theme files can be downloaded from our <a href="http://flagstaffintegrations.com/" target="_blank" rel="noopener noreferrer"><strong>theme directory</strong></a>. Click the button above to upload a theme and apply it to the map embed.</span> }
-          id="theme-file-upload"
-        >
-          <FormFileUpload accept=".json" style={{ width: '100%', justifyContent: 'center', fontWeight: 700 }} variant="primary" onChange={ (event) => readFile(event.target.files.item(0)).then(contents => setAttributes({ styles: contents })) }>
-            Upload A Theme File
-          </FormFileUpload>
-        </BaseControl>
+        <TextareaControl
+          label="Use a JSON-Based Theme"
+          help={ <span>Create your own map theme with <a href="https://mapstyle.withgoogle.com/" target="_blank" rel="noopener noreferrer"><strong>Google's Map Styling Wizard</strong></a> or choose from thousands of pre-made themes on <a href="https://snazzymaps.com/" target="_blank" rel="noopener noreferrer"><strong>Snazzy Maps</strong></a>.</span> }
+          value={ attributes.styles }
+          onChange={ (styles) => setAttributes({ styles }) }
+        />
       </PanelRow>
       <PanelRow>
         <RangeControl
@@ -163,14 +157,6 @@ const themed = function ({ attributes, setAttributes }: { attributes: MapSetting
             { label: 'Terrain', value: 'terrain' }
           ] }
           onChange={ ( themedmaptype: MapSettings['themedmaptype'] ) => setAttributes({ themedmaptype }) }
-        />
-      </PanelRow>
-      <PanelRow>
-        <TextareaControl
-          label="Theme JSON"
-          help={ <span>Advanced users can further customize their themes using JSON. Documentation can be found <a href="https://developers.google.com/maps/documentation/javascript/style-reference" target="_blank" rel="noopener noreferrer"><strong>here</strong></a>. Note that misconfiguring theme JSON will cause errors.</span> }
-          value={ attributes.styles }
-          onChange={ (styles) => setAttributes({ styles }) }
         />
       </PanelRow>
     </>
