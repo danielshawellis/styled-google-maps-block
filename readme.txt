@@ -1,4 +1,4 @@
-=== Google Maps Gutenberg Block ===
+=== Styled Google Maps Block ===
 Contributors:      danielshawellis
 Tags:              block
 Tested up to:      6.1.1
