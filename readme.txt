@@ -1,55 +1,42 @@
 === Google Maps Gutenberg Block ===
-Contributors:      The WordPress Contributors
+Contributors:      danielshawellis
 Tags:              block
-Tested up to:      6.0
-Stable tag:        0.1.0
+Tested up to:      6.1.1
+Stable tag:        1.0.0
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 
-Example block scaffolded with Create Block tool.
+A highly-customizable Google Maps block. Supports custom themes, navigational directions, and Google Street View.
 
 == Description ==
 
-This is the long description. No limit, and you can use Markdown (as well as in the following sections).
+This Gutenberg block allows you to embed and fully-customizable Google Map into any page.
 
-For backwards compatibility, if this section is missing, the full length of the short description will be used, and
-Markdown parsed.
-
-== Installation ==
-
-This section describes how to install the plugin and get it working.
-
-e.g.
-
-1. Upload the plugin files to the `/wp-content/plugins/google-maps-gutenberg-block` directory, or install the plugin through the WordPress plugins screen directly.
-1. Activate the plugin through the 'Plugins' screen in WordPress
-
+- Use [Google's Map Styling Wizard](https://mapstyle.withgoogle.com/) to fully customize the appearance of your maps.
+- Use pre-made themes from [Snazzy Maps](https://snazzymaps.com/).
+- Switch between roadmap, satellite, hybrid, and terrain backgrounds.
+- Display navigational directions from one point to another.
+- Embed an interactive street view.
+- Display multiple Google Maps search results.
 
 == Frequently Asked Questions ==
 
-= A question that someone might have =
+= Do I Need to Generate an API Key to Use This Block? =
 
-An answer to that question.
+After installing, you'll be able to view the block immediately. However, Google requires unique API keys to be created for each site. API keys must also be generated before previewing themed maps.
 
-= What about foo bar? =
+= How Do I Generate an API Key? =
 
-Answer to foo bar dilemma.
+Follow these steps to generate an API key:
 
-== Screenshots ==
-
-1. This screen shot description corresponds to screenshot-1.(png|jpg|jpeg|gif). Note that the screenshot is taken from
-the /assets directory or the directory that contains the stable readme.txt (tags or trunk). Screenshots in the /assets
-directory take precedence. For example, `/assets/screenshot-1.png` would win over `/tags/4.3/screenshot-1.png`
-(or jpg, jpeg, gif).
-2. This is the second screen shot
+1. Go to the [Google Maps Platform > Credentials](https://console.cloud.google.com/project/_/google/maps-apis/credentials) page. If you haven't already, you may need to create an account and a Google Cloud project here.
+2. On the **Credentials** page, click **Create credentials > API key**. The **API key created** dialog displays your newly created API key.
+3. Copy the new API key and paste it in the field above.
+4. Go to the [Google Maps Embed API](https://console.cloud.google.com/apis/library/maps-embed-backend.googleapis.com?project=maps-test-372921) page, ensure that the correct project is selected, and click **Enable**.
+5. If you're using the **themed** map mode, go to the [Google Maps JavaScript API](https://console.cloud.google.com/apis/library/maps-backend.googleapis.com) page, ensure that the correct project is selected, and click **Enable**. This is a pay-as-you-go API, so be aware that [you may incur charges](https://developers.google.com/maps/documentation/javascript/usage-and-billing).
+6. Optionally, you can [restrict your API keys](https://developers.google.com/maps/documentation/embed/get-api-key#restrict_key) to improve security. Google strongly recommends this.
 
 == Changelog ==
 
-= 0.1.0 =
-* Release
-
-== Arbitrary section ==
-
-You may provide arbitrary sections, in the same format as the ones above. This may be of use for extremely complicated
-plugins where more information needs to be conveyed that doesn't fit into the categories of "description" or
-"installation." Arbitrary sections will be shown below the built-in sections outlined above.
+= 1.0.0 =
+* Initial release
