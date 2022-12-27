@@ -12,7 +12,7 @@ A highly-customizable Google Maps block. Supports custom themes, navigational di
 
 This Gutenberg block allows you to embed and fully-customizable Google Map into any page.
 
-- Use [Google's Map Styling Wizard](https://mapstyle.withgoogle.com/) to fully customize the appearance of your maps.
+- Use the [Google's Map Styling Wizard](https://mapstyle.withgoogle.com/) to fully customize the appearance of your maps.
 - Use pre-made themes from [Snazzy Maps](https://snazzymaps.com/).
 - Switch between roadmap, satellite, hybrid, and terrain backgrounds.
 - Display navigational directions from one point to another.
