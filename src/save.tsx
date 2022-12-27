@@ -16,7 +16,7 @@ const save: React.ComponentType<BlockSaveProps<MapSettings>> = function ({ attri
 			{ attributes.mapmode === 'themed' ?
 					attributes.key === 'AIzaSyCRspsEADhOoOF4c2LhYKu_IAB0orV9ExA' ?
 						<section style={{ display: "flex", alignItems: "center", justifyContent: "center" }}><p>You must set your own Google Maps API key and enable the Google Maps JavaScript API to use themed maps.</p></section> :
-						<div className="google-maps-gutenberg-block" style={{ width: '100%', height: `${attributes.height}px` }} data-attributes={ JSON.stringify(attributes) } /> :
+						<div className="styled-google-maps-block" style={{ width: '100%', height: `${attributes.height}px` }} data-attributes={ JSON.stringify(attributes) } /> :
 					<iframe src={ getMapUrl(attributes) } width="100%" height={ attributes.height } style={{ border: 0 }} allowFullScreen={ true } loading="lazy" referrerPolicy="no-referrer-when-downgrade"></iframe>
 			}
 		</div>

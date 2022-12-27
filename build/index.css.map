@@ -1,1 +1,1 @@
-{"version":3,"file":"index.css","mappings":";;;AAAA;;EAAA,C","sources":["webpack://google-maps-gutenberg-block/./src/editor.scss"],"sourcesContent":["/**\n * The following styles get applied inside the editor only.\n */\n"],"names":[],"sourceRoot":""}
+{"version":3,"file":"index.css","mappings":";;;AAAA;;EAAA,C","sources":["webpack://styled-google-maps-block/./src/editor.scss"],"sourcesContent":["/**\n * The following styles get applied inside the editor only.\n */\n"],"names":[],"sourceRoot":""}

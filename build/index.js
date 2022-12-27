@@ -122,7 +122,7 @@ const edit = function (_ref) {
       padding: '20px'
     }
   }, "You must set your own Google Maps API key and enable the Google Maps JavaScript API to use themed maps.")) : (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
-    className: "google-maps-gutenberg-block",
+    className: "styled-google-maps-block",
     ref: containerRef,
     style: {
       width: '100%',
@@ -2043,7 +2043,7 @@ const save = function (_ref) {
       justifyContent: "center"
     }
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, "You must set your own Google Maps API key and enable the Google Maps JavaScript API to use themed maps.")) : (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
-    className: "google-maps-gutenberg-block",
+    className: "styled-google-maps-block",
     style: {
       width: '100%',
       height: `${attributes.height}px`
@@ -2634,7 +2634,7 @@ module.exports = [];
 /******/ 			return __webpack_require__.O(result);
 /******/ 		}
 /******/ 		
-/******/ 		var chunkLoadingGlobal = self["webpackChunkgoogle_maps_gutenberg_block"] = self["webpackChunkgoogle_maps_gutenberg_block"] || [];
+/******/ 		var chunkLoadingGlobal = self["webpackChunkstyled_google_maps_block"] = self["webpackChunkstyled_google_maps_block"] || [];
 /******/ 		chunkLoadingGlobal.forEach(webpackJsonpCallback.bind(null, 0));
 /******/ 		chunkLoadingGlobal.push = webpackJsonpCallback.bind(null, chunkLoadingGlobal.push.bind(chunkLoadingGlobal));
 /******/ 	}();

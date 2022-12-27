@@ -72,7 +72,7 @@ const edit: React.ComponentType<BlockEditProps<MapSettings>> = function ({ attri
 				{ attributes.mapmode === 'themed' ?
 						attributes.key === 'AIzaSyCRspsEADhOoOF4c2LhYKu_IAB0orV9ExA' ?
 							<section style={{ display: "flex", alignItems: "center", justifyContent: "center", height: `${attributes.height}px`, textAlign: 'center', backgroundColor: 'rgb(240, 240, 240)' }}><p style={{ padding: '20px' }}>You must set your own Google Maps API key and enable the Google Maps JavaScript API to use themed maps.</p></section> :
-							<div className="google-maps-gutenberg-block" ref={ containerRef } style={{ width: '100%', height: `${attributes.height}px` }} data-attributes={ JSON.stringify(attributes) } /> :
+							<div className="styled-google-maps-block" ref={ containerRef } style={{ width: '100%', height: `${attributes.height}px` }} data-attributes={ JSON.stringify(attributes) } /> :
 						<iframe ref={ iframeRef } src={ getMapUrl(attributes) } width="100%" height={ attributes.height } style={{ border: 0 }} allowFullScreen={ true } loading="lazy" referrerPolicy="no-referrer-when-downgrade"></iframe>
 				}
 			</div>
