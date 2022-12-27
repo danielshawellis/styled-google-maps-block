@@ -1,6 +1,6 @@
 === Styled Google Maps Block ===
 Contributors:      danielshawellis
-Tags:              block
+Tags:              google maps, map, gutenberg, block, theme, style, themed, styled
 Tested up to:      6.1.1
 Stable tag:        1.0.0
 License:           GPL-2.0-or-later
