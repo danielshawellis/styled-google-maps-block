@@ -22,5 +22,5 @@ export type MapSettings = {
   styles: string,
   themedmaptype: 'roadmap' | 'satellite' | 'hybrid' | 'terrain',
   uivisibility: boolean,
-  markervisibility: boolean,
+  markervisibility: boolean
 }
