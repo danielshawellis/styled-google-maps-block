@@ -2,7 +2,7 @@
 Contributors:      danielshawellis
 Tags:              google maps, map, gutenberg, block, theme, style, themed, styled, street view, directions
 Tested up to:      6.1.1
-Stable tag:        1.0.0
+Stable tag:        1.0.2
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 
