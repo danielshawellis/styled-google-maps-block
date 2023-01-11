@@ -1,0 +1,12 @@
+/.git
+/.github
+/node_modules
+
+docker-compose.yml
+
+styled-google-maps-block.zip
+
+.editorconfig
+
+.distignore
+.gitignore
